@@ -60,13 +60,16 @@ void Cuenta::setEmail(string coreo){
 }
 
 void Cuenta::setFechaAlta(Fecha alta){
-    if(alta < _Alta){
+Fecha aux;
+
+    if(alta <= aux){
         _Alta = alta;
     }
 }
 
 void Cuenta::setFechaBaja(Fecha baja){
-    if(baja < _Baja){
+Fecha aux;
+    if(baja <= aux && _Alta<=baja){
         _Baja = baja;
     }
 }

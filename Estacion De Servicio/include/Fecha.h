@@ -24,7 +24,7 @@ class Fecha
        int getMinutos(){return _Minutos;}
        void setMinutos(int x){_Minutos=x;}
 
-       bool operator < (Fecha aux);
+       bool operator <= (Fecha aux);
        void fechaSinDatos();
 
        void FechaActual();
