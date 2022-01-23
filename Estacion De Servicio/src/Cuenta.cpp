@@ -11,6 +11,7 @@ Cuenta::Cuenta()
     _CUIT = 0;
     _Telefono = 0;
     strcpy(_Email, "SIN DATOS");
+    _Baja.fechaSinDatos();
 
 }
 
@@ -59,11 +60,15 @@ void Cuenta::setEmail(string coreo){
 }
 
 void Cuenta::setFechaAlta(Fecha alta){
-    _Alta = alta;
+    if(alta < _Alta){
+        _Alta = alta;
+    }
 }
 
 void Cuenta::setFechaBaja(Fecha baja){
-    _Baja = baja;
+    if(baja < _Baja){
+        _Baja = baja;
+    }
 }
 
 void Cuenta::cargar(){
@@ -90,6 +95,7 @@ void Cuenta::cargar(){
     setCUIT(cuit);
     setTelefono(tel);
     setEmail(coreo);
+    _Alta.FechaActual();
 }
 
 void Cuenta::mostrar(){

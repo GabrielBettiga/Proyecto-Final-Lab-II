@@ -55,3 +55,19 @@ void Fecha::FechaActual(){
     else {cout<<_Minutos<<endl;}
 }
 
+bool Fecha::operator < (Fecha aux){
+    if(_Anio < aux._Anio){
+        if(_Mes < aux._Mes){
+            if(_Dia < aux._Dia){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+    return false;
+}
+
+void Fecha::fechaSinDatos(){
+    _Dia = _Mes = _Anio = _Horas = _Minutos = 0;
+}
