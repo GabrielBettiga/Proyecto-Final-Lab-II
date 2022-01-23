@@ -82,7 +82,7 @@ int Factura::CantFactura()
 
 void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
     _NumFac=CantFactura()+1;
-    _Fecha.Cargar();
+    //_Fecha.Cargar();
     _IDcliente=cli.getID();
     _IDnaft=naf.getIDtipoDeNafta();
     strcpy (_Descripcion,naf.getnombreDeCombustible());

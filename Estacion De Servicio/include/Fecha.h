@@ -7,7 +7,7 @@ class Fecha
     protected:
         int _Dia,_Mes,_Anio,_Horas,_Minutos;
     public:
-        Fecha(int Dia = 0,int Mes = 0,int Anio = 0,int Horas = 0, int Minutos = 0);
+        Fecha();
 
        int getDia () {return _Dia;}
        void setDia (int x){_Dia=x;}
@@ -25,8 +25,7 @@ class Fecha
        void setMinutos(int x){_Minutos=x;}
 
 
-
-       void Cargar ();
+       //void Cargar ();
        void Mostrar ();
 };
 

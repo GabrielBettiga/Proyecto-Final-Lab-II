@@ -1,7 +1,5 @@
 #include <iostream>
-#include <cstdlib>
-#include <cstdio>
-#include <cstring>
+#include <ctime>
 
 using namespace std;
 #include "Fecha.h"
@@ -10,19 +8,25 @@ using namespace std;
 ///CONSTRUCTOR
 ///========================================================================================================
 
-Fecha::Fecha (int Dia,int Mes,int Anio,int Horas, int Minutos){
+Fecha::Fecha (){
 
-   _Dia=Dia;
-   _Mes=Mes;
-   _Anio=Anio;
-   _Horas=Horas;
-   _Minutos=Minutos;
+    time_t t;
+    struct tm *f;
+    time(&t);
+    f = localtime(&t);
+
+    _Dia = f->tm_mday;
+    _Mes = f->tm_mon + 1;
+    _Anio = f->tm_year + 1900;
+    _Horas = f->tm_hour;
+    _Minutos = f->tm_min;
 
    }
 
 
 ///METODOS
 ///========================================================================================================
+/*
    void Fecha::Cargar (){
    cout<< "Dia: ";
    cin>> _Dia;
@@ -35,7 +39,7 @@ Fecha::Fecha (int Dia,int Mes,int Anio,int Horas, int Minutos){
    cout << "Minutos: ";
    cin >> _Minutos;
    }
-
+*/
 
    void Fecha::Mostrar (){
     if(_Dia<10){cout<<"0"<<_Dia<<"/";}
@@ -50,3 +54,4 @@ Fecha::Fecha (int Dia,int Mes,int Anio,int Horas, int Minutos){
     if(_Minutos<10){cout<<"0"<<_Minutos<<endl;}
     else {cout<<_Minutos<<endl;}
 }
+
