@@ -90,7 +90,7 @@ void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
     _IDsurtidor=sur.getIDsurtidor();
     _Litros=litros;
     _Total=_Litros*_Precio;
-    _Paga=false;
+    _Paga=false; /// ANTES DE GUARDAR LA FACTURA CONSULTAR SI PAGO O NO
 
 }
 

@@ -18,6 +18,7 @@ class Factura
         bool Guardar();
         bool LeerDeDisco(int pos);
 
+
         int     getNumFac (){return _NumFac;}
         Fecha   getFecha (){return _Fecha;}
         int     getIDcliente (){return _IDcliente;}
@@ -49,6 +50,7 @@ class Factura
         float   _Litros;        ///CLASE SURTIDOR
         float   _Total;
         bool    _Paga;
+
 };
 
 #endif // FACTURA_H

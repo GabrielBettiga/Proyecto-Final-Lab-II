@@ -81,7 +81,7 @@ void Cuenta::cargar(){
     string coreo;
 
     cout << "NOMBRE     : ";
-    cin.ignore();
+    //cin.ignore(); ///VER SI SE SACA
     getline(cin, nom);
     cout << "DIRECCION  : ";
     getline(cin, dir);

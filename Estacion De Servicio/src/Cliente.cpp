@@ -57,7 +57,7 @@ bool Cliente::confirmarCtaCte(){
     cout << ">> ";
     cin >> cuenta;
 
-    while(cuenta != 1 || cuenta != 2){
+    while(true){
         switch (cuenta){
         case 1:
             setCuentaCorriente(true);

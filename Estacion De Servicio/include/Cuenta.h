@@ -35,7 +35,7 @@ class Cuenta
         Fecha	_Alta;
         Fecha	_Baja;
 
-    private:
+
 };
 
 #endif // CUENTA_H
