@@ -26,20 +26,20 @@ Fecha::Fecha (){
 
 ///METODOS
 ///========================================================================================================
-/*
-   void Fecha::Cargar (){
-   cout<< "Dia: ";
-   cin>> _Dia;
-   cout<<"Mes: ";
-   cin>>_Mes;
-   cout<<"Anio: ";
-   cin>>_Anio;
-   cout << "Hora: ";
-   cin >> _Horas;
-   cout << "Minutos: ";
-   cin >> _Minutos;
-   }
-*/
+
+void Fecha::FechaActual(){
+    time_t t;
+    struct tm *f;
+    time(&t);
+    f = localtime(&t);
+
+    _Dia = f->tm_mday;
+    _Mes = f->tm_mon + 1;
+    _Anio = f->tm_year + 1900;
+    _Horas = f->tm_hour;
+    _Minutos = f->tm_min;
+
+}
 
    void Fecha::Mostrar (){
     if(_Dia<10){cout<<"0"<<_Dia<<"/";}

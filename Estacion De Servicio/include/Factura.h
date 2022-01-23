@@ -18,7 +18,6 @@ class Factura
         bool Guardar();
         bool LeerDeDisco(int pos);
 
-
         int     getNumFac (){return _NumFac;}
         Fecha   getFecha (){return _Fecha;}
         int     getIDcliente (){return _IDcliente;}
@@ -30,7 +29,6 @@ class Factura
         float   getTotal (){return _Total;}
         bool    getPaga (){return _Paga;}
 
-
         /*void    setFecha (Fecha x){}
         void    setIDcliente (int IDcliente);
         void    setIDnaft (int IDnaf);
@@ -39,9 +37,6 @@ class Factura
         void    setLitros  (Flo);
         void    setTotal ();
         void    setPaga ();*/
-
-
-
 
     private:
         int     _NumFac;

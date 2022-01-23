@@ -25,7 +25,7 @@ class Fecha
        void setMinutos(int x){_Minutos=x;}
 
 
-       //void Cargar ();
+       void FechaActual();
        void Mostrar ();
 };
 
