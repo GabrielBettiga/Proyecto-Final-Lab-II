@@ -4,18 +4,13 @@
 #include <cstring>
 
 using namespace std;
-#include "TanqueManager.h"
-#include "Surtidor.h"
-#include "Nafta.h"
-
+#include "Cliente.h"
 
 int main(){
-    Fecha f;
+    Cliente a;
+    a.cargar();
+    a.mostrar();
 
-    f.Mostrar();
-    f.setAnio(2005);
-    cout << endl;
-    f.Mostrar();
 
 return 0;
 }

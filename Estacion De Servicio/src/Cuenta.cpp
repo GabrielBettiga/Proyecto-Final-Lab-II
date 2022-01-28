@@ -37,7 +37,7 @@ void Cuenta::setDireccion(string direccion){
     strcpy(_Direccion, direccion.c_str());
 }
 
-void Cuenta::setCUIT (int CUIT){
+void Cuenta::setCUIT (long long CUIT){
     if(CUIT > 0){
         _CUIT = CUIT;
     }
@@ -75,7 +75,8 @@ Fecha aux;
 }
 
 void Cuenta::cargar(){
-    int cuit, tel;
+    long long cuit;
+    int tel;
     string nom;
     string dir;
     string coreo;

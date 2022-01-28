@@ -17,7 +17,7 @@ class Cuenta
 
         void setNombre(string nombre);
         void setDireccion(string direccion);
-        void setCUIT (int CUIT);
+        void setCUIT (long long CUIT);
         void setTelefono(int telefono);
         void setEmail(string coreo);
         void setFechaAlta(Fecha alta);
@@ -27,13 +27,13 @@ class Cuenta
         void mostrar();
 
     protected:
-        char    _Nombre[50];        ///nombre o razon soial
-        char	_Direccion[50];
-        int     _CUIT;              ///ver si pasa a char o long long consultar
-        int 	_Telefono;          ///ver si pasa a char
-        char    _Email[50];
-        Fecha	_Alta;
-        Fecha	_Baja;
+        char        _Nombre[50];        ///nombre o razon soial
+        char	    _Direccion[50];
+        long long   _CUIT;              ///ver si pasa a char o long long consultar
+        int 	    _Telefono;          ///ver si pasa a char
+        char        _Email[50];
+        Fecha	    _Alta;
+        Fecha	    _Baja;
 
 
 };
