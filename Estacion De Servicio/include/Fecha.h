@@ -1,34 +1,29 @@
 #ifndef FECHA_H
 #define FECHA_H
 
+bool esCorrecta(int dia, int mes, int anio);
+bool esBisiesto(int a);
 
 class Fecha
 {
     protected:
-        int _Dia,_Mes,_Anio,_Horas,_Minutos;
+        int _dia,_mes,_anio,_horas,_minutos;
     public:
         Fecha();
+        int getDia () {return _dia;}
+        int getMes () {return _mes;}
+        int getAnio () {return _anio;}
+        int getHoras(){return _horas;}
+        int getMinutos(){return _minutos;}
 
-       int getDia () {return _Dia;}
-       void setDia (int x){_Dia=x;}
+        bool operator <= (Fecha aux);
+        void fechaSinDatos();
 
-       int getMes () {return _Mes;}
-       void setMes (int x) {_Mes=x;}
+        bool cambiarFecha(int dia, int mes, int anio);
 
-       int getAnio () {return _Anio;}
-       void setAnio (int x) {_Anio=x;}
-
-       int getHoras(){return _Horas;}
-       void setHoras(int x){_Horas=x;}
-
-       int getMinutos(){return _Minutos;}
-       void setMinutos(int x){_Minutos=x;}
-
-       bool operator <= (Fecha aux);
-       void fechaSinDatos();
-
-       void FechaActual();
-       void Mostrar ();
+        void FechaActual();
+        void MostrarFecha();
+        void MostrarHora();
 };
 
 #endif // FECHA_H

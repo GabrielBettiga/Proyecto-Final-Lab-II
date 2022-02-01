@@ -97,7 +97,7 @@ void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
 
 void Factura::Mostrar(){
     cout<<"Fecha: ";
-    _Fecha.Mostrar();
+    _Fecha.MostrarFecha();
     cout<<"Factura N: "<<_NumFac<<endl;
     cout<<"Surtidor N: "<<_IDsurtidor<<endl;
     cout<<"Codigo De Nafta: "<<_IDnaft<<endl;
