@@ -20,9 +20,9 @@ void Documento::setTipoDocumento(char tipo){
     _TipoDoc = tipo;
 }
 
-void Documento::mostrar(){
-    cout << "CLIENTE        : ";
+void Documento::mostrarDocumento(){
+    cout << "CLIENTE    : ";
     cout << _IDCliente << endl;
-    cout << "FECHA          : ";
+    cout << "FECHA      : ";
     _Fecha.MostrarFecha();
 }

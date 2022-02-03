@@ -36,6 +36,7 @@
 		</Compiler>
 		<Unit filename="include/Cliente.h" />
 		<Unit filename="include/Cuenta.h" />
+		<Unit filename="include/Documento.h" />
 		<Unit filename="include/Factura.h" />
 		<Unit filename="include/Fecha.h" />
 		<Unit filename="include/Nafta.h" />
@@ -45,6 +46,7 @@
 		<Unit filename="main.cpp" />
 		<Unit filename="src/Cliente.cpp" />
 		<Unit filename="src/Cuenta.cpp" />
+		<Unit filename="src/Documento.cpp" />
 		<Unit filename="src/Factura.cpp" />
 		<Unit filename="src/Fecha.cpp" />
 		<Unit filename="src/Nafta.cpp" />

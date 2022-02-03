@@ -16,7 +16,7 @@ class Documento
         Fecha getFecha(){return _Fecha;}
         char getTipoDocumento(){return _TipoDoc;}
 
-        void mostrar();
+        void mostrarDocumento();
 
     protected:
         int     _IDCliente;

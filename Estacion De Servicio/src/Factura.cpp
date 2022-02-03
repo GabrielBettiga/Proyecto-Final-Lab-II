@@ -5,13 +5,16 @@
 using namespace std;
 Factura::Factura()
 {
-    _IDcliente=0;
-    _IDnaft=0;
-    _NumFac=0;
-    _IDsurtidor=0;
-    _Litros=0;
-    _Precio=0;
-    _Total=0;
+    setTipoDocumento('F');
+
+    _NumFac = 0;
+    _IDnaft = 0;
+    _Precio = 0;
+    strcpy(_Descripcion, "SIN DATOS");
+    _IDsurtidor = 0;
+    _Litros = 0;
+    _Total = 0;
+    _Saldo = 0;
     _Paga=false;
 }
 
@@ -81,30 +84,31 @@ int Factura::CantFactura()
 
 
 void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
-    _Fecha.FechaActual();
-    _NumFac=CantFactura()+1;
-    _IDcliente=cli.getID();
-    _IDnaft=naf.getIDtipoDeNafta();
-    strcpy (_Descripcion,naf.getnombreDeCombustible());
-    _Precio=naf.getprecio();
-    _IDsurtidor=sur.getIDsurtidor();
-    _Litros=litros;
-    _Total=_Litros*_Precio;
-    _Paga=false; /// ANTES DE GUARDAR LA FACTURA CONSULTAR SI PAGO O NO
 
+    setCliente(cli);
+    _Fecha.FechaActual();
+
+    _NumFac = CantFactura()+1;
+    _IDnaft = naf.getIDtipoDeNafta();
+    _Precio = naf.getprecio();
+    strcpy (_Descripcion,naf.getnombreDeCombustible());
+    _IDsurtidor = sur.getIDsurtidor();
+    _Litros = litros;                                       ///VER XQ SE PASAN LOS LITROS SOLOS ????
+    _Saldo = _Total = _Litros * _Precio;
+    _Paga = false; /// ANTES DE GUARDAR LA FACTURA CONSULTAR SI PAGO O NO
 }
 
 
-void Factura::Mostrar(){
-    cout<<"Fecha: ";
-    _Fecha.MostrarFecha();
-    cout<<"Factura N: "<<_NumFac<<endl;
-    cout<<"Surtidor N: "<<_IDsurtidor<<endl;
-    cout<<"Codigo De Nafta: "<<_IDnaft<<endl;
-    cout<<"Producto: "<<_Descripcion<<endl;
-    cout<<"Precio Por Litro: $"<<_Precio<<endl;
-    cout<<"Litros: "<<_Litros<<endl;
-    cout<<"TOTAL FACTURA: $"<<_Total<<endl;
+void Factura::MostrarFactura(){
+    Documento::mostrarDocumento();
+    cout << "FATURA N   : " << _NumFac << endl;
+    cout << "SURTIDOR N : " << _IDsurtidor << endl;
+    cout << "COD. NAFTA : " << _IDnaft << endl;
+    cout << "PRODUCTO   : " << _Descripcion << endl;
+    cout << "$ X LITROS : $ " << _Precio << endl;
+    cout << "LITROS     : " << _Litros << endl;
+    cout << "TOTAL      : $ " << _Total << endl;
+    cout << "SALDO      : " << _Saldo << endl;
 
 
 }
