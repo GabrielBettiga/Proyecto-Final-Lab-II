@@ -102,3 +102,46 @@ bool Recibo::modificardeDisco(int pos){
         return false;                               ///SI NO SE ABRE NIEGA /// el mensaje fuera de la clase
     }
 }
+
+/// LOS VECTORES DE FACTURA Y IMPORTE SE CARGAN EN LA FUNCION ANTERIOR, ESTAN ATADOS AL TAMAÑO DEL VECTOR DEL RECIBO
+/// CON EL _TAMFAC.
+
+void Recibo::cargarRecibo(Cliente cli, int *fac, float *impo, float pago){
+    int i;
+    float total;
+
+    setCliente(cli);
+    _Fecha.FechaActual();
+
+    _numRecibo = CantRecibo() + 1;
+
+    for(i=0; i<_TAMFAC; i++){
+        _numFactura[i] = fac [i];
+        total += _importePagado [i] = impo [i];
+    }
+    _saldoRecibo = pago - total;
+
+    if(_saldoRecibo == 0){
+        _cerrado = true;
+    }
+}
+
+int Recibo::CantRecibo()
+{
+    int bytes, cant;
+
+    FILE *p;
+    p = fopen("Recibos.dat", "rb");
+
+    if (p == NULL)
+    {
+        return 0;
+    }
+
+    fseek(p, 0, SEEK_END);///Lo posiciona en el final
+    bytes = ftell(p);
+    fclose(p);
+    cant = bytes / sizeof(Recibo);
+    return cant;
+}
+

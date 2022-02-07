@@ -2,13 +2,17 @@
 #define RECIBO_H
 
 #include "Documento.h"
+#include "Cliente.h"
 
 class Recibo:public Documento
 {
     public:
 
         Recibo();
+        void cargarRecibo(Cliente cli, int *fac, float *impo, float pago);
         void mostrarRecibo();
+
+        int CantRecibo();
 
         bool Guardar();
         bool leerdeDisco(int pos);
