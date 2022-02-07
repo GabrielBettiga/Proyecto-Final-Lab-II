@@ -14,6 +14,7 @@ class Recibo:public Documento
         bool leerdeDisco(int pos);
         bool modificardeDisco(int pos);
 
+        int getTam(){return _TAMFAC;}
         int getNumRecibo(){return _numRecibo;}
         int * getNumFactura(){return _numFactura;}
         float * getImportePago(){return _importePagado;}

@@ -83,7 +83,8 @@ int Factura::CantFactura()
 }
 
 
-void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
+void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros)
+{
 
     setCliente(cli);
     _Fecha.FechaActual();
@@ -99,7 +100,8 @@ void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros){
 }
 
 
-void Factura::MostrarFactura(){
+void Factura::MostrarFactura()
+{
     Documento::mostrarDocumento();
     cout << "FATURA N   : " << _NumFac << endl;
     cout << "SURTIDOR N : " << _IDsurtidor << endl;
@@ -112,3 +114,69 @@ void Factura::MostrarFactura(){
 
 
 }
+
+void Factura::modificarSaldo (Recibo r)
+{
+    int i;
+    int pos = 0;
+
+    for(i=0; i<r.getTam(); i++)
+    {
+        if(r.getNumFactura()[i] != 0)
+        {
+            pos = buscarPorNumero(r.getNumFactura()[i]);
+                  if(pos > 0)
+            {
+                _Saldo -= r.getImportePago()[i];
+                if(_Saldo == 0)
+                {
+                    _Paga = true;
+                }
+
+                modificardeDisco(pos);
+            }
+        }
+    }
+}
+
+
+
+int Factura::buscarPorNumero (int num)
+{
+    int pos = 0;
+
+    while(LeerDeDisco(pos))
+    {
+        if(num == _NumFac)
+        {
+            return pos;
+        }
+        pos++;
+    }
+    return -1;
+}
+
+bool Factura::modificardeDisco(int pos)
+{
+    FILE *p;
+    p = fopen("Factura.dat","rb+");                   ///ABRE EL ARCHIVO DESDE 0 Y PUEDE ESCRIBIR Y MODIFICAR.
+
+    if (p == NULL)
+    {
+        return false;
+    }
+
+    fseek(p, sizeof(Factura)*pos, SEEK_SET);         ///posiciona el PUNTEOR / CABEZAL en la direcion que se le mando.
+
+    if(fwrite(this, sizeof(Factura), 1, p))
+    {
+        fclose(p);
+        return true;                                ///SI SE ABRE CONFIRMA /// el mensaje fuera de la clase
+    }
+    else
+    {
+        fclose(p);
+        return false;                               ///SI NO SE ABRE NIEGA /// el mensaje fuera de la clase
+    }
+}
+

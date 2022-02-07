@@ -5,6 +5,7 @@
 #include "Surtidor.h"
 #include "Cliente.h"
 #include "Documento.h"
+#include "Recibo.h"
 
 class Factura:public Documento
 {
@@ -16,6 +17,11 @@ class Factura:public Documento
         void MostrarFactura();
         bool Guardar();
         bool LeerDeDisco(int pos);
+        bool modificardeDisco(int pos);
+
+        int buscarPorNumero (int num);
+
+        void modificarSaldo (Recibo r);
 
         int     getNumFac (){return _NumFac;}
         int     getIDnaft (){return _IDnaft;}
