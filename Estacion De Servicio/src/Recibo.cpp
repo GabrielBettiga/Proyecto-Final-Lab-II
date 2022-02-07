@@ -11,9 +11,9 @@ Recibo::Recibo()
 
     for(int i=0; i<_TAMFAC; i++){
         _numFactura[i] = 0;
+        _importePagado [i] = 0;
     }
 
-    _importePagado = 0;
     _saldoRecibo = 0;
     _cerrado = false;
 }
@@ -28,8 +28,12 @@ void Recibo::mostrarRecibo(){
         cout << "FACTUR " << i+1 << " : ";
         cout << _numFactura[i] << endl;
         }
-    cout << "IMPORTE PAGADO: ";
-    cout << _importePagado << endl;
+    cout << "IMPORTE PAGADO: " << endl;
+    for(int i=0; i < _TAMFAC; i++){
+        cout << "FACTUR P " << i+1 << " : ";
+        cout << _importePagado[i] << endl;
+        }
+
     cout << "SALDO RECIBO : ";
     cout << _saldoRecibo << endl;
     cout << "ESTADO: ";

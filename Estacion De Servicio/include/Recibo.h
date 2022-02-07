@@ -16,7 +16,7 @@ class Recibo:public Documento
 
         int getNumRecibo(){return _numRecibo;}
         int * getNumFactura(){return _numFactura;}
-        float getImportePago(){return _importePagado;}
+        float * getImportePago(){return _importePagado;}
         float getSaldoRecibo(){return _saldoRecibo;}
         bool getEstadoRecibo(){return _cerrado;}
 
@@ -26,7 +26,7 @@ class Recibo:public Documento
         int     _numRecibo;
         static const int _TAMFAC = 5;       //MANEJA LA CANTIDAD DE FACTURAS Q PUEDE MANEJAR EL RECIBO/SE EXTIENDE A TODA LA CLASE
         int     _numFactura[_TAMFAC];
-        float   _importePagado;
+        float   _importePagado[_TAMFAC];
         float   _saldoRecibo;
         bool    _cerrado;
 };
