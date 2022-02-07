@@ -40,6 +40,7 @@
 		<Unit filename="include/Factura.h" />
 		<Unit filename="include/Fecha.h" />
 		<Unit filename="include/Nafta.h" />
+		<Unit filename="include/Recibo.h" />
 		<Unit filename="include/Surtidor.h" />
 		<Unit filename="include/Tanque.h" />
 		<Unit filename="include/TanqueManager.h" />
@@ -50,6 +51,7 @@
 		<Unit filename="src/Factura.cpp" />
 		<Unit filename="src/Fecha.cpp" />
 		<Unit filename="src/Nafta.cpp" />
+		<Unit filename="src/Recibo.cpp" />
 		<Unit filename="src/Surtidor.cpp" />
 		<Unit filename="src/Tanque.cpp" />
 		<Unit filename="src/TanqueManager.cpp" />
