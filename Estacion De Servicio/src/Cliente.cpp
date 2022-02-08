@@ -33,7 +33,7 @@ void Cliente::setCuentaCorriente(bool x){
     }
 }
 
-void Cliente::cargar(){
+void Cliente::cargarCliente(){
 
     _ID = cantClientes()+1;
     Cuenta::cargar();
@@ -77,10 +77,17 @@ bool Cliente::confirmarCtaCte(){
     return false;
 }
 
-void Cliente::mostrar(){
+void Cliente::mostrarCliente(){
     cout << "ID         : ";
     cout << _ID << endl;
     Cuenta::mostrar();
+    cout << "CTA. CTE.  : ";
+    if(_limiteCred){
+        cout << "SI. " << endl;
+    }
+    else {
+        cout << "NO. " << endl;
+    }
     cout << "LIM. CREDIT: ";
     cout << _limiteCred << endl;
 }

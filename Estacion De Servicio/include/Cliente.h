@@ -13,9 +13,9 @@ class Cliente:public Cuenta
         void setCuentaCorriente(bool x);
         void setLimiteCredito(float limite);
 
-        void cargar();
+        void cargarCliente();
         bool confirmarCtaCte();
-        void mostrar();
+        void mostrarCliente();
 
         int cantClientes();
         int BuscarIDCliente (int ID);
