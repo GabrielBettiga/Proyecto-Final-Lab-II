@@ -4,7 +4,7 @@
 ///===============================
 ///  FUNIONES PARA CLEINTES
 ///===============================
-void clientes();
+void menuClientes();
 void cargarCliente();
 void mostrarCliente();
 void mostrarTodosClientes();
@@ -13,6 +13,22 @@ Cliente datoModificar(Cliente cli);
 
 ///===============================
 ///  FUNIONES PARA VENTAS
+///===============================
+
+///===============================
+///  FUNIONES PARA COBRANZAS
+///===============================
+
+///===============================
+///  FUNIONES PARA COMUSTIBLES
+///===============================
+void menuCombustibles();
+void altaCombustible();
+void mostrarCombustible();
+void mostrarTodosCombustibles();
+void modificarCombustible();
+///===============================
+///  FUNIONES PARA INFORMES
 ///===============================
 
 

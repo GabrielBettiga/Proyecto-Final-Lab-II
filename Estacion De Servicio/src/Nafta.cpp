@@ -19,20 +19,61 @@ void Nafta::Cargar ()
     float precio;
 
     setIDtipoDeNafta (CantCombustible()+1);
-    cout<<"Ingrese Tipo De Combustible:";
+    cout<<" NOMBRE   : ";
     cin>> _nombreDeCombustible;
-    cout<<"Ingrese Precio:";
+    cout<<" PRECIO   : ";
     cin>> precio;
     setprecio (precio);
 }
 
 void Nafta::Mostrar ()
 {
-    cout<<"ID De Combustible:"<<_IDtipoDeNafta<<endl;
-    cout<<"Tipo De Combustible:"<<_nombreDeCombustible<<endl;
-    cout<<"Precio:"<<_precio<<endl;
+    cout<<" ID COMB  : "<<_IDtipoDeNafta<<endl;
+    cout<<" NOMBRE   : "<<_nombreDeCombustible<<endl;
+    cout<<" PRECIO   : "<<_precio<<endl;
 }
 
+void Nafta::modificarNafta(){
+    int opc;
+    string nombre;
+    float precio;
+
+    do{
+        // system("cls");
+        cout << " DATO A MODIFICAR  " << endl;
+        cout << "===================" << endl;
+        cout << " (1) NOMBRE.       " << endl;
+        cout << " (2) PRECIO.       " << endl;
+        cout << " (0) SALIR.        " << endl;
+        cout << "===================" << endl;
+        cout << " >> ";
+        cin >> opc;
+
+        switch(opc){
+        case 1:
+            system("cls");
+            cout << " NOMBRE : ";
+            cin >> nombre;
+            setnombreDeCombustible(nombre);
+            break;
+        case 2:
+            system("cls");
+            cout << " PRECIO : ";
+            cin >> precio;
+            setprecio(precio);
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << endl;
+            cout << " OPCION INCORECTA " << endl;
+            cout << endl;
+            system("pause");
+            system("cls");
+        }
+    }while(opc != 0);
+}
 
 
 

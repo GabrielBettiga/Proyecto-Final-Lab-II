@@ -2,20 +2,21 @@
 #include <cstring>
 using namespace std;
 #include "Funciones.h"
+#include "Nafta.h"
 
 ///===============================
 ///  FUNIONES PARA CLEINTES
 ///===============================
-void clientes(){
+void menuClientes(){
     int opc;
     do{
         cout << "       MENU CLIENTES       " << endl;
         cout << "===========================" << endl;
-        cout << " 1 > INGRESAR              " << endl;
-        cout << " 2 > MODIFICAR             " << endl;
-        cout << " 3 > MOSTRAR               " << endl;
-        cout << " 9 > MOSTRAR TODOS (BORAR OPC) " << endl; /// OPC PARA OCULTAR
-        cout << " 0 > VOLVER                " << endl;
+        cout << " (1)  INGRESAR              " << endl;
+        cout << " (2) MODIFICAR             " << endl;
+        cout << " (3) MOSTRAR               " << endl;
+        cout << " < 9 > MOSTRAR TODOS (BORAR OPC) " << endl; /// OPC PARA OCULTAR
+        cout << " (0) VOLVER                " << endl;
         cout << "===========================" << endl;
         cout << " >> ";
         cin >> opc;
@@ -234,4 +235,146 @@ Cliente datoModificar(Cliente cli){
 ///  FUNIONES PARA VENTAS
 ///===============================
 
+///===============================
+///  FUNIONES PARA COBRANZAS
+///===============================
 
+///===============================
+///  FUNIONES PARA COMUSTIBLES
+///===============================
+void menuCombustibles(){
+    int opc;
+    do {
+        cout << endl;
+        cout << "     COMBUSTIBLES          " << endl;
+        cout << "===========================" << endl;
+        cout << " (1) ALTA COMBUSTIBLE      " << endl;
+        cout << " (2) MODIFICAR COMBUSTIBLE " << endl;
+        cout << " (3) MOSTRAR COMBUSTIBLE   " << endl;
+        cout << " (4) INGRESAR COMBUSTIBLE  " << endl;
+        cout << " (5) TANQUES               " << endl;
+        cout << " < 9 > MOSTRAR TODOS LOS COMBUSTIBLES " << endl;
+        cout << " (0) SALIR                 " << endl;
+        cout << "===========================" << endl;
+        cout << " >> ";
+        cin >> opc;
+        system("cls");
+
+        switch(opc){
+        case 1:
+            altaCombustible();
+            break;
+        case 2:
+            modificarCombustible();
+            break;
+        case 3:
+            mostrarCombustible();
+            break;
+        case 9:
+            mostrarTodosCombustibles();
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+        }
+
+    }while(opc != 0);
+}
+
+void altaCombustible(){
+    int opc;
+    Nafta obj;
+    obj.Cargar();
+    do {
+        cout << endl;
+        cout << " ¿DESEA GUARDAR? " << endl;
+        cout << " (1) SI  / (2) NO          " << endl;
+        cout << " >> ";
+        cin >> opc;
+        if(opc == 1){
+            if(obj.GrabarEnDisco()){
+                cout << endl;
+                cout << " == GUARDADO == " << endl;
+                cout << endl;
+                system("pause");
+                system("cls");
+            }
+            else {
+                cout << " ERROR NO SE GUARDO " << endl;
+            }
+        }
+        else {
+            cout << " NO GUARDADO " << endl;
+        }
+    }while (opc < 0 || opc > 2);
+}
+
+void mostrarCombustible(){
+    int id;
+    Nafta obj;
+
+    system ("cls");
+
+    cout << endl;
+    cout << " ID COMUSTIBLE: ";
+    cin >> id;
+    cout << endl;
+
+    if(obj.BuscarID(id) >= 0){
+        obj.Mostrar();
+    }
+    else {
+        cout << " NO EXISTE EL ID DE COMBUSTIBLE " <<endl;
+    }
+}
+
+void mostrarTodosCombustibles(){
+    Nafta obj;
+    int pos = 0;
+
+    system("cls");
+    cout << endl;
+    cout << " LISTADO DE COMBSTIBLES: " << endl;
+    cout << endl;
+    while(obj.LeerDeDisco(pos++)){
+        obj.Mostrar();
+        cout << endl;
+    }
+}
+
+void modificarCombustible(){
+    int id, pos;
+    Nafta obj;
+
+    system ("cls");
+
+    cout << endl;
+    cout << " ID COMUSTIBLE: ";
+    cin >> id;
+    cout << endl;
+
+    if((pos = obj.BuscarID(id)) >= 0){
+        obj.Mostrar();
+        cout << endl;
+        obj.modificarNafta();
+        if(obj.ModificarEnDisco(pos)){
+            cout << " MODIFICACION GUARDAD " << endl;
+        }
+        else {
+            cout << " NO SE GUARDARON LOS CAMBIOS " << endl;
+        }
+    }
+    else {
+        cout << " NO EXISTE EL ID DE COMBUSTIBLE " <<endl;
+    }
+}
+
+///===============================
+///  FUNIONES PARA INFORMES
+///===============================

@@ -24,32 +24,24 @@ public:
     {
         return _IDtipoDeNafta;
     }
-    void setIDtipoDeNafta (int x)
-    {
-        int pos=0;
-        while (LeerDeDisco(pos))
-        {
-            if(x!= _IDtipoDeNafta)
-            {
-                _IDtipoDeNafta=x;
-            }
-        }
+    void setIDtipoDeNafta (int x){
+        _IDtipoDeNafta = x;
     }
 
     char* getnombreDeCombustible ()
     {
         return _nombreDeCombustible;
     }
-    void setnombreDeCombustible (char *x)
+    void setnombreDeCombustible (string x)
     {
-        strcpy(_nombreDeCombustible,x);
+        strcpy(_nombreDeCombustible, x.c_str());
     }
 
     float getprecio ()
     {
         return _precio;
     }
-    void setprecio(int x)
+    void setprecio(float x)
     {
         if(x>0)
         {
@@ -65,6 +57,7 @@ public:
 
     void Cargar ();
     void Mostrar ();
+    void modificarNafta();
 
     bool GrabarEnDisco ();
     bool LeerDeDisco (int pos);
