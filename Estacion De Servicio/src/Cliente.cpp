@@ -25,12 +25,7 @@ void Cliente::setLimiteCredito(float limite){
 }
 
 void Cliente::setCuentaCorriente(bool x){
-    if(x){
-        _cuentaCorriente = true;
-    }
-    else {
-        _cuentaCorriente = false;
-    }
+    _cuentaCorriente = x;
 }
 
 void Cliente::cargarCliente(){
@@ -82,7 +77,7 @@ void Cliente::mostrarCliente(){
     cout << _ID << endl;
     Cuenta::mostrar();
     cout << "CTA. CTE.  : ";
-    if(_limiteCred){
+    if(_cuentaCorriente){
         cout << "SI. " << endl;
     }
     else {

@@ -3,8 +3,9 @@
 using namespace std;
 #include "Funciones.h"
 
-
-
+///===============================
+///  FUNIONES PARA CLEINTES
+///===============================
 void clientes(){
     int opc;
     do{
@@ -53,7 +54,7 @@ void cargarCliente(){
     obj.cargarCliente();
     do {
         cout << endl;
-        cout << " DESEA GUARDAR EL CLIETNE. " << endl;
+        cout << " DESEA GUARDAR EL CLIENTE. " << endl;
         cout << " (1) SI  / (2) NO          " << endl;
         cout << " >> ";
         cin >> opc;
@@ -88,6 +89,7 @@ void mostrarCliente(){
     if(obj.BuscarIDCliente(num) >= 0){
         cout << endl;
         obj.mostrarCliente();
+        cout << endl;
     }
     else {
         cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
@@ -111,11 +113,12 @@ void modificarCliente(){
     Cliente obj;
 
     system ("cls");
-
-    cout << " NUMERO DE CLIENTE : " << endl;
+    cout << endl;
+    cout << " NUMERO DE CLIENTE : ";
     cin >> num;
 
-    if(pos = obj.BuscarIDCliente(num) >= 0){
+    if((pos = obj.BuscarIDCliente(num)) >= 0){
+
             datoModificar(obj).modificardeDisco(pos);
     }
     else {
@@ -129,18 +132,22 @@ Cliente datoModificar(Cliente cli){
     float importe;
     string cambiar;
     do{
+        cout << endl;
         cli.mostrarCliente();
         cout << endl;
-        cout << "  DATO A MODIFICA: " << endl;
-        cout << " (1) NOMBRE. " << endl;
-        cout << " (2) DIRECCION. " << endl;
-        cout << " (3) CUIT. " << endl;
-        cout << " (4) TELEFONO.  " << endl;
-        cout << " (5) CORREO. " << endl;
-        cout << " (6) CUENTA CORRIENTE. " << endl;
-        cout << " (7) LIMITE DE CREDITO. " << endl;
-        cout << "========================" << endl;
-        cout << " (0) SALIR. " << endl;
+        cout << "===========================" << endl;
+        cout << "SELECCIONE DATO A MODIFICAR" << endl;
+        cout << "===========================" << endl;
+        cout << " (1) NOMBRE.               " << endl;
+        cout << " (2) DIRECCION.            " << endl;
+        cout << " (3) CUIT.                 " << endl;
+        cout << " (4) TELEFONO.             " << endl;
+        cout << " (5) CORREO.               " << endl;
+        cout << " (6) CUENTA CORRIENTE.     " << endl;
+        cout << " (7) LIMITE DE CREDITO.    " << endl;
+        cout << "===========================" << endl;
+        cout << " (0) SALIR.                " << endl;
+        cout << endl;
         cout << " OPC >> ";
         cin >> opc;
 
@@ -183,7 +190,7 @@ Cliente datoModificar(Cliente cli){
             else {
                 cout << endl;
                 cout << " == CTA CTE ACTIVA == " << endl;
-                cli.setCuentaCorriente(false);
+                cli.setCuentaCorriente(true);
             }
             break;
         case 7:
@@ -206,3 +213,9 @@ Cliente datoModificar(Cliente cli){
     }while (opc != 0);
 
 }
+
+///===============================
+///  FUNIONES PARA VENTAS
+///===============================
+
+

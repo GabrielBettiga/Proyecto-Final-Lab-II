@@ -7,15 +7,15 @@ using namespace std;
 int main(){
     while (true){
         int opc;
-        cout << "       MENU RINCIPAL       " << endl;
+        cout << "      MENU PRINCIPAL       " << endl;
         cout << "===========================" << endl;
         cout << " 1 > CLIENTES              " << endl;
         cout << " 2 > VENTAS                " << endl;
-        cout << " 3 > COBRNZAS              " << endl;
+        cout << " 3 > COBRANZAS             " << endl;
         cout << " 4 > COMBUSTIBLES          " << endl;
         cout << " 5 > INFORMES              " << endl;
         cout << "===========================" << endl;
-        cout << " 0 > SALI                  " << endl;
+        cout << " 0 > SALIR                 " << endl;
         cout << " >> ";
         cin >> opc;
         system ("cls");
@@ -25,6 +25,7 @@ int main(){
                 clientes();
                 break;
             case 2:
+                //ventas();
                 break;
             case 3:
                 break;
@@ -38,7 +39,7 @@ int main(){
                 break;
             default:
                 cout << "====================" << endl;
-                cout << "  OPCION INCORECTA  " << endl;
+                cout << " OPCION INCORRECTA  " << endl;
                 cout << "====================" << endl;
                 system("pause");
                 system ("cls");

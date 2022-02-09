@@ -11,4 +11,9 @@ void mostrarTodosClientes();
 void modificarCliente();
 Cliente datoModificar(Cliente cli);
 
+///===============================
+///  FUNIONES PARA VENTAS
+///===============================
+
+
 #endif // FUNCIONES_H_INCLUDED
