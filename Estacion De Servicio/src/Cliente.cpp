@@ -15,6 +15,10 @@ float Cliente::getLimiteCredito(){
     return _limiteCred;
 }
 
+bool Cliente::getEstadoCliente(){
+    return _activo;
+}
+
 void Cliente::setLimiteCredito(float limite){
     if(limite >= 0){
         _limiteCred = limite;
@@ -28,9 +32,19 @@ void Cliente::setCuentaCorriente(bool x){
     _cuentaCorriente = x;
 }
 
+void Cliente::setEstadoCliete(bool activo){
+    if(activo){
+        _activo = true;
+    }
+    else {
+        _activo = false;
+        Cuenta::_Baja.FechaActual();
+    }
+}
 void Cliente::cargarCliente(){
 
     _ID = cantClientes()+1;
+    _activo = true;
     Cuenta::cargar();
     cout << "CUENTA CORRIENTE: SI (1) / NO (2)" << endl;
 
@@ -75,6 +89,13 @@ bool Cliente::confirmarCtaCte(){
 void Cliente::mostrarCliente(){
     cout << "ID         : ";
     cout << _ID << endl;
+    cout << "ESTADO     : ";
+    if(_activo){
+        cout << "ACTIVO. " << endl;
+    }
+    else {
+        cout << "INACTIVA. " << endl;
+    }
     Cuenta::mostrar();
     cout << "CTA. CTE.  : ";
     if(_cuentaCorriente){

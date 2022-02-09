@@ -9,9 +9,11 @@ class Cliente:public Cuenta
         int getID();
         bool getCuentaCorriente();
         float getLimiteCredito();
+        bool getEstadoCliente();
 
         void setCuentaCorriente(bool x);
         void setLimiteCredito(float limite);
+        void setEstadoCliete(bool activo);
 
         void cargarCliente();
         bool confirmarCtaCte();
@@ -30,6 +32,7 @@ class Cliente:public Cuenta
         int     _ID;
         bool    _cuentaCorriente;
         float   _limiteCred;
+        bool    _activo;
 };
 
 #endif // CLIENTE_H

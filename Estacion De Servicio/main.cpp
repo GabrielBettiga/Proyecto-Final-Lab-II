@@ -25,13 +25,16 @@ int main(){
                 clientes();
                 break;
             case 2:
-                //ventas();
+                ///VENTAS
                 break;
             case 3:
+                /// COBRANZAS
                 break;
             case 4:
+                /// COMBUSTIBLES
                 break;
             case 5:
+                /// INFORMES
                 break;
             case 0:
                 cout << "== FIN ==" << endl;

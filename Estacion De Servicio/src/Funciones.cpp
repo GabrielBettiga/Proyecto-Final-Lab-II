@@ -145,6 +145,7 @@ Cliente datoModificar(Cliente cli){
         cout << " (5) CORREO.               " << endl;
         cout << " (6) CUENTA CORRIENTE.     " << endl;
         cout << " (7) LIMITE DE CREDITO.    " << endl;
+        cout << " (8) ACTIVAR / DESACTIVAR. " << endl;
         cout << "===========================" << endl;
         cout << " (0) SALIR.                " << endl;
         cout << endl;
@@ -198,7 +199,23 @@ Cliente datoModificar(Cliente cli){
             cin >> importe;
             cli.setLimiteCredito(importe);
             break;
+        case 8:
+            cout << " CLIENTE: " << endl;
+            if(cli.getEstadoCliente()){
+                cout << " == DESACTIVADO == " << endl;
+                cli.setEstadoCliete(false);
+                system("pause");
+                system ("cls");
+            }
+            else {
+                cout << " == ACTIVADO == " << endl;
+                cli.setEstadoCliete(true);
+                system("pause");
+                system ("cls");
+            }
+            break;
         case 0:
+            system ("cls");
             return cli;
             break;
         default:
@@ -211,7 +228,6 @@ Cliente datoModificar(Cliente cli){
         }
 
     }while (opc != 0);
-
 }
 
 ///===============================
