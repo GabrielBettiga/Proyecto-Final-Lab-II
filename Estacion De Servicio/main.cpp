@@ -22,7 +22,7 @@ int main(){
 
         switch(opc){
             case 1:
-                clientes();
+                menuClientes();
                 break;
             case 2:
                 ///VENTAS
@@ -31,7 +31,7 @@ int main(){
                 /// COBRANZAS
                 break;
             case 4:
-                /// COMBUSTIBLES
+                menuCombustibles();
                 break;
             case 5:
                 /// INFORMES
