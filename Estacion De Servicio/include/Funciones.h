@@ -1,6 +1,11 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
 #include "Cliente.h"
+#include "Nafta.h"
+
+bool configuracion();
+bool controlBanderas(const int tam, bool *vec);
+
 ///===============================
 ///  FUNIONES PARA CLEINTES
 ///===============================
@@ -14,7 +19,7 @@ Cliente datoModificar(Cliente cli);
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================
-
+void venta();
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================

@@ -136,6 +136,17 @@ int Cliente::BuscarIDCliente (int ID){
     return -1;
 }
 
+int Cliente::buscarClientexCUIT (int cuit){
+    int pos = 0;
+
+    while(leerdeDisco(pos++)){
+        if(_CUIT == cuit){
+            return pos -1;
+        }
+    }
+    return -1;
+}
+
 bool Cliente::Guardar(){
     FILE *p;
     p = fopen("Clientes.dat", "ab");                  ///ABRE EL ARCHIVO DESDE EL FINAL, SI NO EXISTE LO CREA.

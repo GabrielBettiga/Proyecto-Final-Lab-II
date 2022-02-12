@@ -2,7 +2,80 @@
 #include <cstring>
 using namespace std;
 #include "Funciones.h"
-#include "Nafta.h"
+
+bool configuracion(){
+    Cliente cli;
+    const int TAM = 3;
+    bool bandera, vecBand[TAM];
+    int opc;
+
+    if(bandera != true){
+
+        do{
+            system("cls");
+            cout << endl;
+            cout << "        CONFIGURACION          " << endl;
+            cout << "===============================" << endl;
+            cout << " (1) CANTIDAD DE TANQUES       " << endl;
+            cout << " (2) CANTIDAD DE SURTIDORES    " << endl;
+            cout << " (3) CONSUMIDOR FINAL          " << endl;
+            cout << " (0) SALIR                     " << endl;
+            cout << "===============================" << endl;
+            cout << " OPC >> ";
+            cin >> opc;
+
+            switch(opc){
+                case 1:
+                    /// FUNCION PARA CONFIRMAR LA CANTIDAD DE TANQUES
+                    cout << " TANQUES " << endl;
+                    vecBand[0] = true;
+                    system("pause");
+                    break;
+                case 2:
+                    /// FUNCION CANTIDAD SURTIDORES
+                    cout << " SURTIDORES " << endl;
+                    vecBand[1] = true;
+                    system("pause");
+                    break;
+                case 3:
+                    /// FUNCION CARGAR CONSUMIDOR FINAL
+                    system("cls");
+                    cout << endl;
+                    cout << " EL CONSUMIDOR FINAL SE CARGARA CON LOS SIGUETES DATOS: " << endl;
+                    vecBand[2] = true;
+                    system("pause");
+                    break;
+                case 0:
+                    return controlBanderas(TAM, vecBand);
+                    break;
+                default:
+                    cout << "====================" << endl;
+                    cout << "  OPCION INCORECTA  " << endl;
+                    cout << "====================" << endl;
+                    system("pause");
+                    system ("cls");
+                    break;
+            }
+        }while(opc != 0);
+        ///bandera = true;
+    }
+    else {
+
+    }
+}
+
+bool controlBanderas(int TAM, bool *vecBand){
+    bool b = true;
+    int i;
+
+    for(i=0; i<TAM; i++){
+        if(vecBand[i] == false){
+            b = false;
+        }
+    }
+    return b;
+}
+
 
 ///===============================
 ///  FUNIONES PARA CLEINTES
@@ -234,7 +307,28 @@ Cliente datoModificar(Cliente cli){
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================
+void venta(){
+    int opc;
+    Cliente cli;
 
+    do{
+        system("cls");
+        cout << endl;
+        cout << " CLINETE O CONSUMIDOR FINAL    " << endl;
+        cout << " ============================= " << endl;
+        cout << " (1) SELECCIONAR CLIENTE       " << endl;
+        cout << " (2) CONSUMIDOR FINAL          " << endl;
+        cout << " ============================= " << endl;
+        cout << " (0) CANCELAR                  " << endl;
+        cout << endl;
+        cout << " OPCION >> ";
+        cin >> opc;
+
+    }while(opc != 0);
+
+
+
+}
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================

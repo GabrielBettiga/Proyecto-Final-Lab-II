@@ -5,8 +5,14 @@ using namespace std;
 
 
 int main(){
+
+    if(configuracion() != true){
+        return 0;
+    }
+
     while (true){
         int opc;
+        system ("cls");
         cout << "      MENU PRINCIPAL       " << endl;
         cout << "===========================" << endl;
         cout << " 1 > CLIENTES              " << endl;
@@ -25,7 +31,7 @@ int main(){
                 menuClientes();
                 break;
             case 2:
-                ///VENTAS
+                venta();
                 break;
             case 3:
                 /// COBRANZAS
