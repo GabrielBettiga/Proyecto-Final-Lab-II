@@ -22,6 +22,24 @@ Surtidor::Surtidor(int IDsurtidor)
 
 ///DISCO
 ///========================================================================================================
+bool Surtidor::crearArchivo(){
+    FILE *p;
+    bool Escribio;
+
+    p=fopen("Surtidores.dat","wb");
+    if (p==NULL)
+    {
+        cout<<"NO SE PUDO ABRIR/CREAR EL ARCHIVO"<<endl;
+        return false;
+    }
+
+    Escribio=fwrite(this,sizeof(Surtidor),1,p);
+
+    fclose (p);
+
+    return Escribio;
+
+}
 
 bool Surtidor::GrabarEnDisco()
 {

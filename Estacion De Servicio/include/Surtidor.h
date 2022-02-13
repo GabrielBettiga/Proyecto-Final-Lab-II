@@ -28,6 +28,8 @@ public:
     bool Cargar(int IDnafta, float Litros);
     float CombertirLitros (int IDnafta, float Pesos);
     void CrearSurtidor ();
+
+    bool crearArchivo();
     bool GrabarEnDisco ();
     bool LeerDeDisco (int pos);
     bool ModificarEnDisco (int pos);

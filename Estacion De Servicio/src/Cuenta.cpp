@@ -82,7 +82,7 @@ void Cuenta::cargar(){
     string coreo;
 
     cout << "NOMBRE     : ";
-    //cin.ignore(); ///VER SI SE SACA
+    cin.ignore();
     getline(cin, nom);
     cout << "DIRECCION  : ";
     getline(cin, dir);
@@ -90,7 +90,7 @@ void Cuenta::cargar(){
     cin >> cuit;
     cout << "TELEFONO   : ";
     cin >> tel;
-    cout << "COREO      : ";
+    cout << "CORREO     : ";
     cin.ignore();
     getline(cin, coreo);
 
@@ -111,7 +111,7 @@ void Cuenta::mostrar(){
     cout << _CUIT << endl;
     cout << "TELEFONO   : ";
     cout << _Telefono << endl;
-    cout << "COREO      : ";
+    cout << "CORREO     : ";
     cout << _Email << endl;
 
 }

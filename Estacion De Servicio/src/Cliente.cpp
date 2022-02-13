@@ -2,7 +2,12 @@
 using namespace std;
 #include "Cliente.h"
 
-
+Cliente::Cliente(){
+    _ID = 0;
+    _cuentaCorriente = false;
+    _limiteCred = 0;
+    _activo = true;
+}
 int Cliente::getID(){
     return _ID;
 }
@@ -15,6 +20,10 @@ float Cliente::getLimiteCredito(){
     return _limiteCred;
 }
 
+bool Cliente::getEstadoCliente(){
+    return _activo;
+}
+
 void Cliente::setLimiteCredito(float limite){
     if(limite >= 0){
         _limiteCred = limite;
@@ -24,18 +33,27 @@ void Cliente::setLimiteCredito(float limite){
     }
 }
 
-void Cliente::setCuentaCorriente(bool x){
-    if(x){
-        _cuentaCorriente = true;
-    }
-    else {
-        _cuentaCorriente = false;
-    }
+void Cliente::setID(int id){
+    _ID = id;
 }
 
-void Cliente::cargar(){
+void Cliente::setCuentaCorriente(bool x){
+    _cuentaCorriente = x;
+}
+
+void Cliente::setEstadoCliete(bool activo){
+    if(activo){
+        _activo = true;
+    }
+    else {
+        _activo = false;
+        Cuenta::_Baja.FechaActual();
+    }
+}
+void Cliente::cargarCliente(){
 
     _ID = cantClientes()+1;
+    _activo = true;
     Cuenta::cargar();
     cout << "CUENTA CORRIENTE: SI (1) / NO (2)" << endl;
 
@@ -77,10 +95,24 @@ bool Cliente::confirmarCtaCte(){
     return false;
 }
 
-void Cliente::mostrar(){
+void Cliente::mostrarCliente(){
     cout << "ID         : ";
     cout << _ID << endl;
+    cout << "ESTADO     : ";
+    if(_activo){
+        cout << "ACTIVO. " << endl;
+    }
+    else {
+        cout << "INACTIVA. " << endl;
+    }
     Cuenta::mostrar();
+    cout << "CTA. CTE.  : ";
+    if(_cuentaCorriente){
+        cout << "SI. " << endl;
+    }
+    else {
+        cout << "NO. " << endl;
+    }
     cout << "LIM. CREDIT: ";
     cout << _limiteCred << endl;
 }
@@ -112,6 +144,35 @@ int Cliente::BuscarIDCliente (int ID){
     }
     return -1;
 }
+
+int Cliente::buscarClientexCUIT (int cuit){
+    int pos = 0;
+
+    while(leerdeDisco(pos++)){
+        if(_CUIT == cuit){
+            return pos -1;
+        }
+    }
+    return -1;
+}
+
+bool Cliente::crearArchivo(){
+    FILE *p;
+    p = fopen("Clientes.dat", "wb");                  ///DESTRUYE E ARCHIVO, LO CREA SI NO EXISTE
+    if(p == NULL){
+        return false;
+    }
+
+    if(fwrite(this, sizeof(Cliente), 1, p)){         ///ESCRIBE EL ARCHIVO.
+        fclose(p);
+        return true;                                ///SI SE GUARDA CONFIRMA /// el mensaje fuera de la clase
+    }
+    else{
+        fclose(p);
+        return false;                               ///SI NO SE GUARDA NIEGA /// el mensaje fuera de la clase
+    }
+}
+
 
 bool Cliente::Guardar(){
     FILE *p;
