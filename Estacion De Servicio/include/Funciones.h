@@ -8,6 +8,8 @@
 bool archivos(const int TAM, bool *vec);
 bool configuracion();
 bool controlBanderas(const int T, bool *vec);
+bool cargarTanques();
+bool cargarSurtidores();
 bool cargaConsumidorFinal();
 
 ///===============================
@@ -36,6 +38,7 @@ void altaCombustible();
 void mostrarCombustible();
 void mostrarTodosCombustibles();
 void modificarCombustible();
+void menuTanques();
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================

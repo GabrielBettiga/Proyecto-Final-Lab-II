@@ -50,22 +50,26 @@ float TanqueManager::DisponibleAllenarxNafta(int IDNafta){
             cantidad += _aux.getDisponible();
         }
     }
-    return cantidad;
+    return cantidad;                                    ////LA CANTIDAD DE LITROS Q PUEDE ENTRAR X NAFTA EN LOS TANQUES
 }
 
 void TanqueManager::DistribuirNaftaTanques(int IDNafta,float litros){
+
+    ///CARGA LOS TANQUES A SU MAXIMA CAP X COMBUSTIBE, DESCONTANDO DEL TOTAL DE LITROS ENVIDOS A CARGAR.
+    ///LITROS ES EL DESACUMULADOR
+
     int pos = 0;
     while (leerdeDisco(pos++)){
         if( _aux == IDNafta && litros > 0){             /// == OPERADOR SOBRECARGA EN CLASE TANQUE
 
-            if(_aux.getDisponible() <= litros){
+            if(_aux.getDisponible() <= litros){         ///CONSULTA EL DISPNIBLE DEL TANQUE
 
                 float cargo = 0;
-                cargo = _aux.getDisponible();
+                cargo = _aux.getDisponible();           ///GUARDAMOS LO Q LE VAMOS A DESCONTAR A LITROS
 
-                if(_aux.Llenar(_aux.getDisponible())){
-                    litros = litros - cargo;
-                    modificardeDisco(pos-1);
+                if(_aux.Llenar(_aux.getDisponible())){  ///LLENAMOS EL TANQUE CON EL Q ESTAMOS TRABAJANDO
+                    litros = litros - cargo;            ///DESCONTAMOS DE LISTROS
+                    modificardeDisco(pos-1);            ///GUARDAMOS X TANQUE
                 }
             }
             else {
@@ -132,6 +136,13 @@ int TanqueManager::BuscarIDtanque (int IDTanque){
     return -1;
 }
 
+void TanqueManager::setCapacidad(float litros){
+    _aux.setCapacidadMaxima(litros);
+}
+
+void TanqueManager::setID (int id){
+    _aux.setID(id);
+}
 ///USUARIO
 ///=================
 
@@ -169,6 +180,23 @@ void TanqueManager::Mostrar(){
 ///=================================================
 /// ARCHIVOS
 ///=================================================
+bool TanqueManager::crearArchivo(){
+    FILE *p;
+    p = fopen("Tanques.dat", "wb");                  ///DESTRUYE E ARCHIVO, LO CREA SI NO EXISTE
+
+    if(p == NULL){
+        return false;
+    }
+
+    if(fwrite(this, sizeof(Tanque), 1, p)){         ///ESCRIBE EL ARCHIVO.
+        fclose(p);
+        return true;                                ///SI SE GUARDA CONFIRMA /// el mensaje fuera de la clase
+    }
+    else{
+        fclose(p);
+        return false;                               ///SI NO SE GUARDA NIEGA /// el mensaje fuera de la clase
+    }
+}
 bool TanqueManager::Guardar(){
     FILE *p;
     p = fopen("Tanques.dat", "ab");                  ///ABRE EL ARCHIVO DESDE EL FINAL, SI NO EXISTE LO CREA.

@@ -11,24 +11,26 @@ class TanqueManager
         int CantTanques();
 
         bool CargarTanques(int IDNafta, float litros);
-        float DisponibleAllenarxNafta(int IDNafta);
+        float DisponibleAllenarxNafta(int IDNafta);             /// CAPACIDAD A GUARDAD
         void DistribuirNaftaTanques(int IDNafta, float litros);
 
         bool Surtidor (int IDNafta, float litros);
-        float DisponiblexCombustible(int IDNafta);
+        float DisponiblexCombustible(int IDNafta);              /// LO Q TENEMOS X COMBUSTIBLE
         void AcomodarTanque (int IDNafta,float litros);
 
         int BuscarIDtanque (int IDTanque);
+        void setCapacidad(float litros);
+        void setID (int id);
 
         ///USUARIO
         ///=================
         void Cargar();
         void Mostrar();
 
+        bool crearArchivo();
         bool Guardar();
         bool leerdeDisco(int pos);
         bool modificardeDisco(int pos);
-
 
     protected:
 

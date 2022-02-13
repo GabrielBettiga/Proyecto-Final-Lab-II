@@ -28,21 +28,17 @@ bool configuracion(){
             switch(opc){
                 case 1:
                     /// FUNCION PARA CONFIRMAR LA CANTIDAD DE TANQUES
-                    cout << " TANQUES " << endl;
-                    vecBand[0] = true;
+                    vecBand[0] = cargarTanques();
                     system("pause");
                     break;
                 case 2:
                     /// FUNCION CANTIDAD SURTIDORES
                     cout << " SURTIDORES " << endl;
-                    vecBand[1] = true;
-                    system("pause");
+                    vecBand[1] = cargarSurtidores();
                     break;
                 case 3:
                     /// FUNCION CARGAR CONSUMIDOR FINAL
-
                     vecBand[2] = cargaConsumidorFinal();
-                    ///vecBand[2] = true;
                     system("pause");
                     break;
                 case 0:
@@ -68,8 +64,8 @@ bool archivos(const int TAM, bool *vecBand){
     Cliente cli;
     TanqueManager tan;
 
-    vecBand[0] = true;//tan.CantTanques();
-    vecBand[1] = true; //sur.CantSurtidor();
+    vecBand[0] = tan.CantTanques();
+    vecBand[1] = sur.CantSurtidor();
     vecBand[2] = cli.cantClientes();
 
     for(i=0; i<TAM; i++){
@@ -90,6 +86,67 @@ bool controlBanderas(const int TAM, bool *vecBand){
         }
     }
     return b;
+}
+
+bool cargarTanques(){
+    int cant, i;
+
+    system ("cls");
+    cout << endl;
+    cout << "===============================" << endl;
+    cout << "           TANQUES             " << endl;
+    cout << "===============================" << endl;
+    cout << " ¿CANTIDAD DE TANQUES?         " << endl;
+    cout << " >> ";
+    cin >> cant;
+    system("cls");
+
+    for (i=0;i <cant; i++){
+        float litros;
+        TanqueManager aux;
+
+        cout << " CAPACIDAD DEL TANQUE N° " << i+1 << " : ";
+        cin >> litros;
+
+        aux.CrearTanque();
+        aux.setCapacidad(litros);
+
+        if(i==0) {
+           aux.setID(1);
+           aux.crearArchivo();
+        }
+        else{
+            aux.Guardar();
+        }
+    }
+    return true;
+}
+
+bool cargarSurtidores(){
+    int cant, i;
+    Surtidor sur;
+
+    system ("cls");
+    cout << endl;
+    cout << "===============================" << endl;
+    cout << "           SURTIDORES          " << endl;
+    cout << "===============================" << endl;
+    cout << " ¿CANTIDAD DE SURTIDORES?      " << endl;
+    cout << " >> ";
+    cin >> cant;
+    system("cls");
+
+    for(i=0; i<cant; i++){
+        if(i==0){
+            sur.setIDsurtidor(1);
+            sur.crearArchivo();
+        }
+        else {
+            sur.CrearSurtidor();
+            sur.GrabarEnDisco();
+        }
+    }
+    return true;
 }
 
 bool cargaConsumidorFinal(){
@@ -440,6 +497,9 @@ void menuCombustibles(){
         case 3:
             mostrarCombustible();
             break;
+        case 5:
+            menuTanques();
+            break;
         case 9:
             mostrarTodosCombustibles();
             break;
@@ -502,6 +562,26 @@ void mostrarCombustible(){
     else {
         cout << " NO EXISTE EL ID DE COMBUSTIBLE " <<endl;
     }
+}
+
+void menuTanques(){
+    TanqueManager aux;
+    int pos = 0;
+
+    while(aux.leerdeDisco(pos++)){
+        aux.Mostrar();
+        cout << endl;
+    }
+
+    Surtidor sur;
+    pos = 0;
+    cout << endl;
+    cout << " CANTIDAD DE SURTIDORES : " << sur.CantSurtidor() << endl;
+    while(sur.LeerDeDisco(pos++)){
+
+        cout << " SURTIDOR : " << sur.getIDsurtidor() << endl;
+    }
+
 }
 
 void mostrarTodosCombustibles(){
