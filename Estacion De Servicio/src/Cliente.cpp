@@ -2,7 +2,12 @@
 using namespace std;
 #include "Cliente.h"
 
-
+Cliente::Cliente(){
+    _ID = 0;
+    _cuentaCorriente = false;
+    _limiteCred = 0;
+    _activo = true;
+}
 int Cliente::getID(){
     return _ID;
 }
@@ -26,6 +31,10 @@ void Cliente::setLimiteCredito(float limite){
     else {
         _limiteCred = 0;
     }
+}
+
+void Cliente::setID(int id){
+    _ID = id;
 }
 
 void Cliente::setCuentaCorriente(bool x){
@@ -146,6 +155,24 @@ int Cliente::buscarClientexCUIT (int cuit){
     }
     return -1;
 }
+
+bool Cliente::crearArchivo(){
+    FILE *p;
+    p = fopen("Clientes.dat", "wb");                  ///DESTRUYE E ARCHIVO, LO CREA SI NO EXISTE
+    if(p == NULL){
+        return false;
+    }
+
+    if(fwrite(this, sizeof(Cliente), 1, p)){         ///ESCRIBE EL ARCHIVO.
+        fclose(p);
+        return true;                                ///SI SE GUARDA CONFIRMA /// el mensaje fuera de la clase
+    }
+    else{
+        fclose(p);
+        return false;                               ///SI NO SE GUARDA NIEGA /// el mensaje fuera de la clase
+    }
+}
+
 
 bool Cliente::Guardar(){
     FILE *p;

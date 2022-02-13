@@ -6,11 +6,14 @@ class Cliente:public Cuenta
 {
     public:
 
+        Cliente();
+
         int getID();
         bool getCuentaCorriente();
         float getLimiteCredito();
         bool getEstadoCliente();
 
+        void setID(int id);
         void setCuentaCorriente(bool x);
         void setLimiteCredito(float limite);
         void setEstadoCliete(bool activo);
@@ -18,11 +21,11 @@ class Cliente:public Cuenta
         void cargarCliente();
         bool confirmarCtaCte();
         void mostrarCliente();
-
         int cantClientes();
         int BuscarIDCliente (int ID);
         int buscarClientexCUIT (int cuit);
 
+        bool crearArchivo();
         bool Guardar();
         bool leerdeDisco(int pos);
         bool modificardeDisco(int pos);

@@ -7,7 +7,7 @@ using namespace std;
 int main(){
 
     if(configuracion() != true){
-        return 0;
+        return 1;
     }
 
     while (true){

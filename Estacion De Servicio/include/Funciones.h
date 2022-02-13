@@ -2,9 +2,13 @@
 #define FUNCIONES_H_INCLUDED
 #include "Cliente.h"
 #include "Nafta.h"
+#include "Surtidor.h"
+#include "TanqueManager.h"
 
+bool archivos(const int TAM, bool *vec);
 bool configuracion();
-bool controlBanderas(const int tam, bool *vec);
+bool controlBanderas(const int T, bool *vec);
+bool cargaConsumidorFinal();
 
 ///===============================
 ///  FUNIONES PARA CLEINTES

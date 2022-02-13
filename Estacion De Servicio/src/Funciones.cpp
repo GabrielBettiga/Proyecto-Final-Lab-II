@@ -4,10 +4,11 @@ using namespace std;
 #include "Funciones.h"
 
 bool configuracion(){
-    Cliente cli;
     const int TAM = 3;
-    bool bandera, vecBand[TAM];
+    bool bandera = false, vecBand[TAM];
     int opc;
+
+    bandera = archivos(TAM, vecBand);
 
     if(bandera != true){
 
@@ -39,10 +40,9 @@ bool configuracion(){
                     break;
                 case 3:
                     /// FUNCION CARGAR CONSUMIDOR FINAL
-                    system("cls");
-                    cout << endl;
-                    cout << " EL CONSUMIDOR FINAL SE CARGARA CON LOS SIGUETES DATOS: " << endl;
-                    vecBand[2] = true;
+
+                    vecBand[2] = cargaConsumidorFinal();
+                    ///vecBand[2] = true;
                     system("pause");
                     break;
                 case 0:
@@ -57,14 +57,30 @@ bool configuracion(){
                     break;
             }
         }while(opc != 0);
-        ///bandera = true;
     }
-    else {
-
-    }
+    return bandera;
 }
 
-bool controlBanderas(int TAM, bool *vecBand){
+bool archivos(const int TAM, bool *vecBand){
+    int i;
+    bool ok = true;
+    Surtidor sur;
+    Cliente cli;
+    TanqueManager tan;
+
+    vecBand[0] = true;//tan.CantTanques();
+    vecBand[1] = true; //sur.CantSurtidor();
+    vecBand[2] = cli.cantClientes();
+
+    for(i=0; i<TAM; i++){
+        if(vecBand[i] == false){
+            ok = false;
+        }
+    }
+
+    return ok;
+}
+bool controlBanderas(const int TAM, bool *vecBand){
     bool b = true;
     int i;
 
@@ -76,6 +92,66 @@ bool controlBanderas(int TAM, bool *vecBand){
     return b;
 }
 
+bool cargaConsumidorFinal(){
+    Cliente aux;
+    int opc;
+
+    system("cls");
+    cout << endl;
+    cout << " EL CONSUMIDOR FINAL SE CARGARA CON LOS SIGUETES DATOS: (*)" << endl;
+    cout << endl;
+
+    aux.setID(1);
+    aux.setNombre("CONSUMIDOR FINAL ");
+    aux.setCUIT(9999);
+    aux.mostrarCliente();
+
+    do {
+        cout << endl;
+        cout << "(*) POSIBIIDAD DE MODIFICAR NUMERO DE CUIT: " << endl;
+        cout << endl;
+        cout << "     ¿GUARDAR?          " << endl;
+        cout << " (1) SI / (2) MODIFICAR " << endl;
+        cout << " OPC >> ";
+        cin >> opc;
+
+        if (opc == 1){
+            if(aux.crearArchivo()){
+                cout << " CARGADO " << endl;
+                return true;
+            }
+            else {
+                cout << " ERROR EN CARGA " << endl;
+                system("pause");
+                return false;
+            }
+        }
+        else {
+            long long int cuit;
+            system("cls");
+            cout << endl;
+            cout << " NUEVO CUIT: ";
+            cin >> cuit;
+            aux.setCUIT(cuit);
+            cout << endl;
+            aux.mostrarCliente();
+
+            if(aux.crearArchivo()){
+                cout << endl;
+                cout << " CARGADO " << endl;
+                return true;
+            }
+            else {
+                cout << endl;
+                cout << " ERROR EN CARGA " << endl;
+                system("pause");
+                return false;
+            }
+        }
+    }while (opc > 2 || opc < 1);
+}
+
+
 
 ///===============================
 ///  FUNIONES PARA CLEINTES
@@ -85,7 +161,7 @@ void menuClientes(){
     do{
         cout << "       MENU CLIENTES       " << endl;
         cout << "===========================" << endl;
-        cout << " (1)  INGRESAR              " << endl;
+        cout << " (1) INGRESAR              " << endl;
         cout << " (2) MODIFICAR             " << endl;
         cout << " (3) MOSTRAR               " << endl;
         cout << " < 9 > MOSTRAR TODOS (BORAR OPC) " << endl; /// OPC PARA OCULTAR
