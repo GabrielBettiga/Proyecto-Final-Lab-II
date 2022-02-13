@@ -38,6 +38,10 @@ void altaCombustible();
 void mostrarCombustible();
 void mostrarTodosCombustibles();
 void modificarCombustible();
+
+///===============================
+///  FUNIONES PARA TANQUES
+///===============================
 void menuTanques();
 ///===============================
 ///  FUNIONES PARA INFORMES

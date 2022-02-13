@@ -478,8 +478,6 @@ void menuCombustibles(){
         cout << " (1) ALTA COMBUSTIBLE      " << endl;
         cout << " (2) MODIFICAR COMBUSTIBLE " << endl;
         cout << " (3) MOSTRAR COMBUSTIBLE   " << endl;
-        cout << " (4) INGRESAR COMBUSTIBLE  " << endl;
-        cout << " (5) TANQUES               " << endl;
         cout << " < 9 > MOSTRAR TODOS LOS COMBUSTIBLES " << endl;
         cout << " (0) SALIR                 " << endl;
         cout << "===========================" << endl;
@@ -496,9 +494,6 @@ void menuCombustibles(){
             break;
         case 3:
             mostrarCombustible();
-            break;
-        case 5:
-            menuTanques();
             break;
         case 9:
             mostrarTodosCombustibles();
@@ -581,7 +576,7 @@ void menuTanques(){
 
         cout << " SURTIDOR : " << sur.getIDsurtidor() << endl;
     }
-
+    system ("pause");
 }
 
 void mostrarTodosCombustibles(){

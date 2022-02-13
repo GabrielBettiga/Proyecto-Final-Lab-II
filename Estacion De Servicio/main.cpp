@@ -19,7 +19,8 @@ int main(){
         cout << " 2 > VENTAS                " << endl;
         cout << " 3 > COBRANZAS             " << endl;
         cout << " 4 > COMBUSTIBLES          " << endl;
-        cout << " 5 > INFORMES              " << endl;
+        cout << " 5 > TANQUES               " << endl;
+        cout << " 6 > INFORMES              " << endl;
         cout << "===========================" << endl;
         cout << " 0 > SALIR                 " << endl;
         cout << " >> ";
@@ -40,6 +41,9 @@ int main(){
                 menuCombustibles();
                 break;
             case 5:
+                menuTanques();
+                break;
+            case 6:
                 /// INFORMES
                 break;
             case 0:
