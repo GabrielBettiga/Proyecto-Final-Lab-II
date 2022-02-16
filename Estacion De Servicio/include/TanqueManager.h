@@ -22,6 +22,9 @@ class TanqueManager
         void setCapacidad(float litros);
         void setID (int id);
 
+        int getID ();
+        int setIDNafta (int x);
+
         ///USUARIO
         ///=================
         void Cargar();

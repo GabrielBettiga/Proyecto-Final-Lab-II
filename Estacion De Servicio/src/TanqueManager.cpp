@@ -143,6 +143,18 @@ void TanqueManager::setCapacidad(float litros){
 void TanqueManager::setID (int id){
     _aux.setID(id);
 }
+
+int TanqueManager::getID (){
+
+
+return _aux.getIDtanque();
+}
+
+int TanqueManager::setIDNafta (int x){
+
+    _aux.setIDnafta(x);
+}
+
 ///USUARIO
 ///=================
 

@@ -43,6 +43,10 @@ void modificarCombustible();
 ///  FUNIONES PARA TANQUES
 ///===============================
 void menuTanques();
+void mostrarTodosLosTanques();
+void mostrarTanque();
+bool asignarNafta();
+void ingresarCombustible();
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================

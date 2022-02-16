@@ -30,7 +30,7 @@ void Nafta::Mostrar ()
 {
     cout<<" ID COMB  : "<<_IDtipoDeNafta<<endl;
     cout<<" NOMBRE   : "<<_nombreDeCombustible<<endl;
-    cout<<" PRECIO   : "<<_precio<<endl;
+    cout<<" PRECIO   : "<<_precio;
 }
 
 void Nafta::modificarNafta(){
