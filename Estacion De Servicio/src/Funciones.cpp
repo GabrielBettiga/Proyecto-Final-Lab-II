@@ -123,6 +123,7 @@ bool cargarTanques()
 
         aux.CrearTanque();
         aux.setCapacidad(litros);
+        aux.setDisponible(litros);
 
         if(i==0)
         {

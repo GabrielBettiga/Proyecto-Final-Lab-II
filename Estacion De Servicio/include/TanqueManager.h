@@ -20,9 +20,11 @@ class TanqueManager
 
         int BuscarIDtanque (int IDTanque);
         void setCapacidad(float litros);
+        void setDisponible (float Disponible);
         void setID (int id);
 
         int getID ();
+        float getCapacidad();
         int setIDNafta (int x);
 
         ///USUARIO
