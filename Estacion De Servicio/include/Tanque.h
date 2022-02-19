@@ -17,7 +17,7 @@ class Tanque
         void setIDnafta(int IDnafta);
         void setCapacidadMaxima(float litros);
         void setOcupacion(float litros);
-        void setDisponible(float x);
+        void setDisponible();
 
         bool operator == (int IDNfta);
         bool operator < (Tanque aux);

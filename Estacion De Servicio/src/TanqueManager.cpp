@@ -32,9 +32,8 @@ int TanqueManager::CantTanques(){
 }
 
 bool TanqueManager::CargarTanques(int IDNafta, float litros){
-float aux=0;
-aux=DisponibleAllenarxNafta(IDNafta);
-    if(aux >= litros && litros > 0){
+
+    if( DisponibleAllenarxNafta(IDNafta)>= litros && litros > 0){
             cout<<"Entro a cargar tanque y retorno true"<<endl;
     system("pause");
         DistribuirNaftaTanques(IDNafta, litros);
@@ -148,9 +147,9 @@ int TanqueManager::BuscarIDtanque (int IDTanque){
 void TanqueManager::setCapacidad(float litros){
     _aux.setCapacidadMaxima(litros);
 }
-void TanqueManager::setDisponible (float Disponible){
+void TanqueManager::setDisponible (){
 
-_aux.setDisponible(Disponible);
+_aux.setDisponible();
 
 }
 
@@ -171,9 +170,15 @@ float TanqueManager::getCapacidad(){
 return _aux.getCapacidad();
 }
 
-int TanqueManager::setIDNafta (int x){
+void TanqueManager::setIDNafta (int x){
 
     _aux.setIDnafta(x);
+}
+
+Tanque TanqueManager::getTanque (){
+
+return _aux;
+
 }
 
 ///USUARIO

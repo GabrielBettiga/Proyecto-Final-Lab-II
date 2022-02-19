@@ -123,7 +123,7 @@ bool cargarTanques()
 
         aux.CrearTanque();
         aux.setCapacidad(litros);
-        aux.setDisponible(litros);
+        aux.setDisponible();
 
         if(i==0)
         {
@@ -757,24 +757,22 @@ void mostrarTodosLosTanques()
 }
 
 void mostrarTanque()
-{
+{///REVISAR ESTA SIN TERMINAR
     TanqueManager aux;
     int pos = 0,tan;
 
     cout << " ID DEL TANQUE: ";
     cin >> tan;
-
-    while(aux.leerdeDisco(pos++))
+cout<<aux.leerdeDisco(aux.BuscarIDtanque(tan))<<endl;
+system("pause");
+    while(aux.leerdeDisco(aux.BuscarIDtanque(tan))==false)
     {
+       cout << "ID INCORRECTA ";
+       cout << " INGRESE OTRA ID: ";
+       cin >> tan;
 
-        if(aux.getID()==tan)
-        {
-
-            aux.Mostrar();
-
-        }
     }
-
+    aux.Mostrar();
 
     system("pause");
     system("cls");
@@ -785,27 +783,61 @@ void mostrarTanque()
 bool asignarNafta()
 {
     TanqueManager aux;
-    int tan;
+    int opc;
     int pos=0;
-    while(aux.leerdeDisco(pos++))
-    {
-
-        aux.Mostrar();
-        cout<<endl;
+    int tan;
+    int ok;
 
 
 
+    do
+    {pos=0;
+        while(aux.leerdeDisco(pos++))
+        {
+            aux.Mostrar();
+            cout<<endl;
+        }
+        cout<< "A QUE TANQUE QUIERE ASIGNARLE EL COMBUSTIBLE: ";
+        cin>> tan;
+
+
+        while(ok=aux.BuscarIDtanque(tan)==-1)
+        {
+            system("cls");
+            cout<< "ID DE TANQUE INCORRECTA, INGRESE OTRO: ";
+            cin>> tan;
+        }
+        if(aux.getTanque().getOcupacion()!=0)
+        {
+
+            cout<< "EL TANQUE CONTIENE COMBUSTIBLE, NO SE PUEDE ASIGNAR COMBUSTIBLE "<<endl;
+            cout<< "VACIE EL TANQUE PARA PODER ASIGNAR COMBUSTIBLE "<<endl;
+            system("pause");
+            ok=-1;
+        }
+
+        system("cls");
     }
+    while (ok==-1);
 
-    cout<< "A QUE TANQUE QUIERE ASIGNARLE EL COMBUSTIBLE: ";
-    cin>> tan;
-    system("cls");
+
     mostrarTodosCombustibles();
     cout<<endl;
 
     int naf;
+    Nafta auxNaf;
     cout<< "QUE NAFTA VA A CONTENER EL TANQUE: ";
     cin>> naf;
+
+    while(auxNaf.BuscarID(naf)==-1)
+    {
+        system("cls");
+        mostrarTodosCombustibles();
+        cout<<endl;
+        cout<< "EL COMBUSTIBLE NO EXISTE ";
+        cout<< "INGRESE OTRO ID COMBUSTIBLE : ";
+        cin>> naf;
+    }
 
     pos=0;
     while(aux.leerdeDisco(pos++))
