@@ -3,16 +3,19 @@
 using namespace std;
 #include "Funciones.h"
 
-bool configuracion(){
+bool configuracion()
+{
     const int TAM = 3;
     bool bandera = false, vecBand[TAM];
     int opc;
 
     bandera = archivos(TAM, vecBand);
 
-    if(bandera != true){
+    if(bandera != true)
+    {
 
-        do{
+        do
+        {
             system("cls");
             cout << endl;
             cout << "        CONFIGURACION          " << endl;
@@ -25,39 +28,42 @@ bool configuracion(){
             cout << " OPC >> ";
             cin >> opc;
 
-            switch(opc){
-                case 1:
-                    /// FUNCION PARA CONFIRMAR LA CANTIDAD DE TANQUES
-                    vecBand[0] = cargarTanques();
-                    system("pause");
-                    break;
-                case 2:
-                    /// FUNCION CANTIDAD SURTIDORES
-                    cout << " SURTIDORES " << endl;
-                    vecBand[1] = cargarSurtidores();
-                    break;
-                case 3:
-                    /// FUNCION CARGAR CONSUMIDOR FINAL
-                    vecBand[2] = cargaConsumidorFinal();
-                    system("pause");
-                    break;
-                case 0:
-                    return controlBanderas(TAM, vecBand);
-                    break;
-                default:
-                    cout << "====================" << endl;
-                    cout << "  OPCION INCORECTA  " << endl;
-                    cout << "====================" << endl;
-                    system("pause");
-                    system ("cls");
-                    break;
+            switch(opc)
+            {
+            case 1:
+                /// FUNCION PARA CONFIRMAR LA CANTIDAD DE TANQUES
+                vecBand[0] = cargarTanques();
+                system("pause");
+                break;
+            case 2:
+                /// FUNCION CANTIDAD SURTIDORES
+                cout << " SURTIDORES " << endl;
+                vecBand[1] = cargarSurtidores();
+                break;
+            case 3:
+                /// FUNCION CARGAR CONSUMIDOR FINAL
+                vecBand[2] = cargaConsumidorFinal();
+                system("pause");
+                break;
+            case 0:
+                return controlBanderas(TAM, vecBand);
+                break;
+            default:
+                cout << "====================" << endl;
+                cout << "  OPCION INCORECTA  " << endl;
+                cout << "====================" << endl;
+                system("pause");
+                system ("cls");
+                break;
             }
-        }while(opc != 0);
+        }
+        while(opc != 0);
     }
     return bandera;
 }
 
-bool archivos(const int TAM, bool *vecBand){
+bool archivos(const int TAM, bool *vecBand)
+{
     int i;
     bool ok = true;
     Surtidor sur;
@@ -68,27 +74,33 @@ bool archivos(const int TAM, bool *vecBand){
     vecBand[1] = sur.CantSurtidor();
     vecBand[2] = cli.cantClientes();
 
-    for(i=0; i<TAM; i++){
-        if(vecBand[i] == false){
+    for(i=0; i<TAM; i++)
+    {
+        if(vecBand[i] == false)
+        {
             ok = false;
         }
     }
 
     return ok;
 }
-bool controlBanderas(const int TAM, bool *vecBand){
+bool controlBanderas(const int TAM, bool *vecBand)
+{
     bool b = true;
     int i;
 
-    for(i=0; i<TAM; i++){
-        if(vecBand[i] == false){
+    for(i=0; i<TAM; i++)
+    {
+        if(vecBand[i] == false)
+        {
             b = false;
         }
     }
     return b;
 }
 
-bool cargarTanques(){
+bool cargarTanques()
+{
     int cant, i;
 
     system ("cls");
@@ -101,7 +113,8 @@ bool cargarTanques(){
     cin >> cant;
     system("cls");
 
-    for (i=0;i <cant; i++){
+    for (i=0; i <cant; i++)
+    {
         float litros;
         TanqueManager aux;
 
@@ -110,19 +123,23 @@ bool cargarTanques(){
 
         aux.CrearTanque();
         aux.setCapacidad(litros);
+        aux.setDisponible();
 
-        if(i==0) {
-           aux.setID(1);
-           aux.crearArchivo();
+        if(i==0)
+        {
+            aux.setID(1);
+            aux.crearArchivo();
         }
-        else{
+        else
+        {
             aux.Guardar();
         }
     }
     return true;
 }
 
-bool cargarSurtidores(){
+bool cargarSurtidores()
+{
     int cant, i;
     Surtidor sur;
 
@@ -136,12 +153,15 @@ bool cargarSurtidores(){
     cin >> cant;
     system("cls");
 
-    for(i=0; i<cant; i++){
-        if(i==0){
+    for(i=0; i<cant; i++)
+    {
+        if(i==0)
+        {
             sur.setIDsurtidor(1);
             sur.crearArchivo();
         }
-        else {
+        else
+        {
             sur.CrearSurtidor();
             sur.GrabarEnDisco();
         }
@@ -149,7 +169,8 @@ bool cargarSurtidores(){
     return true;
 }
 
-bool cargaConsumidorFinal(){
+bool cargaConsumidorFinal()
+{
     Cliente aux;
     int opc;
 
@@ -163,7 +184,8 @@ bool cargaConsumidorFinal(){
     aux.setCUIT(9999);
     aux.mostrarCliente();
 
-    do {
+    do
+    {
         cout << endl;
         cout << "(*) POSIBIIDAD DE MODIFICAR NUMERO DE CUIT: " << endl;
         cout << endl;
@@ -172,18 +194,22 @@ bool cargaConsumidorFinal(){
         cout << " OPC >> ";
         cin >> opc;
 
-        if (opc == 1){
-            if(aux.crearArchivo()){
+        if (opc == 1)
+        {
+            if(aux.crearArchivo())
+            {
                 cout << " CARGADO " << endl;
                 return true;
             }
-            else {
+            else
+            {
                 cout << " ERROR EN CARGA " << endl;
                 system("pause");
                 return false;
             }
         }
-        else {
+        else
+        {
             long long int cuit;
             system("cls");
             cout << endl;
@@ -193,19 +219,22 @@ bool cargaConsumidorFinal(){
             cout << endl;
             aux.mostrarCliente();
 
-            if(aux.crearArchivo()){
+            if(aux.crearArchivo())
+            {
                 cout << endl;
                 cout << " CARGADO " << endl;
                 return true;
             }
-            else {
+            else
+            {
                 cout << endl;
                 cout << " ERROR EN CARGA " << endl;
                 system("pause");
                 return false;
             }
         }
-    }while (opc > 2 || opc < 1);
+    }
+    while (opc > 2 || opc < 1);
 }
 
 
@@ -213,9 +242,11 @@ bool cargaConsumidorFinal(){
 ///===============================
 ///  FUNIONES PARA CLEINTES
 ///===============================
-void menuClientes(){
+void menuClientes()
+{
     int opc;
-    do{
+    do
+    {
         cout << "       MENU CLIENTES       " << endl;
         cout << "===========================" << endl;
         cout << " (1) INGRESAR              " << endl;
@@ -228,7 +259,8 @@ void menuClientes(){
         cin >> opc;
         system ("cls");
 
-        switch(opc){
+        switch(opc)
+        {
         case 1:
             cargarCliente();
             break;
@@ -252,38 +284,47 @@ void menuClientes(){
             system ("cls");
             break;
         }
-    }while (opc != 0);
+    }
+    while (opc != 0);
 }
 
-void cargarCliente(){
+void cargarCliente()
+{
     int opc;
     Cliente obj;
     obj.cargarCliente();
-    do {
+    do
+    {
         cout << endl;
         cout << " DESEA GUARDAR EL CLIENTE. " << endl;
         cout << " (1) SI  / (2) NO          " << endl;
         cout << " >> ";
         cin >> opc;
-        if(opc == 1){
-            if(obj.Guardar()){
+        if(opc == 1)
+        {
+            if(obj.Guardar())
+            {
                 cout << endl;
                 cout << " == CLIENTE GUARDADO == " << endl;
                 cout << endl;
                 system("pause");
                 system("cls");
             }
-            else {
+            else
+            {
                 cout << " ERROR NO SE GUARDO " << endl;
             }
         }
-        else {
+        else
+        {
             cout << " CLIENTE NO GUARDADO " << endl;
         }
-    }while (opc < 0 || opc > 2);
+    }
+    while (opc < 0 || opc > 2);
 }
 
-void mostrarCliente(){
+void mostrarCliente()
+{
 
     int num;
     Cliente obj;
@@ -293,29 +334,34 @@ void mostrarCliente(){
     cout << " NUMERO DE CLIENTE : " << endl;
     cin >> num;
 
-    if(obj.BuscarIDCliente(num) >= 0){
+    if(obj.BuscarIDCliente(num) >= 0)
+    {
         cout << endl;
         obj.mostrarCliente();
         cout << endl;
     }
-    else {
+    else
+    {
         cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
 
-void mostrarTodosClientes(){
+void mostrarTodosClientes()
+{
     cout << endl << endl;
     cout << " TODO EL ARCHIVO CLIENTE   " << endl;
     Cliente obj;
     int pos = 0;
-    while(obj.leerdeDisco(pos++)){
+    while(obj.leerdeDisco(pos++))
+    {
         cout << "POS " << pos << endl;
         obj.mostrarCliente();
         cout << endl;
     }
 }
 
-void modificarCliente(){
+void modificarCliente()
+{
     int num, pos;
     Cliente obj;
 
@@ -324,21 +370,25 @@ void modificarCliente(){
     cout << " NUMERO DE CLIENTE : ";
     cin >> num;
 
-    if((pos = obj.BuscarIDCliente(num)) >= 0){
+    if((pos = obj.BuscarIDCliente(num)) >= 0)
+    {
 
-            datoModificar(obj).modificardeDisco(pos);
+        datoModificar(obj).modificardeDisco(pos);
     }
-    else {
+    else
+    {
         cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
 
-Cliente datoModificar(Cliente cli){
+Cliente datoModificar(Cliente cli)
+{
     int opc, tel;
     long long cuit;
     float importe;
     string cambiar;
-    do{
+    do
+    {
         cout << endl;
         cli.mostrarCliente();
         cout << endl;
@@ -359,7 +409,8 @@ Cliente datoModificar(Cliente cli){
         cout << " OPC >> ";
         cin >> opc;
 
-        switch (opc){
+        switch (opc)
+        {
         case 1:
             cout << " NOMBRE: " << endl;
             cin.ignore();
@@ -390,12 +441,14 @@ Cliente datoModificar(Cliente cli){
             break;
         case 6:
             cout << " CUENTA CORRIENTE: " << endl;
-            if(cli.getCuentaCorriente()){
+            if(cli.getCuentaCorriente())
+            {
                 cout << endl;
                 cout << " == CTA CTE DESACTIVADA == " << endl;
                 cli.setCuentaCorriente(false);
             }
-            else {
+            else
+            {
                 cout << endl;
                 cout << " == CTA CTE ACTIVA == " << endl;
                 cli.setCuentaCorriente(true);
@@ -408,13 +461,15 @@ Cliente datoModificar(Cliente cli){
             break;
         case 8:
             cout << " CLIENTE: " << endl;
-            if(cli.getEstadoCliente()){
+            if(cli.getEstadoCliente())
+            {
                 cout << " == DESACTIVADO == " << endl;
                 cli.setEstadoCliete(false);
                 system("pause");
                 system ("cls");
             }
-            else {
+            else
+            {
                 cout << " == ACTIVADO == " << endl;
                 cli.setEstadoCliete(true);
                 system("pause");
@@ -434,17 +489,20 @@ Cliente datoModificar(Cliente cli){
             break;
         }
 
-    }while (opc != 0);
+    }
+    while (opc != 0);
 }
 
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================
-void venta(){
+void venta()
+{
     int opc;
     Cliente cli;
 
-    do{
+    do
+    {
         system("cls");
         cout << endl;
         cout << " CLINETE O CONSUMIDOR FINAL    " << endl;
@@ -457,7 +515,8 @@ void venta(){
         cout << " OPCION >> ";
         cin >> opc;
 
-    }while(opc != 0);
+    }
+    while(opc != 0);
 
 
 
@@ -469,9 +528,11 @@ void venta(){
 ///===============================
 ///  FUNIONES PARA COMUSTIBLES
 ///===============================
-void menuCombustibles(){
+void menuCombustibles()
+{
     int opc;
-    do {
+    do
+    {
         cout << endl;
         cout << "     COMBUSTIBLES          " << endl;
         cout << "===========================" << endl;
@@ -485,7 +546,8 @@ void menuCombustibles(){
         cin >> opc;
         system("cls");
 
-        switch(opc){
+        switch(opc)
+        {
         case 1:
             altaCombustible();
             break;
@@ -509,38 +571,47 @@ void menuCombustibles(){
             system ("cls");
         }
 
-    }while(opc != 0);
+    }
+    while(opc != 0);
 }
 
-void altaCombustible(){
+void altaCombustible()
+{
     int opc;
     Nafta obj;
     obj.Cargar();
-    do {
+    do
+    {
         cout << endl;
         cout << " ¿DESEA GUARDAR? " << endl;
         cout << " (1) SI  / (2) NO          " << endl;
         cout << " >> ";
         cin >> opc;
-        if(opc == 1){
-            if(obj.GrabarEnDisco()){
+        if(opc == 1)
+        {
+            if(obj.GrabarEnDisco())
+            {
                 cout << endl;
                 cout << " == GUARDADO == " << endl;
                 cout << endl;
                 system("pause");
                 system("cls");
             }
-            else {
+            else
+            {
                 cout << " ERROR NO SE GUARDO " << endl;
             }
         }
-        else {
+        else
+        {
             cout << " NO GUARDADO " << endl;
         }
-    }while (opc < 0 || opc > 2);
+    }
+    while (opc < 0 || opc > 2);
 }
 
-void mostrarCombustible(){
+void mostrarCombustible()
+{
     int id;
     Nafta obj;
 
@@ -551,35 +622,21 @@ void mostrarCombustible(){
     cin >> id;
     cout << endl;
 
-    if(obj.BuscarID(id) >= 0){
+    if(obj.BuscarID(id) >= 0)
+    {
         obj.Mostrar();
     }
-    else {
+    else
+    {
         cout << " NO EXISTE EL ID DE COMBUSTIBLE " <<endl;
     }
 }
 
-void menuTanques(){
-    TanqueManager aux;
-    int pos = 0;
 
-    while(aux.leerdeDisco(pos++)){
-        aux.Mostrar();
-        cout << endl;
-    }
 
-    Surtidor sur;
-    pos = 0;
-    cout << endl;
-    cout << " CANTIDAD DE SURTIDORES : " << sur.CantSurtidor() << endl;
-    while(sur.LeerDeDisco(pos++)){
 
-        cout << " SURTIDOR : " << sur.getIDsurtidor() << endl;
-    }
-    system ("pause");
-}
-
-void mostrarTodosCombustibles(){
+void mostrarTodosCombustibles()
+{
     Nafta obj;
     int pos = 0;
 
@@ -587,13 +644,16 @@ void mostrarTodosCombustibles(){
     cout << endl;
     cout << " LISTADO DE COMBSTIBLES: " << endl;
     cout << endl;
-    while(obj.LeerDeDisco(pos++)){
+    while(obj.LeerDeDisco(pos++))
+    {
         obj.Mostrar();
-        cout << endl;
+        cout << endl<<endl;
+
     }
 }
 
-void modificarCombustible(){
+void modificarCombustible()
+{
     int id, pos;
     Nafta obj;
 
@@ -604,22 +664,283 @@ void modificarCombustible(){
     cin >> id;
     cout << endl;
 
-    if((pos = obj.BuscarID(id)) >= 0){
+    if((pos = obj.BuscarID(id)) >= 0)
+    {
         obj.Mostrar();
         cout << endl;
         obj.modificarNafta();
-        if(obj.ModificarEnDisco(pos)){
+        if(obj.ModificarEnDisco(pos))
+        {
             cout << " MODIFICACION GUARDAD " << endl;
         }
-        else {
+        else
+        {
             cout << " NO SE GUARDARON LOS CAMBIOS " << endl;
         }
     }
-    else {
+    else
+    {
         cout << " NO EXISTE EL ID DE COMBUSTIBLE " <<endl;
     }
 }
 
+
+///===============================
+///  FUNIONES PARA TANQUES
+///===============================
+
+
+
+void menuTanques()
+{
+    int opc;
+    do
+    {
+        cout << endl;
+        cout << "            TANQUES             " << endl;
+        cout << "================================" << endl;
+        cout << " (1) ASIGNAR NAFTA              " << endl;
+        cout << " (2) MOSTRAR TANQUE             " << endl;
+        cout << " (3) MOSTRAR TODO LOS TANQUES   " << endl;
+        cout << " (4) INGRESAR COMBUSTIBLE       " << endl;
+        cout << " (5) VACIAR TANQUE              " << endl;
+        cout << " (0) SALIR                      " << endl;
+        cout << "================================" << endl;
+        cout << " >> ";
+        cin >> opc;
+        system("cls");
+
+        switch(opc)
+        {
+        case 1:
+            asignarNafta();
+            system ("cls");
+            break;
+        case 2:
+            mostrarTanque();
+            system ("cls");
+            break;
+        case 3:
+            mostrarTodosLosTanques();
+            system("pause");
+            system("cls");
+            break;
+        case 4:
+            ingresarCombustible();
+            system ("cls");
+            break;
+        case 5:
+            vaciarTanque();
+            system ("cls");
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+        }
+
+    }
+    while(opc != 0);
+}
+
+
+
+
+void mostrarTodosLosTanques()
+{
+    TanqueManager aux;
+    int pos = 0;
+
+    while(aux.leerdeDisco(pos++))
+    {
+        aux.Mostrar();
+        cout << endl;
+    }
+
+}
+
+void mostrarTanque()
+{
+    ///REVISAR ESTA SIN TERMINAR
+    TanqueManager aux;
+    int pos = 0,tan;
+    cout<<endl<< " ID DEL TANQUE: ";
+    cin >> tan;
+    pos=aux.BuscarIDtanque(tan);
+    while(pos<0)
+    {
+        system("cls");
+        cout << "ID INCORRECTA ";
+        cout << " INGRESE OTRA ID: ";
+        cin >> tan;
+        pos=aux.BuscarIDtanque(tan);
+
+    }
+    cout<<endl;
+    aux.Mostrar();
+
+    system("pause");
+    system("cls");
+}
+
+
+
+bool asignarNafta()
+{
+    TanqueManager aux;
+    int opc;
+    int pos=0;
+    int tan;
+    int ok;
+
+
+
+    do
+    {
+        pos=0;
+        while(aux.leerdeDisco(pos++))
+        {
+            aux.Mostrar();
+            cout<<endl;
+        }
+        cout<< "A QUE TANQUE QUIERE ASIGNARLE EL COMBUSTIBLE: ";
+        cin>> tan;
+
+
+        while(ok=aux.BuscarIDtanque(tan)==-1)
+        {
+            system("cls");
+            cout<< "ID DE TANQUE INCORRECTA, INGRESE OTRO: ";
+            cin>> tan;
+        }
+        if(aux.getTanque().getOcupacion()!=0)
+        {
+
+            cout<< "EL TANQUE CONTIENE COMBUSTIBLE, NO SE PUEDE ASIGNAR COMBUSTIBLE "<<endl;
+            cout<< "VACIE EL TANQUE PARA PODER ASIGNAR COMBUSTIBLE "<<endl;
+            system("pause");
+            ok=-1;
+        }
+
+        system("cls");
+    }
+    while (ok==-1);
+
+
+    mostrarTodosCombustibles();
+    cout<<endl;
+
+    int naf;
+    Nafta auxNaf;
+    cout<< "QUE NAFTA VA A CONTENER EL TANQUE: ";
+    cin>> naf;
+
+    while(auxNaf.BuscarID(naf)==-1)
+    {
+        system("cls");
+        mostrarTodosCombustibles();
+        cout<<endl;
+        cout<< "EL COMBUSTIBLE NO EXISTE ";
+        cout<< "INGRESE OTRO ID COMBUSTIBLE : ";
+        cin>> naf;
+    }
+
+    pos=0;
+    while(aux.leerdeDisco(pos++))
+    {
+
+        if(aux.getID()==tan)
+        {
+            system ("cls");
+            aux.setIDNafta(naf);
+            aux.modificardeDisco(pos-1);
+            aux.Mostrar();
+            cout<<endl<<"GUARDADO"<<endl;
+            system("pause");
+            return true;
+
+        }
+    }
+
+
+    return false;
+}
+
+
+void ingresarCombustible()
+{
+    TanqueManager aux;
+    Nafta naf;
+    int id;
+
+    system("cls");
+    mostrarTodosCombustibles();
+    cout<<endl;
+    cout<< "QUE COMBUSTIBLE QUIERE CARGAR: ";
+    cin>> id;
+
+    while(naf.BuscarID(id)==-1)
+    {
+
+        mostrarTodosCombustibles();
+        cout<<endl;
+        cout<< "NO EXISTE LA ID DE COMBUSTIBLE INGRESADA.  "<<endl;
+        cout<< "INGRESE NUEVA ID : ";
+        cin>> id;
+
+    }
+
+    float Litros;
+    cout<< "CUANTOS LITROS VA A CARGAR: ";
+    cin>> Litros;
+
+    if (aux.CargarTanques(id,Litros))
+    {
+        cout<<"CARGO"<<endl;
+        system("pause");
+    }
+    else
+    {
+        cout<<"EXCEDE LA CAPACIDAD DE ALMACENAMIENTO"<<endl;
+        system("pause");
+    }
+}
+
+
+void vaciarTanque()
+{
+    TanqueManager aux;
+    int tan,pos;
+
+    mostrarTodosLosTanques();
+    cout<<endl;
+    cout<< "SELECCIONE UN TAQUE: ";
+    cin>> tan;
+
+    while((pos=aux.BuscarIDtanque(tan))==-1)
+    {
+
+        mostrarTodosLosTanques();
+        cout<<endl;
+        cout<< "NO EXISTE LA ID DE TANQUE INGRESADO.  "<<endl;
+        cout<< "INGRESE NUEVA ID : ";
+        cin>> tan;
+
+    }
+
+    aux.vaciarTanque();
+    aux.modificardeDisco(pos);
+    aux.Mostrar();
+    system("pause");
+
+
+
+}
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================

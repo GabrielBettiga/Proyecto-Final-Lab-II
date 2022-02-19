@@ -55,7 +55,7 @@ void Tanque::setOcupacion(float litros){
     }
 }
 void Tanque::setDisponible(){
-    _disponible = _capacidadMaxima - _ocupacion;
+     _disponible = _capacidadMaxima - _ocupacion;
 }
 ///METODOS
 ///=================================================================================

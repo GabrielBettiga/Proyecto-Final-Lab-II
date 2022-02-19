@@ -33,7 +33,7 @@ int TanqueManager::CantTanques(){
 
 bool TanqueManager::CargarTanques(int IDNafta, float litros){
 
-    if(DisponibleAllenarxNafta(IDNafta) >= litros && litros > 0){
+    if( DisponibleAllenarxNafta(IDNafta)>= litros && litros > 0){
         DistribuirNaftaTanques(IDNafta, litros);
         return true;
     }
@@ -45,11 +45,11 @@ bool TanqueManager::CargarTanques(int IDNafta, float litros){
 float TanqueManager::DisponibleAllenarxNafta(int IDNafta){
     int pos = 0;
     float cantidad = 0;
-    while(leerdeDisco(pos++)){
+    while(leerdeDisco(pos)){
         if( _aux == IDNafta){                           /// == OPERADOR SOBRECARGA EN CLASE TANQUE
             cantidad += _aux.getDisponible();
         }
-    }
+ pos++;   }
     return cantidad;                                    ////LA CANTIDAD DE LITROS Q PUEDE ENTRAR X NAFTA EN LOS TANQUES
 }
 
@@ -68,11 +68,13 @@ void TanqueManager::DistribuirNaftaTanques(int IDNafta,float litros){
                 cargo = _aux.getDisponible();           ///GUARDAMOS LO Q LE VAMOS A DESCONTAR A LITROS
 
                 if(_aux.Llenar(_aux.getDisponible())){  ///LLENAMOS EL TANQUE CON EL Q ESTAMOS TRABAJANDO
+
                     litros = litros - cargo;            ///DESCONTAMOS DE LISTROS
                     modificardeDisco(pos-1);            ///GUARDAMOS X TANQUE
                 }
             }
             else {
+
                 _aux.Llenar(litros);
                 litros = litros - litros;
                 modificardeDisco(pos-1);
@@ -124,6 +126,12 @@ void TanqueManager::AcomodarTanque(int IDNafta,float litros){
     }
 }
 
+float TanqueManager::vaciarTanque(){
+
+return _aux.VaciarTodo();
+
+}
+
 int TanqueManager::BuscarIDtanque (int IDTanque){
 
     int pos = 0;
@@ -139,14 +147,44 @@ int TanqueManager::BuscarIDtanque (int IDTanque){
 void TanqueManager::setCapacidad(float litros){
     _aux.setCapacidadMaxima(litros);
 }
+void TanqueManager::setDisponible (){
+
+_aux.setDisponible();
+
+}
 
 void TanqueManager::setID (int id){
     _aux.setID(id);
 }
+
+int TanqueManager::getID (){
+
+
+return _aux.getIDtanque();
+}
+
+float TanqueManager::getCapacidad(){
+
+
+
+return _aux.getCapacidad();
+}
+
+void TanqueManager::setIDNafta (int x){
+
+    _aux.setIDnafta(x);
+}
+
+Tanque TanqueManager::getTanque (){
+
+return _aux;
+
+}
+
 ///USUARIO
 ///=================
 
-void TanqueManager::Cargar(){
+/*void TanqueManager::Cargar(){
 
     float CapMax, Ocup;
     int idNafta;
@@ -161,14 +199,18 @@ void TanqueManager::Cargar(){
     _aux.setIDnafta(idNafta);
     _aux.setCapacidadMaxima(CapMax);
     _aux.setOcupacion(Ocup);
-    _aux.setDisponible();
-}
+    _aux.setDisponible(0);
+}*/
 
 void TanqueManager::Mostrar(){
+    Nafta aux;
+    aux.BuscarID(_aux.getIDnafta());
     cout << "ID TANQUE  : ";
     cout << _aux.getIDtanque() << endl;
     cout << "ID NAFTA   : ";
     cout << _aux.getIDnafta()  << endl;
+    cout << "NOMBRE     : ";
+    cout << aux.getnombreDeCombustible() <<endl;
     cout << "MAXIMA CAP : ";
     cout << _aux.getCapacidad() << endl;
     cout << "OCUPACION  : ";
