@@ -703,6 +703,7 @@ void menuTanques()
         cout << " (2) MOSTRAR TANQUE             " << endl;
         cout << " (3) MOSTRAR TODO LOS TANQUES   " << endl;
         cout << " (4) INGRESAR COMBUSTIBLE       " << endl;
+        cout << " (5) VACIAR TANQUE              " << endl;
         cout << " (0) SALIR                      " << endl;
         cout << "================================" << endl;
         cout << " >> ";
@@ -717,13 +718,20 @@ void menuTanques()
             break;
         case 2:
             mostrarTanque();
+            system ("cls");
             break;
         case 3:
             mostrarTodosLosTanques();
+            system("pause");
             system("cls");
             break;
         case 4:
             ingresarCombustible();
+            system ("cls");
+            break;
+        case 5:
+            vaciarTanque();
+            system ("cls");
             break;
         case 0:
             return;
@@ -753,25 +761,27 @@ void mostrarTodosLosTanques()
         aux.Mostrar();
         cout << endl;
     }
-    system ("pause");
+
 }
 
 void mostrarTanque()
-{///REVISAR ESTA SIN TERMINAR
+{
+    ///REVISAR ESTA SIN TERMINAR
     TanqueManager aux;
     int pos = 0,tan;
-
-    cout << " ID DEL TANQUE: ";
+    cout<<endl<< " ID DEL TANQUE: ";
     cin >> tan;
-cout<<aux.leerdeDisco(aux.BuscarIDtanque(tan))<<endl;
-system("pause");
-    while(aux.leerdeDisco(aux.BuscarIDtanque(tan))==false)
+    pos=aux.BuscarIDtanque(tan);
+    while(pos<0)
     {
-       cout << "ID INCORRECTA ";
-       cout << " INGRESE OTRA ID: ";
-       cin >> tan;
+        system("cls");
+        cout << "ID INCORRECTA ";
+        cout << " INGRESE OTRA ID: ";
+        cin >> tan;
+        pos=aux.BuscarIDtanque(tan);
 
     }
+    cout<<endl;
     aux.Mostrar();
 
     system("pause");
@@ -791,7 +801,8 @@ bool asignarNafta()
 
 
     do
-    {pos=0;
+    {
+        pos=0;
         while(aux.leerdeDisco(pos++))
         {
             aux.Mostrar();
@@ -864,29 +875,68 @@ bool asignarNafta()
 void ingresarCombustible()
 {
     TanqueManager aux;
+    Nafta naf;
+    int id;
 
-
+    system("cls");
     mostrarTodosCombustibles();
     cout<<endl;
-
-    int naf;
     cout<< "QUE COMBUSTIBLE QUIERE CARGAR: ";
-    cin>> naf;
+    cin>> id;
+
+    while(naf.BuscarID(id)==-1)
+    {
+
+        mostrarTodosCombustibles();
+        cout<<endl;
+        cout<< "NO EXISTE LA ID DE COMBUSTIBLE INGRESADA.  "<<endl;
+        cout<< "INGRESE NUEVA ID : ";
+        cin>> id;
+
+    }
+
     float Litros;
     cout<< "CUANTOS LITROS VA A CARGAR: ";
     cin>> Litros;
 
-    if (aux.CargarTanques(naf,Litros))
+    if (aux.CargarTanques(id,Litros))
     {
-
-        cout<<"CARGADO"<<endl;
+        cout<<"CARGO"<<endl;
+        system("pause");
     }
     else
     {
-        cout<<"NO SE PUDO CARGAR"<<endl;
+        cout<<"EXCEDE LA CAPACIDAD DE ALMACENAMIENTO"<<endl;
+        system("pause");
+    }
+}
+
+
+void vaciarTanque()
+{
+    TanqueManager aux;
+    int tan,pos;
+
+    mostrarTodosLosTanques();
+    cout<<endl;
+    cout<< "SELECCIONE UN TAQUE: ";
+    cin>> tan;
+
+    while((pos=aux.BuscarIDtanque(tan))==-1)
+    {
+
+        mostrarTodosLosTanques();
+        cout<<endl;
+        cout<< "NO EXISTE LA ID DE TANQUE INGRESADO.  "<<endl;
+        cout<< "INGRESE NUEVA ID : ";
+        cin>> tan;
 
     }
 
+    aux.vaciarTanque();
+    aux.modificardeDisco(pos);
+    aux.Mostrar();
+    system("pause");
 
 
 

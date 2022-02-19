@@ -47,6 +47,7 @@ void mostrarTodosLosTanques();
 void mostrarTanque();
 bool asignarNafta();
 void ingresarCombustible();
+void vaciarTanque();
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================

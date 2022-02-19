@@ -34,8 +34,6 @@ int TanqueManager::CantTanques(){
 bool TanqueManager::CargarTanques(int IDNafta, float litros){
 
     if( DisponibleAllenarxNafta(IDNafta)>= litros && litros > 0){
-            cout<<"Entro a cargar tanque y retorno true"<<endl;
-    system("pause");
         DistribuirNaftaTanques(IDNafta, litros);
         return true;
     }
@@ -63,24 +61,20 @@ void TanqueManager::DistribuirNaftaTanques(int IDNafta,float litros){
     int pos = 0;
     while (leerdeDisco(pos++)){
         if( _aux == IDNafta && litros > 0){             /// == OPERADOR SOBRECARGA EN CLASE TANQUE
-cout<< "ENTRO IF 1"<<endl;
-system("pause");
+
             if(_aux.getDisponible() <= litros){         ///CONSULTA EL DISPNIBLE DEL TANQUE
-cout<< "ENTRO IF 2"<<endl;
-system("pause");
+
                 float cargo = 0;
                 cargo = _aux.getDisponible();           ///GUARDAMOS LO Q LE VAMOS A DESCONTAR A LITROS
 
                 if(_aux.Llenar(_aux.getDisponible())){  ///LLENAMOS EL TANQUE CON EL Q ESTAMOS TRABAJANDO
-cout<< "ENTRO IF 3"<<endl;
-system("pause");
+
                     litros = litros - cargo;            ///DESCONTAMOS DE LISTROS
                     modificardeDisco(pos-1);            ///GUARDAMOS X TANQUE
                 }
             }
             else {
-cout<< "ENTRO else if"<<endl;
-system("pause");
+
                 _aux.Llenar(litros);
                 litros = litros - litros;
                 modificardeDisco(pos-1);
@@ -130,6 +124,12 @@ void TanqueManager::AcomodarTanque(int IDNafta,float litros){
             }
         }
     }
+}
+
+float TanqueManager::vaciarTanque(){
+
+return _aux.VaciarTodo();
+
 }
 
 int TanqueManager::BuscarIDtanque (int IDTanque){
@@ -203,10 +203,14 @@ return _aux;
 }*/
 
 void TanqueManager::Mostrar(){
+    Nafta aux;
+    aux.BuscarID(_aux.getIDnafta());
     cout << "ID TANQUE  : ";
     cout << _aux.getIDtanque() << endl;
     cout << "ID NAFTA   : ";
     cout << _aux.getIDnafta()  << endl;
+    cout << "NOMBRE     : ";
+    cout << aux.getnombreDeCombustible() <<endl;
     cout << "MAXIMA CAP : ";
     cout << _aux.getCapacidad() << endl;
     cout << "OCUPACION  : ";

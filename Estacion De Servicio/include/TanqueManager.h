@@ -1,6 +1,7 @@
 #ifndef GESTIONTANQUES_H
 #define GESTIONTANQUES_H
 #include "Tanque.h"
+#include "Nafta.h"
 
 class TanqueManager
 {
@@ -17,6 +18,7 @@ class TanqueManager
         bool Surtidor (int IDNafta, float litros);
         float DisponiblexCombustible(int IDNafta);              /// LO Q TENEMOS X COMBUSTIBLE
         void AcomodarTanque (int IDNafta,float litros);
+        float vaciarTanque();
 
         int BuscarIDtanque (int IDTanque);
         void setCapacidad(float litros);
