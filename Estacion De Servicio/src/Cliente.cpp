@@ -156,6 +156,117 @@ int Cliente::buscarClientexCUIT (int cuit){
     return -1;
 }
 
+void Cliente::modificarDatoCliente(){
+    int opc, tel;
+    long long cuit;
+    float importe;
+    string cambiar;
+    do
+    {
+        system("cls");
+        cout << endl;
+        mostrarCliente();
+        cout << endl;
+        cout << "===========================" << endl;
+        cout << "SELECCIONE DATO A MODIFICAR" << endl;
+        cout << "===========================" << endl;
+        cout << " (1) NOMBRE.               " << endl;
+        cout << " (2) DIRECCION.            " << endl;
+        cout << " (3) CUIT.                 " << endl;
+        cout << " (4) TELEFONO.             " << endl;
+        cout << " (5) CORREO.               " << endl;
+        cout << " (6) CUENTA CORRIENTE.     " << endl;
+        cout << " (7) LIMITE DE CREDITO.    " << endl;
+        cout << " (8) ACTIVAR / DESACTIVAR. " << endl;
+        cout << "===========================" << endl;
+        cout << " (0) SALIR.                " << endl;
+        cout << endl;
+        cout << " OPC >> ";
+        cin >> opc;
+
+        switch (opc)
+        {
+        case 1:
+            cout << " NOMBRE: " << endl;
+            cin.ignore();
+            getline(cin,cambiar);
+            setNombre(cambiar);
+            break;
+        case 2:
+            cout << " DIRECCION: " << endl;
+            cin.ignore();
+            getline(cin,cambiar);
+            setDireccion(cambiar);
+            break;
+        case 3:
+            cout << " CUIT: " << endl;
+            cin >> cuit;
+            setCUIT(cuit);
+            break;
+        case 4:
+            cout << " TELEFONO: " << endl;
+            cin >> tel;
+            setTelefono(tel);
+            break;
+        case 5:
+            cout << " CORREO: " << endl;
+            cin.ignore();
+            getline(cin,cambiar);
+            setEmail(cambiar);
+            break;
+        case 6:
+            cout << " CUENTA CORRIENTE: " << endl;
+            if(getCuentaCorriente())
+            {
+                cout << endl;
+                cout << " == CTA CTE DESACTIVADA == " << endl;
+                setCuentaCorriente(false);
+            }
+            else
+            {
+                cout << endl;
+                cout << " == CTA CTE ACTIVA == " << endl;
+                setCuentaCorriente(true);
+            }
+            break;
+        case 7:
+            cout << " LIMITE DE CREDITO: " << endl;
+            cin >> importe;
+            setLimiteCredito(importe);
+            break;
+        case 8:
+            cout << " CLIENTE: " << endl;
+            if(getEstadoCliente())
+            {
+                cout << " == DESACTIVADO == " << endl;
+                setEstadoCliete(false);
+                system("pause");
+                system ("cls");
+            }
+            else
+            {
+                cout << " == ACTIVADO == " << endl;
+                setEstadoCliete(true);
+                system("pause");
+                system ("cls");
+            }
+            break;
+        case 0:
+            system ("cls");
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+            break;
+        }
+    }
+    while (opc != 0);
+}
+
 bool Cliente::crearArchivo(){
     FILE *p;
     p = fopen("Clientes.dat", "wb");                  ///DESTRUYE E ARCHIVO, LO CREA SI NO EXISTE

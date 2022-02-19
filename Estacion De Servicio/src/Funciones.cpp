@@ -372,127 +372,14 @@ void modificarCliente()
 
     if((pos = obj.BuscarIDCliente(num)) >= 0)
     {
-
-        datoModificar(obj).modificardeDisco(pos);
+        obj.modificarDatoCliente();
+        obj.modificardeDisco(pos);
     }
     else
     {
         cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
-
-Cliente datoModificar(Cliente cli)
-{
-    int opc, tel;
-    long long cuit;
-    float importe;
-    string cambiar;
-    do
-    {
-        cout << endl;
-        cli.mostrarCliente();
-        cout << endl;
-        cout << "===========================" << endl;
-        cout << "SELECCIONE DATO A MODIFICAR" << endl;
-        cout << "===========================" << endl;
-        cout << " (1) NOMBRE.               " << endl;
-        cout << " (2) DIRECCION.            " << endl;
-        cout << " (3) CUIT.                 " << endl;
-        cout << " (4) TELEFONO.             " << endl;
-        cout << " (5) CORREO.               " << endl;
-        cout << " (6) CUENTA CORRIENTE.     " << endl;
-        cout << " (7) LIMITE DE CREDITO.    " << endl;
-        cout << " (8) ACTIVAR / DESACTIVAR. " << endl;
-        cout << "===========================" << endl;
-        cout << " (0) SALIR.                " << endl;
-        cout << endl;
-        cout << " OPC >> ";
-        cin >> opc;
-
-        switch (opc)
-        {
-        case 1:
-            cout << " NOMBRE: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setNombre(cambiar);
-            break;
-        case 2:
-            cout << " DIRECCION: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setDireccion(cambiar);
-            break;
-        case 3:
-            cout << " CUIT: " << endl;
-            cin >> cuit;
-            cli.setCUIT(cuit);
-            break;
-        case 4:
-            cout << " TELEFONO: " << endl;
-            cin >> tel;
-            cli.setTelefono(tel);
-            break;
-        case 5:
-            cout << " CORREO: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setEmail(cambiar);
-            break;
-        case 6:
-            cout << " CUENTA CORRIENTE: " << endl;
-            if(cli.getCuentaCorriente())
-            {
-                cout << endl;
-                cout << " == CTA CTE DESACTIVADA == " << endl;
-                cli.setCuentaCorriente(false);
-            }
-            else
-            {
-                cout << endl;
-                cout << " == CTA CTE ACTIVA == " << endl;
-                cli.setCuentaCorriente(true);
-            }
-            break;
-        case 7:
-            cout << " LIMITE DE CREDITO: " << endl;
-            cin >> importe;
-            cli.setLimiteCredito(importe);
-            break;
-        case 8:
-            cout << " CLIENTE: " << endl;
-            if(cli.getEstadoCliente())
-            {
-                cout << " == DESACTIVADO == " << endl;
-                cli.setEstadoCliete(false);
-                system("pause");
-                system ("cls");
-            }
-            else
-            {
-                cout << " == ACTIVADO == " << endl;
-                cli.setEstadoCliete(true);
-                system("pause");
-                system ("cls");
-            }
-            break;
-        case 0:
-            system ("cls");
-            return cli;
-            break;
-        default:
-            cout << "====================" << endl;
-            cout << "  OPCION INCORECTA  " << endl;
-            cout << "====================" << endl;
-            system("pause");
-            system ("cls");
-            break;
-        }
-
-    }
-    while (opc != 0);
-}
-
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================

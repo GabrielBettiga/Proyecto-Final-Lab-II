@@ -20,7 +20,6 @@ void cargarCliente();
 void mostrarCliente();
 void mostrarTodosClientes();
 void modificarCliente();
-Cliente datoModificar(Cliente cli);
 
 ///===============================
 ///  FUNIONES PARA VENTAS
