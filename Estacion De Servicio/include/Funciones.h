@@ -27,6 +27,7 @@ void modificarCliente();
 ///===============================
 void venta();
 void facturarxClietete();
+void facturarxConsumidorFinal();
 int seleccionarClietete();
 int seleccionarNafta();
 Surtidor cargarCombustible(int idnaf);

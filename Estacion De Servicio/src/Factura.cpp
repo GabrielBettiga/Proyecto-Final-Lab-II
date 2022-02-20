@@ -15,7 +15,7 @@ Factura::Factura()
     _Litros = 0;
     _Total = 0;
     _Saldo = 0;
-    _Paga=false;
+    _Paga = false;
 }
 
 bool Factura::Guardar()
@@ -68,7 +68,7 @@ int Factura::CantFactura()
     int bytes, cant;
 
     FILE *p;
-    p = fopen("Factura.dat", "rb");
+    p = fopen("Facturas.dat", "rb");
 
     if (p == NULL)
     {
@@ -89,7 +89,7 @@ void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur)
     setCliente(cli);
     _Fecha.FechaActual();
 
-    _NumFac = CantFactura()+1;
+    _NumFac = (CantFactura()+1);
     _IDnaft = naf.getIDtipoDeNafta();
     _Precio = naf.getprecio();
     strcpy (_Descripcion,naf.getnombreDeCombustible());
