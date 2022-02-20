@@ -29,6 +29,7 @@ void venta();
 void facturarxClietete();
 int seleccionarClietete();
 int seleccionarNafta();
+Surtidor cargarCombustible(int idnaf);
 
 ///===============================
 ///  FUNIONES PARA COBRANZAS

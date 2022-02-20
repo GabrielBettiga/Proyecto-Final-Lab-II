@@ -437,11 +437,19 @@ void facturarxClietete(){
             if((posNaf = seleccionarNafta()) != -1){
                 cli.leerdeDisco(posCli);
                 naf.LeerDeDisco(posNaf);
+                sur = cargarCombustible(naf.getIDtipoDeNafta());
             }
     }
 
-    cli.mostrar();
-    naf.Mostrar();
+    cout << "NUMERO:";
+    cout << sur.getIDsurtidor() << endl;
+    cout << "litros :";
+    cout << sur.getLitros() << endl;
+
+
+
+    //cli.mostrar();
+    //naf.Mostrar();
     system("pause");
 
 
@@ -512,6 +520,89 @@ int seleccionarNafta(){
     return -1;
 }
 
+Surtidor cargarCombustible(int IDnaf){
+    int opc, numero;
+    Surtidor sur;
+    float pesos, litros;
+
+
+    system("cls");
+
+    cout << " ============================ " << endl;
+    cout << "  INDIQUE NUMERO DE SURTIDOR  " << endl;
+    cout << " ============================ " << endl;
+    cout << " >> ";
+    cin >> numero;
+
+    while(sur.buscarPorID(numero) < -1){
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << "  N DE SURTIDOR NO EXISTE     " << endl;
+        cout << " ============================ " << endl;
+        cout << " INGRESE OTRO                 " << endl;
+        cout << " >> ";
+        cin >> numero;
+    }
+
+    do{
+    system("cls");
+    cout << " SURTIDOR N " << sur.getIDsurtidor() << ": "<<endl;
+    cout << " ===================== " << endl;
+    cout << " (1) CARGAR POS PESOS  " << endl;
+    cout << " (2) CARGAR POR LITROS " << endl;
+    cout << " (0) SALIR             " << endl;
+    cout << " ===================== " << endl;
+    cout << " OPC >> ";
+    cin >> opc;
+
+    if(opc == 1){
+        system("cls");
+        cout << endl;
+        cout << " PESOS A CARGAR : ";
+        cin >> pesos;
+
+        while(pesos < 1){
+            system("cls");
+            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
+            cout << " PESOS A CARGAR : ";
+            cin >> pesos;
+        }
+        sur.CombertirLitros(IDnaf,pesos);
+        return sur;
+    }
+    else {
+        if(opc == 2){
+            system("cls");
+            cout << endl;
+            cout << " LITROS A CARGAR : ";
+            cin >> litros;
+
+            while(litros < 1){
+            system("cls");
+            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
+            cout << " PESOS A CARGAR : ";
+            cin >> litros;
+            }
+            sur.setLitros(litros);
+            return sur;
+        }
+        else {
+            if(opc != 0){
+                system ("cls");
+                cout << " ========================= " << endl;
+                cout << "       OPCION INCORECTA    " << endl;
+                cout << " ========================= " << endl;
+                system ("pause");
+            }
+        }
+    }
+
+    }while (opc != 0);
+    sur.setIDsurtidor(-1);
+    sur.setLitros(0);
+    return sur;
+
+}
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
