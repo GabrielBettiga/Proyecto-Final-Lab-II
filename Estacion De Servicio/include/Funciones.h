@@ -59,6 +59,8 @@ void vaciarTanque();
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================
+void menuInfores();
 
+void informeCombustibles();
 
 #endif // FUNCIONES_H_INCLUDED

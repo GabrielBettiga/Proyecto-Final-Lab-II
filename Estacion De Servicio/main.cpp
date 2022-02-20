@@ -44,7 +44,7 @@ int main(){
                 menuTanques();
                 break;
             case 6:
-                /// INFORMES
+                menuInfores();
                 break;
             case 0:
                 cout << "== FIN ==" << endl;
