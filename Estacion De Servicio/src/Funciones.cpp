@@ -372,140 +372,27 @@ void modificarCliente()
 
     if((pos = obj.BuscarIDCliente(num)) >= 0)
     {
-
-        datoModificar(obj).modificardeDisco(pos);
+        obj.modificarDatoCliente();
+        obj.modificardeDisco(pos);
     }
     else
     {
         cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
-
-Cliente datoModificar(Cliente cli)
-{
-    int opc, tel;
-    long long cuit;
-    float importe;
-    string cambiar;
-    do
-    {
-        cout << endl;
-        cli.mostrarCliente();
-        cout << endl;
-        cout << "===========================" << endl;
-        cout << "SELECCIONE DATO A MODIFICAR" << endl;
-        cout << "===========================" << endl;
-        cout << " (1) NOMBRE.               " << endl;
-        cout << " (2) DIRECCION.            " << endl;
-        cout << " (3) CUIT.                 " << endl;
-        cout << " (4) TELEFONO.             " << endl;
-        cout << " (5) CORREO.               " << endl;
-        cout << " (6) CUENTA CORRIENTE.     " << endl;
-        cout << " (7) LIMITE DE CREDITO.    " << endl;
-        cout << " (8) ACTIVAR / DESACTIVAR. " << endl;
-        cout << "===========================" << endl;
-        cout << " (0) SALIR.                " << endl;
-        cout << endl;
-        cout << " OPC >> ";
-        cin >> opc;
-
-        switch (opc)
-        {
-        case 1:
-            cout << " NOMBRE: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setNombre(cambiar);
-            break;
-        case 2:
-            cout << " DIRECCION: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setDireccion(cambiar);
-            break;
-        case 3:
-            cout << " CUIT: " << endl;
-            cin >> cuit;
-            cli.setCUIT(cuit);
-            break;
-        case 4:
-            cout << " TELEFONO: " << endl;
-            cin >> tel;
-            cli.setTelefono(tel);
-            break;
-        case 5:
-            cout << " CORREO: " << endl;
-            cin.ignore();
-            getline(cin,cambiar);
-            cli.setEmail(cambiar);
-            break;
-        case 6:
-            cout << " CUENTA CORRIENTE: " << endl;
-            if(cli.getCuentaCorriente())
-            {
-                cout << endl;
-                cout << " == CTA CTE DESACTIVADA == " << endl;
-                cli.setCuentaCorriente(false);
-            }
-            else
-            {
-                cout << endl;
-                cout << " == CTA CTE ACTIVA == " << endl;
-                cli.setCuentaCorriente(true);
-            }
-            break;
-        case 7:
-            cout << " LIMITE DE CREDITO: " << endl;
-            cin >> importe;
-            cli.setLimiteCredito(importe);
-            break;
-        case 8:
-            cout << " CLIENTE: " << endl;
-            if(cli.getEstadoCliente())
-            {
-                cout << " == DESACTIVADO == " << endl;
-                cli.setEstadoCliete(false);
-                system("pause");
-                system ("cls");
-            }
-            else
-            {
-                cout << " == ACTIVADO == " << endl;
-                cli.setEstadoCliete(true);
-                system("pause");
-                system ("cls");
-            }
-            break;
-        case 0:
-            system ("cls");
-            return cli;
-            break;
-        default:
-            cout << "====================" << endl;
-            cout << "  OPCION INCORECTA  " << endl;
-            cout << "====================" << endl;
-            system("pause");
-            system ("cls");
-            break;
-        }
-
-    }
-    while (opc != 0);
-}
-
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================
 void venta()
 {
     int opc;
-    Cliente cli;
-
     do
     {
         system("cls");
         cout << endl;
-        cout << " CLINETE O CONSUMIDOR FINAL    " << endl;
+        cout << "           VENTA               " << endl;
+        cout << " ============================= " << endl;
+        cout << "  CLINETE O CONSUMIDOR FINAL   " << endl;
         cout << " ============================= " << endl;
         cout << " (1) SELECCIONAR CLIENTE       " << endl;
         cout << " (2) CONSUMIDOR FINAL          " << endl;
@@ -515,10 +402,230 @@ void venta()
         cout << " OPCION >> ";
         cin >> opc;
 
+        switch(opc){
+            case 1:
+                facturarxClietete();
+                break;
+            case 2:
+                mostrarFactura();
+                system("pause");
+                break;
+            case 0:
+                return;
+                break;
+            default:
+                cout << "====================" << endl;
+                cout << "  OPCION INCORECTA  " << endl;
+                cout << "====================" << endl;
+                system("pause");
+                system ("cls");
+                break;
+        }
     }
     while(opc != 0);
+}
+
+void facturarxClietete(){
+    Factura fac;
+    Cliente cli;
+    Surtidor sur;
+    Nafta naf;
+    int posCli, posNaf, posSur;
+
+    if((posCli = seleccionarClietete()) != -1 ){
+            if((posNaf = seleccionarNafta()) != -1){
+                cli.leerdeDisco(posCli);
+                naf.LeerDeDisco(posNaf);
+
+                sur = cargarCombustible(naf.getIDtipoDeNafta());
+
+                if(sur.getIDsurtidor() != -1){
+
+                    if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
+                        fac.Facturar(cli,naf,sur);
+                        fac.Guardar();
+                    }
+                    else {
+                        cout << endl;
+                        cout << " NO SE CARGO " << endl;
+                        system("pasue");
+                    }
+
+                }
+
+            }
+    }
+}
+
+void mostrarFactura(){
+    Factura aux;
+    int pos = 0;
+
+    while (aux.LeerDeDisco(pos++)){
+        aux.MostrarFactura();
+        cout << endl;
+    }
+}
+
+int seleccionarClietete(){
+    Cliente cli;
+    int numero, posID, posCUIT;
+    bool ok;
+
+    do {
+        system("cls");
+        cout << endl;
+        cout << " NUMERO DE CLIENTE / CUIT : ";
+        cin >> numero;
+
+        if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true){
+            cout << "POS ID " << endl;
+            cout << posID;
+            system("pause");
+            return posID;
+        }
+        else {
+            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1 && cli.getEstadoCliente() == true){
+                cout << "POS cuit  " << endl;
+                cout << posCUIT;
+                system("pause");
+                return posCUIT;
+            }
+        }
+
+        if( posID > -1 || posCUIT > -1 && cli.getEstadoCliente() != true){
+            system("cls");
+            cout << endl;
+            cout << " ============================= " << endl;
+            cout << " = CLIENTE INACTIVO INACTIVA = " << endl;
+            cout << " ============================= " << endl;
+            system("pause");
+            return -1;
+        }
+
+        cout << " ============================ " << endl;
+        cout << " NUMERO DE CLIENTE INCORECTOR " << endl;
+        cout << " ============================ " << endl;
+        cout << " (1) INGRESAR OTRO NUMERO     " << endl;
+        cout << " (0) CANCELAR CARGA           " << endl;
+        cout << " ============================ " << endl;
+        cout << " >> ";
+        cin >> ok;
+
+    }while(ok);
+    return -1;
+}
+
+int seleccionarNafta(){
+    Nafta naf;
+    int id, pos;
+    bool ok;
+
+    do {
+        system("cls");
+        cout << endl;
+        cout << " ID NAFTA: ";
+        cin >> id;
+
+        if((pos = naf.BuscarID(id)) > -1){
+            return pos;
+        }
+
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << "       EL ID NO EXISTE        " << endl;
+        cout << " ============================ " << endl;
+        cout << " (1) INGRESAR OTRO NUMERO     " << endl;
+        cout << " (0) CANCELAR CARGA           " << endl;
+        cout << " ============================ " << endl;
+        cout << " >> ";
+        cin >> ok;
+
+    }while(ok);
+    return -1;
+}
+
+Surtidor cargarCombustible(int IDnaf){
+    int opc, numero;
+    Surtidor sur;
+    float pesos, litros;
 
 
+    system("cls");
+
+    cout << " ============================ " << endl;
+    cout << "  INDIQUE NUMERO DE SURTIDOR  " << endl;
+    cout << " ============================ " << endl;
+    cout << " >> ";
+    cin >> numero;
+
+    while(sur.buscarPorID(numero) == -1){
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << "  N DE SURTIDOR NO EXISTE     " << endl;
+        cout << " ============================ " << endl;
+        cout << " INGRESE OTRO                 " << endl;
+        cout << " >> ";
+        cin >> numero;
+    }
+
+    do{
+    system("cls");
+    cout << " SURTIDOR N " << sur.getIDsurtidor() << ": "<<endl;
+    cout << " ===================== " << endl;
+    cout << " (1) CARGAR POS PESOS  " << endl;
+    cout << " (2) CARGAR POR LITROS " << endl;
+    cout << " (0) SALIR             " << endl;
+    cout << " ===================== " << endl;
+    cout << " OPC >> ";
+    cin >> opc;
+
+    if(opc == 1){
+        system("cls");
+        cout << endl;
+        cout << " PESOS A CARGAR : ";
+        cin >> pesos;
+
+        while(pesos < 1){
+            system("cls");
+            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
+            cout << " PESOS A CARGAR : ";
+            cin >> pesos;
+        }
+        sur.CombertirLitros(IDnaf,pesos);
+        return sur;
+    }
+    else {
+        if(opc == 2){
+            system("cls");
+            cout << endl;
+            cout << " LITROS A CARGAR : ";
+            cin >> litros;
+
+            while(litros < 1){
+            system("cls");
+            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
+            cout << " PESOS A CARGAR : ";
+            cin >> litros;
+            }
+            sur.setLitros(litros);
+            return sur;
+        }
+        else {
+            if(opc != 0){
+                system ("cls");
+                cout << " ========================= " << endl;
+                cout << "       OPCION INCORECTA    " << endl;
+                cout << " ========================= " << endl;
+                system ("pause");
+            }
+        }
+    }
+
+    }while (opc != 0);
+    sur.setIDsurtidor(-1);
+    sur.setLitros(0);
+    return sur;
 
 }
 ///===============================

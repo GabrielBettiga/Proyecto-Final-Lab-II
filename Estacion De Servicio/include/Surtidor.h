@@ -7,10 +7,13 @@ class Surtidor
 {
 private:
     int _IDsurtidor;
-
+    float _litros;
 
 public:
     Surtidor(int IDsurtidor = 0);
+    void setLitros(float litros);
+
+    float getLitros(){return _litros;}
 
 
 
@@ -24,10 +27,12 @@ public:
     }
 ///METODOS
     int CantSurtidor();
-    void MostraCarga(bool Carga,int IDnafta, float Litros);
-    bool Cargar(int IDnafta, float Litros);
-    float CombertirLitros (int IDnafta, float Pesos);
     void CrearSurtidor ();
+    void MostraCarga(bool Carga,int IDnafta);
+    bool Cargar(int IDnafta);
+    void CombertirLitros (int IDnafta, float Pesos);
+
+    int buscarPorID(int id);
 
     bool crearArchivo();
     bool GrabarEnDisco ();

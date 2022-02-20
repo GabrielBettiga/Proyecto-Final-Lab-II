@@ -24,6 +24,7 @@ class Cliente:public Cuenta
         int cantClientes();
         int BuscarIDCliente (int ID);
         int buscarClientexCUIT (int cuit);
+        void modificarDatoCliente();
 
         bool crearArchivo();
         bool Guardar();

@@ -16,7 +16,26 @@ using namespace std;
 Surtidor::Surtidor(int IDsurtidor)
 {
     _IDsurtidor=IDsurtidor;
+    _litros = 0;
 
+}
+
+void Surtidor::setLitros(float litros){
+    if(litros > 0){
+        _litros = litros;
+    }
+}
+
+int Surtidor::buscarPorID(int id){
+    int pos = 0;
+    while (LeerDeDisco(pos++))
+    {
+        if (_IDsurtidor == id)
+        {
+            return pos-1;
+        }
+    }
+return -1;
 }
 
 
@@ -140,13 +159,12 @@ int Surtidor::CantSurtidor()
 
 
 
-bool Surtidor::Cargar(int IDnafta, float Litros)
+bool Surtidor::Cargar(int IDnafta)
 {
     TanqueManager aux;
 
-    if (aux.Surtidor(IDnafta,Litros))
+    if (aux.Surtidor(IDnafta,_litros))
     {
-
         return true;
     }
     else
@@ -160,7 +178,7 @@ bool Surtidor::Cargar(int IDnafta, float Litros)
 
 
 
-void Surtidor::MostraCarga(bool Carga,int IDnafta, float Litros)
+void Surtidor::MostraCarga(bool Carga,int IDnafta)
 {
     Nafta Naf;
     Naf.LeerDeDisco(Naf.BuscarID(IDnafta));
@@ -169,8 +187,8 @@ void Surtidor::MostraCarga(bool Carga,int IDnafta, float Litros)
     {
         cout<< "Combustible     : "<< Naf.getnombreDeCombustible()<<endl;
         cout<< "Precio Por Litro: "<< Naf.getprecio()<<endl;
-        cout<< "Litros Cargados : "<<Litros<<endl;
-        cout<< "Precio Total    : " << Litros*Naf.getprecio()<<endl;
+        cout<< "Litros Cargados : "<< _litros <<endl;
+        cout<< "Precio Total    : " << _litros * Naf.getprecio()<<endl;
         return;
 
     }
@@ -184,13 +202,13 @@ void Surtidor::MostraCarga(bool Carga,int IDnafta, float Litros)
 
 
 
-float Surtidor::CombertirLitros (int IDnafta, float Pesos)
+void Surtidor::CombertirLitros (int IDnafta, float Pesos)
 {
     Nafta Naf;
 
     Naf.LeerDeDisco(Naf.BuscarID(IDnafta));
 
-    return Pesos/Naf.getprecio();
+    _litros = Pesos/Naf.getprecio();
 
 }
 

@@ -12,7 +12,7 @@ class Factura:public Documento
     public:
 
         Factura();
-        void Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros);
+        void Facturar (Cliente cli,Nafta naf,Surtidor sur);
         int CantFactura();
         void MostrarFactura();
         bool Guardar();

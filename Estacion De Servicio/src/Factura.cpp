@@ -83,7 +83,7 @@ int Factura::CantFactura()
 }
 
 
-void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros)
+void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur)
 {
 
     setCliente(cli);
@@ -94,7 +94,7 @@ void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur,float litros)
     _Precio = naf.getprecio();
     strcpy (_Descripcion,naf.getnombreDeCombustible());
     _IDsurtidor = sur.getIDsurtidor();
-    _Litros = litros;                                       ///VER XQ SE PASAN LOS LITROS SOLOS ????
+    _Litros = sur.getLitros();
     _Saldo = _Total = _Litros * _Precio;
     _Paga = false; /// ANTES DE GUARDAR LA FACTURA CONSULTAR SI PAGO O NO
 }
