@@ -4,6 +4,7 @@
 #include "Nafta.h"
 #include "Surtidor.h"
 #include "TanqueManager.h"
+#include "Factura.h"
 
 bool archivos(const int TAM, bool *vec);
 bool configuracion();
@@ -25,6 +26,10 @@ void modificarCliente();
 ///  FUNIONES PARA VENTAS
 ///===============================
 void venta();
+void facturarxClietete();
+Cliente seleccionarClietete();
+Nafta seleccionarNafta();
+
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================

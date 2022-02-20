@@ -386,13 +386,13 @@ void modificarCliente()
 void venta()
 {
     int opc;
-    Cliente cli;
-
     do
     {
         system("cls");
         cout << endl;
-        cout << " CLINETE O CONSUMIDOR FINAL    " << endl;
+        cout << "           VENTA               " << endl;
+        cout << " ============================= " << endl;
+        cout << "  CLINETE O CONSUMIDOR FINAL   " << endl;
         cout << " ============================= " << endl;
         cout << " (1) SELECCIONAR CLIENTE       " << endl;
         cout << " (2) CONSUMIDOR FINAL          " << endl;
@@ -402,12 +402,106 @@ void venta()
         cout << " OPCION >> ";
         cin >> opc;
 
+        switch(opc){
+            case 1:
+                facturarxClietete();
+                break;
+            case 2:
+                break;
+            case 0:
+                return;
+                break;
+            default:
+                cout << "====================" << endl;
+                cout << "  OPCION INCORECTA  " << endl;
+                cout << "====================" << endl;
+                system("pause");
+                system ("cls");
+                break;
+        }
     }
     while(opc != 0);
+}
+void facturarxClietete(){
+    Factura fac;
+    Cliente cli;
+    Surtidor sur;
+    Nafta naf;
+    float litros;
+
+    //cli = seleccionarClietete();
+    //naf = seleccionarNafta();
+
+    cli.mostrar();
+    naf.Mostrar();
+    system("pause");
+
 
 
 
 }
+
+Cliente seleccionarClietete(){
+    Cliente cli;
+    int numero, pos;
+    bool ok;
+
+    do {
+        system("cls");
+        cout << endl;
+        cout << " NUMERO DE CLIENTE / CUIT : ";
+        cin >> numero;
+
+        if(cli.BuscarIDCliente(numero) > -1){
+            return cli;
+        }
+        else {
+            if(cli.buscarClientexCUIT(numero) > -1){
+                return cli;
+            }
+        }
+
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << " NUMERO DE CLIENTE INCORECTOR " << endl;
+        cout << " ============================ " << endl;
+        cout << " (1) INGRESAR OTRO NUMERO     " << endl;
+        cout << " (0) CANCELAR CARGA           " << endl;
+        cout << " ============================ " << endl;
+        cout << " >> ";
+        cin >> ok;
+
+    }while(ok);
+}
+
+Nafta seleccionarNafta(){
+    Nafta naf;
+    int id;
+    bool ok;
+
+    do {
+        system("cls");
+        cout << endl;
+        cout << " ID NAFTA: ";
+        cin >> id;
+
+        if(naf.BuscarID(id) > -1){
+            return naf;
+        }
+
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << "       EL ID NO EXISTE        " << endl;
+        cout << " ============================ " << endl;
+        cout << " (1) INGRESAR OTRO NUMERO     " << endl;
+        cout << " (0) CANCELAR CARGA           " << endl;
+        cout << " ============================ " << endl;
+        cout << " >> ";
+        cin >> ok;
+
+    }while(ok);
+}
+
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
