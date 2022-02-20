@@ -27,8 +27,8 @@ void modificarCliente();
 ///===============================
 void venta();
 void facturarxClietete();
-Cliente seleccionarClietete();
-Nafta seleccionarNafta();
+int seleccionarClietete();
+int seleccionarNafta();
 
 ///===============================
 ///  FUNIONES PARA COBRANZAS

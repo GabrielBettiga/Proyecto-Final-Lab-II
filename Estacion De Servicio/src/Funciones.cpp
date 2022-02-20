@@ -427,10 +427,18 @@ void facturarxClietete(){
     Cliente cli;
     Surtidor sur;
     Nafta naf;
+    int posCli, posNaf, posSur;
+
     float litros;
 
-    //cli = seleccionarClietete();
-    //naf = seleccionarNafta();
+
+
+    if((posCli = seleccionarClietete()) == true ){
+            if((posNaf = seleccionarNafta()) != -1){
+                cli.leerdeDisco(posCli);
+                naf.LeerDeDisco(posNaf);
+            }
+    }
 
     cli.mostrar();
     naf.Mostrar();
@@ -441,7 +449,7 @@ void facturarxClietete(){
 
 }
 
-Cliente seleccionarClietete(){
+int seleccionarClietete(){
     Cliente cli;
     int numero, pos;
     bool ok;
@@ -452,12 +460,12 @@ Cliente seleccionarClietete(){
         cout << " NUMERO DE CLIENTE / CUIT : ";
         cin >> numero;
 
-        if(cli.BuscarIDCliente(numero) > -1){
-            return cli;
+        if((pos = cli.BuscarIDCliente(numero)) > -1){
+            return pos;
         }
         else {
-            if(cli.buscarClientexCUIT(numero) > -1){
-                return cli;
+            if((pos = cli.buscarClientexCUIT(numero)) > -1){
+                return pos;
             }
         }
 
@@ -472,11 +480,12 @@ Cliente seleccionarClietete(){
         cin >> ok;
 
     }while(ok);
+    return ok;
 }
 
-Nafta seleccionarNafta(){
+int seleccionarNafta(){
     Nafta naf;
-    int id;
+    int id, pos;
     bool ok;
 
     do {
@@ -485,8 +494,8 @@ Nafta seleccionarNafta(){
         cout << " ID NAFTA: ";
         cin >> id;
 
-        if(naf.BuscarID(id) > -1){
-            return naf;
+        if((pos = naf.BuscarID(id)) > -1){
+            return pos;
         }
 
         system("cls");
@@ -500,6 +509,7 @@ Nafta seleccionarNafta(){
         cin >> ok;
 
     }while(ok);
+    return -1;
 }
 
 ///===============================
