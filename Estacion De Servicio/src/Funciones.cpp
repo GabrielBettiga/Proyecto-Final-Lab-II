@@ -407,6 +407,8 @@ void venta()
                 facturarxClietete();
                 break;
             case 2:
+                mostrarFactura();
+                system("pause");
                 break;
             case 0:
                 return;
@@ -422,6 +424,7 @@ void venta()
     }
     while(opc != 0);
 }
+
 void facturarxClietete(){
     Factura fac;
     Cliente cli;
@@ -429,37 +432,44 @@ void facturarxClietete(){
     Nafta naf;
     int posCli, posNaf, posSur;
 
-    float litros;
-
-
-
-    if((posCli = seleccionarClietete()) == true ){
+    if((posCli = seleccionarClietete()) != -1 ){
             if((posNaf = seleccionarNafta()) != -1){
                 cli.leerdeDisco(posCli);
                 naf.LeerDeDisco(posNaf);
+
                 sur = cargarCombustible(naf.getIDtipoDeNafta());
+
+                if(sur.getIDsurtidor() != -1){
+
+                    if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
+                        fac.Facturar(cli,naf,sur);
+                        fac.Guardar();
+                    }
+                    else {
+                        cout << endl;
+                        cout << " NO SE CARGO " << endl;
+                        system("pasue");
+                    }
+
+                }
+
             }
     }
+}
 
-    cout << "NUMERO:";
-    cout << sur.getIDsurtidor() << endl;
-    cout << "litros :";
-    cout << sur.getLitros() << endl;
+void mostrarFactura(){
+    Factura aux;
+    int pos = 0;
 
-
-
-    //cli.mostrar();
-    //naf.Mostrar();
-    system("pause");
-
-
-
-
+    while (aux.LeerDeDisco(pos++)){
+        aux.MostrarFactura();
+        cout << endl;
+    }
 }
 
 int seleccionarClietete(){
     Cliente cli;
-    int numero, pos;
+    int numero, posID, posCUIT;
     bool ok;
 
     do {
@@ -468,16 +478,31 @@ int seleccionarClietete(){
         cout << " NUMERO DE CLIENTE / CUIT : ";
         cin >> numero;
 
-        if((pos = cli.BuscarIDCliente(numero)) > -1){
-            return pos;
+        if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true){
+            cout << "POS ID " << endl;
+            cout << posID;
+            system("pause");
+            return posID;
         }
         else {
-            if((pos = cli.buscarClientexCUIT(numero)) > -1){
-                return pos;
+            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1 && cli.getEstadoCliente() == true){
+                cout << "POS cuit  " << endl;
+                cout << posCUIT;
+                system("pause");
+                return posCUIT;
             }
         }
 
-        system("cls");
+        if( posID > -1 || posCUIT > -1 && cli.getEstadoCliente() != true){
+            system("cls");
+            cout << endl;
+            cout << " ============================= " << endl;
+            cout << " = CLIENTE INACTIVO INACTIVA = " << endl;
+            cout << " ============================= " << endl;
+            system("pause");
+            return -1;
+        }
+
         cout << " ============================ " << endl;
         cout << " NUMERO DE CLIENTE INCORECTOR " << endl;
         cout << " ============================ " << endl;
@@ -488,7 +513,7 @@ int seleccionarClietete(){
         cin >> ok;
 
     }while(ok);
-    return ok;
+    return -1;
 }
 
 int seleccionarNafta(){
@@ -534,7 +559,7 @@ Surtidor cargarCombustible(int IDnaf){
     cout << " >> ";
     cin >> numero;
 
-    while(sur.buscarPorID(numero) < -1){
+    while(sur.buscarPorID(numero) == -1){
         system("cls");
         cout << " ============================ " << endl;
         cout << "  N DE SURTIDOR NO EXISTE     " << endl;

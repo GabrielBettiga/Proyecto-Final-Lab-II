@@ -204,13 +204,15 @@ return _aux;
 
 void TanqueManager::Mostrar(){
     Nafta aux;
-    aux.BuscarID(_aux.getIDnafta());
+
     cout << "ID TANQUE  : ";
     cout << _aux.getIDtanque() << endl;
     cout << "ID NAFTA   : ";
     cout << _aux.getIDnafta()  << endl;
-    cout << "NOMBRE     : ";
-    cout << aux.getnombreDeCombustible() <<endl;
+    if(aux.BuscarID(_aux.getIDnafta()) != -1){
+        cout << "NOMBRE     : ";
+        cout << aux.getnombreDeCombustible() <<endl;
+    }
     cout << "MAXIMA CAP : ";
     cout << _aux.getCapacidad() << endl;
     cout << "OCUPACION  : ";

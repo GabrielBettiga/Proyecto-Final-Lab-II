@@ -165,7 +165,6 @@ bool Surtidor::Cargar(int IDnafta)
 
     if (aux.Surtidor(IDnafta,_litros))
     {
-
         return true;
     }
     else

@@ -31,6 +31,8 @@ int seleccionarClietete();
 int seleccionarNafta();
 Surtidor cargarCombustible(int idnaf);
 
+void mostrarFactura();
+
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
