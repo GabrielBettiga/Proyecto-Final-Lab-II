@@ -407,8 +407,7 @@ void venta()
                 facturarxClietete();
                 break;
             case 2:
-                mostrarFactura();
-                system("pause");
+                facturarxConsumidorFinal();
                 break;
             case 0:
                 return;
@@ -432,11 +431,14 @@ void facturarxClietete(){
     Nafta naf;
     int posCli, posNaf, posSur;
 
+
+
     if((posCli = seleccionarClietete()) != -1 ){
+
             if((posNaf = seleccionarNafta()) != -1){
+
                 cli.leerdeDisco(posCli);
                 naf.LeerDeDisco(posNaf);
-
                 sur = cargarCombustible(naf.getIDtipoDeNafta());
 
                 if(sur.getIDsurtidor() != -1){
@@ -444,16 +446,62 @@ void facturarxClietete(){
                     if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
                         fac.Facturar(cli,naf,sur);
                         fac.Guardar();
+
+                        system("cls");
+
+                        cout << "NOMBRE     : ";
+                        cout << cli.getNombre() << endl;
+                        cout << "CUIT       : ";
+                        cout << cli.getCUIT() << endl;
+
+                        fac.MostrarFactura();
+                        system("pause");
                     }
                     else {
                         cout << endl;
                         cout << " NO SE CARGO " << endl;
-                        system("pasue");
+                        system("pause");
                     }
-
                 }
-
             }
+    }
+}
+
+void facturarxConsumidorFinal(){
+    Factura fac;
+    Cliente cli;
+    Surtidor sur;
+    Nafta naf;
+    int posCli = 0, posNaf, posSur;
+
+    if((posNaf = seleccionarNafta()) != -1){
+
+        cli.leerdeDisco(posCli);
+        naf.LeerDeDisco(posNaf);
+        sur = cargarCombustible(naf.getIDtipoDeNafta());
+
+        if(sur.getIDsurtidor() != -1){
+
+            if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
+                fac.Facturar(cli,naf,sur);
+                fac.Guardar();
+
+                system("cls");
+
+                cout << "NOMBRE     : ";
+                cout << cli.getNombre() << endl;
+                cout << "CUIT       : ";
+                cout << cli.getCUIT() << endl;
+
+                fac.MostrarFactura();
+                system("pause");
+            }
+            else {
+                cout << endl;
+                cout << " NO SE CARGO " << endl;
+                system("pause");
+            }
+        }
     }
 }
 
@@ -479,16 +527,10 @@ int seleccionarClietete(){
         cin >> numero;
 
         if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true){
-            cout << "POS ID " << endl;
-            cout << posID;
-            system("pause");
             return posID;
         }
         else {
             if((posCUIT = cli.buscarClientexCUIT(numero)) > -1 && cli.getEstadoCliente() == true){
-                cout << "POS cuit  " << endl;
-                cout << posCUIT;
-                system("pause");
                 return posCUIT;
             }
         }
@@ -623,6 +665,13 @@ Surtidor cargarCombustible(int IDnaf){
     }
 
     }while (opc != 0);
+
+    system ("cls");
+    cout << " ========================= " << endl;
+    cout << "       CARGA CANCELADA     " << endl;
+    cout << " ========================= " << endl;
+    system ("pause");
+
     sur.setIDsurtidor(-1);
     sur.setLitros(0);
     return sur;
