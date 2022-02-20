@@ -1093,10 +1093,107 @@ void vaciarTanque()
     aux.modificardeDisco(pos);
     aux.Mostrar();
     system("pause");
-
-
-
 }
 ///===============================
 ///  FUNIONES PARA INFORMES
 ///===============================
+
+void menuInfores(){
+    int opc;
+    do
+    {
+        cout << endl;
+        cout << "         INFORMES          " << endl;
+        cout << "===========================" << endl;
+        cout << " (1) VENTAS                " << endl;
+        cout << " (2) COMBUSTIBLE           " << endl;
+        cout << " (3) TANQUES               " << endl;
+        cout << " (0) SALIR                 " << endl;
+        cout << "===========================" << endl;
+        cout << " >> ";
+        cin >> opc;
+        system("cls");
+
+        switch(opc)
+        {
+        case 1:
+
+            break;
+        case 2:
+            informeCombustibles();
+            break;
+        case 3:
+
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+        }
+
+    }
+    while(opc != 0);
+
+}
+
+void informeCombustibles(){
+
+    Nafta aux;
+    int pos = 0;
+
+    int *vecIDNaft = NULL;
+    float *vecDisponible = NULL;
+    float *vecLitros = NULL;
+
+    int TAM = aux.CantCombustible();
+
+    vecIDNaft = new int [TAM];
+    vecDisponible = new float [TAM];
+    vecLitros = new float [TAM];
+
+
+    if(vecDisponible == nullptr){
+        cout << "NO MEMORIA VEC 1" << endl;
+        return;
+    }
+    if(vecLitros == nullptr){
+        cout << "NO MEMORIA VEC 2" << endl;
+        return;
+    }
+
+    for(int i=0; i<TAM; i++){
+        vecLitros[i] = 0;
+        vecDisponible[i] = 0;
+    }
+
+    while(aux.LeerDeDisco(pos++)){
+        vecIDNaft[pos-1] = aux.getIDtipoDeNafta();
+    }
+
+    TanqueManager tanMan;
+
+    for(int i=0; i<TAM; i++){
+        vecDisponible[i] = tanMan.DisponibleAllenarxNafta(vecIDNaft[i]);
+        vecLitros[i] = tanMan.DisponiblexCombustible(vecIDNaft[i]);
+    }
+
+    for(int i=0; i<TAM; i++){
+        cout << "ID NAFTA       : ";
+        cout << vecIDNaft[i] << endl;
+        cout << " DISPONIBLE    : ";
+        cout << vecDisponible[i] << endl;
+        cout << " LITROS        : ";
+        cout << vecLitros[i] << endl;
+    }
+
+    delete vecIDNaft;
+    delete vecDisponible;
+    delete vecLitros;
+
+}
+
