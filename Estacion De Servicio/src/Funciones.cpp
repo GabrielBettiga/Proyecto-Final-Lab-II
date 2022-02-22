@@ -1156,13 +1156,20 @@ void informeCombustibles(){
     vecDisponible = new float [TAM];
     vecLitros = new float [TAM];
 
+    if(vecIDNaft == nullptr){
+        cout << "NO MEMORIA VEC NAFTA" << endl;
+        system("pause");
+        return;
+    }
 
     if(vecDisponible == nullptr){
-        cout << "NO MEMORIA VEC 1" << endl;
+        cout << "NO MEMORIA VEC DISPONIBLE" << endl;
+        system("pause");
         return;
     }
     if(vecLitros == nullptr){
-        cout << "NO MEMORIA VEC 2" << endl;
+        cout << "NO MEMORIA VEC LITROS" << endl;
+        system("pause");
         return;
     }
 
@@ -1182,13 +1189,23 @@ void informeCombustibles(){
         vecLitros[i] = tanMan.DisponiblexCombustible(vecIDNaft[i]);
     }
 
+    cout << left;
+    cout << setw(4) <<" ID ";
+    cout << setw(10) << " NOMBRE ";
+    cout << setw(10) << " CAPACIDAD ";
+    cout << setw(10) << " LITROS " << endl;
+    cout << " ======================================================== " << endl;
+
+
     for(int i=0; i<TAM; i++){
-        cout << "ID NAFTA       : ";
-        cout << vecIDNaft[i] << endl;
-        cout << " DISPONIBLE    : ";
-        cout << vecDisponible[i] << endl;
-        cout << " LITROS        : ";
-        cout << vecLitros[i] << endl;
+        cout << left;
+        cout << setw(4) << vecIDNaft[i];
+        aux.BuscarID(vecIDNaft[i]);
+        cout << setw(10) << aux.getnombreDeCombustible();
+        cout << right << fixed << setprecision(2);
+        cout << setw(10) << vecDisponible[i];
+        cout << setw(10) << vecLitros[i] << endl;
+
     }
 
     delete vecIDNaft;

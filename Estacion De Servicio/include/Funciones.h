@@ -1,5 +1,6 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
+#include <iomanip>
 #include "Cliente.h"
 #include "Nafta.h"
 #include "Surtidor.h"
