@@ -531,12 +531,12 @@ Surtidor cargarCombustible()
     return sur;
 }
 
-void mostrarFacturas(bool ok)
+void listFacCli(Cliente cli, bool estado)
 {
     Factura aux;
     int pos = 0;
-    Cliente cli;
 
+    cout << endl;
     cout << left;
     cout << setw(6) <<" NUM ";
     cout << setw(20) << " CLIENTE ";
@@ -547,10 +547,8 @@ void mostrarFacturas(bool ok)
 
     while (aux.LeerDeDisco(pos++))
     {
-        if(ok){
-                aux.MostrarFactura();
-        }
-        else{
+        if(aux.getCliente() == cli.getID() && aux.getPaga() == estado){
+
             cout << left;
             cout << setw(6) << aux.getNumFac();
             cli.BuscarIDCliente(aux.getCliente());
@@ -559,6 +557,40 @@ void mostrarFacturas(bool ok)
             cout << setw(10) << aux.getSaldo();
             cout << setw(6) << aux.getPaga() << endl;
         }
+    }
+    system("pause");
+}
+
+float deudaxCliente(Cliente cli){
+    Factura aux;
+    int pos = 0;
+    float deuda = 0;
+
+    while(aux.LeerDeDisco(pos++)){
+        if(aux.getCliente() == cli.getID()){
+            if(aux.getPaga() == false){
+                deuda += aux.getSaldo();
+            }
+        }
+    }
+    return deuda;
+}
+
+void deuda(){
+    Cliente cli;
+    int pos;
+
+    pos = seleccionarClietete();
+    if(pos > -1){
+        cli.leerdeDisco(pos);
+
+        system("cls");
+        cout << endl;
+        cout << " ID: " << cli.getID() << endl;
+        cout << " CLIENTE : " << cli.getNombre() << endl;
+        cout << " LA DEUDA DEL CLEINTE ES DE : " << deudaxCliente(cli) << endl;
+        cout << "=========================================================" << endl;
+        listFacCli(cli, false);
     }
 }
 
@@ -582,29 +614,16 @@ int seleccionarClietete()
             return 0;
         }
 
-        if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true)
+        if((posID = cli.BuscarIDCliente(numero)) > -1)
         {
             return posID;
         }
         else
         {
-            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1 && cli.getEstadoCliente() == true)
+            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1)
             {
                 return posCUIT;
             }
-        }
-
-        if( posID > -1 || posCUIT > -1 && cli.getEstadoCliente() != true)
-        {
-            system("cls");
-            cout << endl;
-            cout << " ============================= " << endl;
-            cout << " = CLIENTE INACTIVO INACTIVA = " << endl;
-            cout << " ============================= " << endl;
-            cout << "      SE FACTURARA COMO CF     " << endl;
-            cout << " ============================= " << endl;
-            system("pause");
-            return -1;
         }
 
         system("cls");
@@ -717,9 +736,49 @@ int seleccionarNafta()
 ///===============================
 
 void menuCobranzas(){
-    system("cls");
-    mostrarFacturas(false);
-    system("pause");
+
+    int opc;
+
+    do
+    {
+        system("cls");
+        cout << endl;
+        cout << " ========================= " << endl;
+        cout << "         COBRANZA          " << endl;
+        cout << " ========================= " << endl;
+        cout << " (1) DEUDA TOTAL           " << endl;
+        cout << " (2) DEUDA POR CLIENTE     " << endl;
+        cout << " (3) HACER RECIBO          " << endl;
+        cout << "===========================" << endl;
+        cout << " (0) SALIR                 " << endl;
+        cout << " >> ";
+        cin >> opc;
+        system("cls");
+
+        switch(opc)
+        {
+        case 1:
+            ///DEUDA TOTAL DE FACTRAS;
+            break;
+        case 2:
+            deuda();
+            break;
+        case 3:
+
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+        }
+
+    }
+    while(opc != 0);
 }
 
 ///===============================

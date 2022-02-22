@@ -33,17 +33,13 @@ int seleccionarClietete();
 int seleccionarSurtidor();
 void hacerFactura(Cliente cli, Surtidor sur, bool mostrar = false, bool cobrar = false);
 
-
-
-
-
-void mostrarFacturas(bool ok = true);
-
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
 void menuCobranzas();
-
+void listFacCli(Cliente cli, bool estado);
+float deudaxCliente(Cliente cli);
+void deuda();
 
 
 ///===============================
