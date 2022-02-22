@@ -27,11 +27,14 @@ void modificarCliente();
 ///  FUNIONES PARA VENTAS
 ///===============================
 void venta();
-void facturarxClietete();
-void facturarxConsumidorFinal();
-int seleccionarClietete();
+Surtidor cargarCombustible();
 int seleccionarNafta();
-Surtidor cargarCombustible(int idnaf);
+int seleccionarClietete();
+int seleccionarSurtidor();
+
+
+
+
 
 void mostrarFactura();
 

@@ -177,7 +177,7 @@ bool Surtidor::Cargar()
 {
     TanqueManager aux;
 
-    if (aux.Surtidor(_IDNafta,_litros))
+    if (aux.Surtidor( getNafta().getIDtipoDeNafta(), _litros))
     {
         return true;
     }
@@ -190,7 +190,10 @@ bool Surtidor::Cargar()
 
 void Surtidor::MostraCarga(){
 
-    cout << " COMBUSTIBLE : "<< getNafta().getnombreDeCombustible() <<endl;
+    cout << " ================== " << endl;
+    cout << "   DETALLE CARGA    " << endl;
+    cout << " ================== " << endl;
+    cout << " COMB   : "<< getNafta().getnombreDeCombustible() <<endl;
     cout << " PRECIO : "<< getNafta().getprecio() <<endl;
     cout << " LITROS : "<< _litros <<endl;
     cout << " ================== " << endl;
@@ -199,7 +202,7 @@ void Surtidor::MostraCarga(){
 
 void Surtidor::CombertirLitros (float Pesos){
 
-    _litros = Pesos/getNafta().getIDtipoDeNafta();
+    _litros = Pesos / getNafta().getprecio();
 
 }
 
