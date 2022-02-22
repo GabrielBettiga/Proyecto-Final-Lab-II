@@ -386,16 +386,28 @@ void modificarCliente()
 
 void venta()
 {
-    Surtidor sr;
-    sr = cargarCombustible();
+    /// 1) CARGA => TE LA DA EL SURTIDOR
+    /// 2) CLIENTE
+    /// 3) FACTURAR
+    /// 4) SI SE PAGA LA FACTURA O VA A CEUNTA.
 
-    cout << sr.getIDsurtidor() << endl;
+    Surtidor sur;
+    Cliente cli;
+    int posCli;
 
-    sr.MostraCarga();
+    sur = cargarCombustible();
+    if(sur.getIDsurtidor() < 0){
+        return;
+    }
+    posCli = seleccionarClietete();
+    cli.leerdeDisco(posCli);
 
-    cout << "venta "<< endl;
-    system("pause");
-
+    if(posCli <= 0){
+        hacerFactura(cli, sur,true,true);
+    }
+    else {
+        hacerFactura(cli, sur,true);
+    }
 }
 
 Surtidor cargarCombustible()
@@ -519,15 +531,34 @@ Surtidor cargarCombustible()
     return sur;
 }
 
-void mostrarFactura()
+void mostrarFacturas(bool ok)
 {
     Factura aux;
     int pos = 0;
+    Cliente cli;
+
+    cout << left;
+    cout << setw(6) <<" NUM ";
+    cout << setw(20) << " CLIENTE ";
+    cout << setw(10) << " TOTAL ";
+    cout << setw(10) << " SALDO ";
+    cout << setw(6) << " ESTADO " << endl;
+    cout << " ======================================================== " << endl;
 
     while (aux.LeerDeDisco(pos++))
     {
-        aux.MostrarFactura();
-        cout << endl;
+        if(ok){
+                aux.MostrarFactura();
+        }
+        else{
+            cout << left;
+            cout << setw(6) << aux.getNumFac();
+            cli.BuscarIDCliente(aux.getCliente());
+            cout << setw(20) << cli.getNombre();
+            cout << setw(10) << aux.getTotal();
+            cout << setw(10) << aux.getSaldo();
+            cout << setw(6) << aux.getPaga() << endl;
+        }
     }
 }
 
@@ -541,8 +572,15 @@ int seleccionarClietete()
     {
         system("cls");
         cout << endl;
+        cout << " ========================== " << endl;
+        cout << " (1) PARA CONSUMIDOR FINAL  " << endl;
+        cout << " ========================== " << endl;
         cout << " NUMERO DE CLIENTE / CUIT : ";
         cin >> numero;
+
+        if(numero == 0){
+            return 0;
+        }
 
         if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true)
         {
@@ -563,10 +601,13 @@ int seleccionarClietete()
             cout << " ============================= " << endl;
             cout << " = CLIENTE INACTIVO INACTIVA = " << endl;
             cout << " ============================= " << endl;
+            cout << "      SE FACTURARA COMO CF     " << endl;
+            cout << " ============================= " << endl;
             system("pause");
             return -1;
         }
 
+        system("cls");
         cout << " ============================ " << endl;
         cout << " NUMERO DE CLIENTE INCORECTOR " << endl;
         cout << " ============================ " << endl;
@@ -612,7 +653,27 @@ int seleccionarSurtidor()
     }
     while(ok);
     return -1;
+}
 
+void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
+    Factura aux;
+
+    aux.Facturar(cli, sur);
+    if(aux.Guardar()){
+        if(mostrar){
+            system("cls");
+            aux.MostrarFactura();
+            system("pause");
+        }
+        if(cobrar){
+            cout << " COBRAR " << endl;
+            system("pause");
+        }
+    }
+    else {
+        cout << "ERROR EN EL GUARDDO " << endl;
+        system("pase");
+    }
 
 }
 
@@ -654,6 +715,12 @@ int seleccionarNafta()
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
+
+void menuCobranzas(){
+    system("cls");
+    mostrarFacturas(false);
+    system("pause");
+}
 
 ///===============================
 ///  FUNIONES PARA COMUSTIBLES

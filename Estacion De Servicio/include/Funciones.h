@@ -31,16 +31,20 @@ Surtidor cargarCombustible();
 int seleccionarNafta();
 int seleccionarClietete();
 int seleccionarSurtidor();
+void hacerFactura(Cliente cli, Surtidor sur, bool mostrar = false, bool cobrar = false);
 
 
 
 
 
-void mostrarFactura();
+void mostrarFacturas(bool ok = true);
 
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
+void menuCobranzas();
+
+
 
 ///===============================
 ///  FUNIONES PARA COMUSTIBLES

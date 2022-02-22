@@ -83,16 +83,16 @@ int Factura::CantFactura()
 }
 
 
-void Factura::Facturar (Cliente cli,Nafta naf,Surtidor sur)
+void Factura::Facturar (Cliente cli, Surtidor sur)
 {
 
     setCliente(cli);
     _Fecha.FechaActual();
 
     _NumFac = (CantFactura()+1);
-    _IDnaft = naf.getIDtipoDeNafta();
-    _Precio = naf.getprecio();
-    strcpy (_Descripcion,naf.getnombreDeCombustible());
+    _IDnaft = sur.getNafta().getIDtipoDeNafta();
+    _Precio = sur.getNafta().getprecio();
+    strcpy (_Descripcion, sur.getNafta().getnombreDeCombustible());
     _IDsurtidor = sur.getIDsurtidor();
     _Litros = sur.getLitros();
     _Saldo = _Total = _Litros * _Precio;
@@ -110,7 +110,7 @@ void Factura::MostrarFactura()
     cout << "$ X LITROS : $ " << _Precio << endl;
     cout << "LITROS     : " << _Litros << endl;
     cout << "TOTAL      : $ " << _Total << endl;
-    cout << "SALDO      : " << _Saldo << endl;
+    cout << "SALDO      : $ " << _Saldo << endl;
 
 
 }
@@ -125,7 +125,7 @@ void Factura::modificarSaldo (Recibo r)
         if(r.getNumFactura()[i] != 0)
         {
             pos = buscarPorNumero(r.getNumFactura()[i]);
-                  if(pos > 0)
+            if(pos > 0)
             {
                 _Saldo -= r.getImportePago()[i];
                 if(_Saldo == 0)
