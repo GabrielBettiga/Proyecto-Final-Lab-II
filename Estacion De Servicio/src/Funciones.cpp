@@ -594,6 +594,11 @@ void deuda(){
     }
 }
 
+void hacerPago(){
+    cout << "HACER " << endl;
+    system("pause");
+}
+
 int seleccionarClietete()
 {
     Cliente cli;
@@ -746,9 +751,8 @@ void menuCobranzas(){
         cout << " ========================= " << endl;
         cout << "         COBRANZA          " << endl;
         cout << " ========================= " << endl;
-        cout << " (1) DEUDA TOTAL           " << endl;
-        cout << " (2) DEUDA POR CLIENTE     " << endl;
-        cout << " (3) HACER RECIBO          " << endl;
+        cout << " (1) DEUDA POR CLIENTE     " << endl;
+        cout << " (2) HACER RECIBO          " << endl;
         cout << "===========================" << endl;
         cout << " (0) SALIR                 " << endl;
         cout << " >> ";
@@ -758,13 +762,10 @@ void menuCobranzas(){
         switch(opc)
         {
         case 1:
-            ///DEUDA TOTAL DE FACTRAS;
-            break;
-        case 2:
             deuda();
             break;
-        case 3:
-
+        case 2:
+            hacerPago();
             break;
         case 0:
             return;
@@ -1304,7 +1305,6 @@ void informeCombustibles()
     cout << setw(10) << " LITROS " << endl;
     cout << " ======================================================== " << endl;
 
-
     for(int i=0; i<TAM; i++)
     {
         cout << left;
@@ -1314,12 +1314,10 @@ void informeCombustibles()
         cout << right << fixed << setprecision(2);
         cout << setw(10) << vecDisponible[i];
         cout << setw(10) << vecLitros[i] << endl;
-
     }
-
     delete vecIDNaft;
     delete vecDisponible;
     delete vecLitros;
-
 }
+
 

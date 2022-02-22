@@ -6,6 +6,7 @@
 #include "Surtidor.h"
 #include "TanqueManager.h"
 #include "Factura.h"
+#include "Recibo.h"
 
 bool archivos(const int TAM, bool *vec);
 bool configuracion();
@@ -40,6 +41,9 @@ void menuCobranzas();
 void listFacCli(Cliente cli, bool estado);
 float deudaxCliente(Cliente cli);
 void deuda();
+void hacerPago();
+void emitirRecibo();
+
 
 
 ///===============================
@@ -66,5 +70,6 @@ void vaciarTanque();
 void menuInfores();
 
 void informeCombustibles();
+
 
 #endif // FUNCIONES_H_INCLUDED
