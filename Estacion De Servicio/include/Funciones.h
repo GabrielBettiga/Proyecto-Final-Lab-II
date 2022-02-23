@@ -44,7 +44,7 @@ void mostFacturas();
 float deudaxCliente(Cliente cli);
 void deuda();
 void hacerPago();
-void emitirRecibo();
+void mostrarRecibos();
 
 
 

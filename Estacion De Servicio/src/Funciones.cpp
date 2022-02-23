@@ -325,24 +325,15 @@ void cargarCliente()
 
 void mostrarCliente()
 {
-
-    int num;
+    int pos;
     Cliente obj;
 
     system ("cls");
 
-    cout << " NUMERO DE CLIENTE : " << endl;
-    cin >> num;
-
-    if(obj.BuscarIDCliente(num) >= 0)
+    if((pos = seleccionarClietete()) >= 0)
     {
-        cout << endl;
-        obj.mostrarCliente();
-        cout << endl;
-    }
-    else
-    {
-        cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
+        obj.leerdeDisco(pos);
+        obj.mostrar();
     }
 }
 
@@ -362,22 +353,16 @@ void mostrarTodosClientes()
 
 void modificarCliente()
 {
-    int num, pos;
+    int pos;
     Cliente obj;
 
     system ("cls");
-    cout << endl;
-    cout << " NUMERO DE CLIENTE : ";
-    cin >> num;
 
-    if((pos = obj.BuscarIDCliente(num)) >= 0)
+    if((pos = seleccionarClietete()) >= 0)
     {
+        obj.leerdeDisco(pos);
         obj.modificarDatoCliente();
         obj.modificardeDisco(pos);
-    }
-    else
-    {
-        cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
 ///===============================
@@ -588,7 +573,6 @@ void mostFacturas(){
         cout << setw(10) << aux.getTotal();
         cout << setw(10) << aux.getSaldo();
         cout << setw(6) << aux.getPaga() << endl;
-
     }
     system("pause");
 }
@@ -628,6 +612,16 @@ void deuda(){
 
 void hacerPago(){
     cout << "HACER " << endl;
+    system("pause");
+}
+
+void mostrarRecibos(){
+    Recibo aux;
+    int pos = 0;
+
+    while(aux.leerdeDisco(pos++)){
+        aux.mostrarRecibo();
+    }
     system("pause");
 }
 
@@ -713,6 +707,7 @@ int seleccionarSurtidor()
 
 void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
     Factura aux;
+    Recibo rc;
 
     aux.Facturar(cli, sur);
     if(aux.Guardar()){
@@ -722,7 +717,10 @@ void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
             system("pause");
         }
         if(cobrar){
-            cout << " COBRAR = HACER FUNCION " << endl;
+            rc.cargarRecibo(aux.getNumFac());
+            rc.Guardar();
+            aux.modificarSaldo(rc);
+            cout << " COBRADO ( HACER LINDO RECIBO )" << endl;
             system("pause");
         }
     }
@@ -800,6 +798,7 @@ void menuCobranzas(){
         cout << " (1) DEUDA POR CLIENTE     " << endl;
         cout << " (2) HACER RECIBO          " << endl;
         cout << " (3) FACTURAS (TODAS)      " << endl;
+        cout << " (4) VER RECIBOS           " << endl;
         cout << "===========================" << endl;
         cout << " (0) SALIR                 " << endl;
         cout << " >> ";
@@ -816,6 +815,9 @@ void menuCobranzas(){
             break;
         case 3:
             mostFacturas();
+            break;
+        case 4:
+            mostrarRecibos();
             break;
         case 0:
             return;

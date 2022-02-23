@@ -132,8 +132,12 @@ void Factura::modificarSaldo (Recibo r)
                 {
                     _Paga = true;
                 }
-
-                modificardeDisco(pos);
+                if(modificardeDisco(pos)){
+                }
+                else{
+                    cout << "ERROR" << endl;
+                    system("pause");
+                }
             }
         }
     }
@@ -159,7 +163,7 @@ int Factura::buscarPorNumero (int num)
 bool Factura::modificardeDisco(int pos)
 {
     FILE *p;
-    p = fopen("Factura.dat","rb+");                   ///ABRE EL ARCHIVO DESDE 0 Y PUEDE ESCRIBIR Y MODIFICAR.
+    p = fopen("Facturas.dat","rb+");                   ///ABRE EL ARCHIVO DESDE 0 Y PUEDE ESCRIBIR Y MODIFICAR.
 
     if (p == NULL)
     {
