@@ -13,7 +13,7 @@ int Cliente::getID(){
 }
 
 bool Cliente::getCuentaCorriente(){
-    return _limiteCred;
+    return _cuentaCorriente;
 }
 
 float Cliente::getLimiteCredito(){

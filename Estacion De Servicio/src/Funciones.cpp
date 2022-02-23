@@ -402,7 +402,11 @@ void venta()
     posCli = seleccionarClietete();
     cli.leerdeDisco(posCli);
 
-    if(posCli <= 0){
+    if(cli.getEstadoCliente() == false){
+        cli.leerdeDisco(0);
+    }
+
+    if(situacionCliente(cli,( sur.getLitros() * sur.getNafta().getprecio()))){
         hacerFactura(cli, sur,true,true);
     }
     else {
@@ -543,7 +547,7 @@ void listFacCli(Cliente cli, bool estado)
     cout << setw(10) << " TOTAL ";
     cout << setw(10) << " SALDO ";
     cout << setw(6) << " ESTADO " << endl;
-    cout << " ======================================================== " << endl;
+    cout << "========================================================= " << endl;
 
     while (aux.LeerDeDisco(pos++))
     {
@@ -557,6 +561,34 @@ void listFacCli(Cliente cli, bool estado)
             cout << setw(10) << aux.getSaldo();
             cout << setw(6) << aux.getPaga() << endl;
         }
+    }
+    system("pause");
+}
+
+void mostFacturas(){
+    Factura aux;
+    Cliente cli;
+    int pos = 0;
+
+    cout << endl;
+    cout << left;
+    cout << setw(6) <<" NUM ";
+    cout << setw(20) << " CLIENTE ";
+    cout << setw(10) << " TOTAL ";
+    cout << setw(10) << " SALDO ";
+    cout << setw(6) << " ESTADO " << endl;
+    cout << "========================================================= " << endl;
+
+    while (aux.LeerDeDisco(pos++))
+    {
+        cout << left;
+        cout << setw(6) << aux.getNumFac();
+        cli.BuscarIDCliente(aux.getCliente());
+        cout << setw(20) << cli.getNombre();
+        cout << setw(10) << aux.getTotal();
+        cout << setw(10) << aux.getSaldo();
+        cout << setw(6) << aux.getPaga() << endl;
+
     }
     system("pause");
 }
@@ -690,7 +722,7 @@ void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
             system("pause");
         }
         if(cobrar){
-            cout << " COBRAR " << endl;
+            cout << " COBRAR = HACER FUNCION " << endl;
             system("pause");
         }
     }
@@ -699,6 +731,20 @@ void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
         system("pase");
     }
 
+}
+
+bool situacionCliente(Cliente cli, float importe){
+    //// TRUE => MOSTRAR Y COBRAR
+    if(cli.getID() != 1){
+        if(cli.getEstadoCliente() == true){
+            if(cli.getCuentaCorriente() == true){
+                if((cli.getLimiteCredito() - deudaxCliente(cli)) >= importe){
+                    return false;
+                }
+            }
+        }
+    }
+    return true;
 }
 
 int seleccionarNafta()
@@ -753,6 +799,7 @@ void menuCobranzas(){
         cout << " ========================= " << endl;
         cout << " (1) DEUDA POR CLIENTE     " << endl;
         cout << " (2) HACER RECIBO          " << endl;
+        cout << " (3) FACTURAS (TODAS)      " << endl;
         cout << "===========================" << endl;
         cout << " (0) SALIR                 " << endl;
         cout << " >> ";
@@ -766,6 +813,9 @@ void menuCobranzas(){
             break;
         case 2:
             hacerPago();
+            break;
+        case 3:
+            mostFacturas();
             break;
         case 0:
             return;

@@ -33,16 +33,20 @@ int seleccionarNafta();
 int seleccionarClietete();
 int seleccionarSurtidor();
 void hacerFactura(Cliente cli, Surtidor sur, bool mostrar = false, bool cobrar = false);
+bool situacionCliente(Cliente cli, float importe);
 
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
 void menuCobranzas();
 void listFacCli(Cliente cli, bool estado);
+void mostFacturas();
 float deudaxCliente(Cliente cli);
 void deuda();
 void hacerPago();
 void emitirRecibo();
+
+
 
 
 
