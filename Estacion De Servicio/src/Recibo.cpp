@@ -108,7 +108,7 @@ bool Recibo::modificardeDisco(int pos){
 
 void Recibo::cargarRecibo(Cliente cli, int *fac, float *impo, float pago){
     int i;
-    float total;
+    float total = 0;
 
     setCliente(cli);
     _Fecha.FechaActual();

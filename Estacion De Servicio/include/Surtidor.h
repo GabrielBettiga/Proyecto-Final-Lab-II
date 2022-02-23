@@ -1,6 +1,7 @@
 #ifndef SURTIDOR_H
 #define SURTIDOR_H
 #include "Fecha.h"
+#include "Nafta.h"
 
 
 class Surtidor
@@ -8,29 +9,25 @@ class Surtidor
 private:
     int _IDsurtidor;
     float _litros;
+    int _IDNafta;
 
 public:
     Surtidor(int IDsurtidor = 0);
+
+    void setIDsurtidor(int ID);
     void setLitros(float litros);
+    void setNafta(Nafta naf);
 
+    int getIDsurtidor (){return _IDsurtidor;}
     float getLitros(){return _litros;}
+    Nafta getNafta();
 
-
-
-    int getIDsurtidor ()
-    {
-        return _IDsurtidor;
-    }
-    void setIDsurtidor (int x )
-    {
-        _IDsurtidor=x;
-    }
 ///METODOS
     int CantSurtidor();
     void CrearSurtidor ();
-    void MostraCarga(bool Carga,int IDnafta);
-    bool Cargar(int IDnafta);
-    void CombertirLitros (int IDnafta, float Pesos);
+    void MostraCarga();
+    bool Cargar();
+    void CombertirLitros (float importe);
 
     int buscarPorID(int id);
 
@@ -38,7 +35,6 @@ public:
     bool GrabarEnDisco ();
     bool LeerDeDisco (int pos);
     bool ModificarEnDisco (int pos);
-
 
 };
 

@@ -383,168 +383,287 @@ void modificarCliente()
 ///===============================
 ///  FUNIONES PARA VENTAS
 ///===============================
+
 void venta()
 {
-    int opc;
-    do
-    {
-        system("cls");
-        cout << endl;
-        cout << "           VENTA               " << endl;
-        cout << " ============================= " << endl;
-        cout << "  CLINETE O CONSUMIDOR FINAL   " << endl;
-        cout << " ============================= " << endl;
-        cout << " (1) SELECCIONAR CLIENTE       " << endl;
-        cout << " (2) CONSUMIDOR FINAL          " << endl;
-        cout << " ============================= " << endl;
-        cout << " (0) CANCELAR                  " << endl;
-        cout << endl;
-        cout << " OPCION >> ";
-        cin >> opc;
+    /// 1) CARGA => TE LA DA EL SURTIDOR
+    /// 2) CLIENTE
+    /// 3) FACTURAR
+    /// 4) SI SE PAGA LA FACTURA O VA A CEUNTA.
 
-        switch(opc){
-            case 1:
-                facturarxClietete();
-                break;
-            case 2:
-                facturarxConsumidorFinal();
-                break;
-            case 0:
-                return;
-                break;
-            default:
-                cout << "====================" << endl;
-                cout << "  OPCION INCORECTA  " << endl;
-                cout << "====================" << endl;
-                system("pause");
-                system ("cls");
-                break;
-        }
+    Surtidor sur;
+    Cliente cli;
+    int posCli;
+
+    sur = cargarCombustible();
+    if(sur.getIDsurtidor() < 0){
+        return;
     }
-    while(opc != 0);
+    posCli = seleccionarClietete();
+    cli.leerdeDisco(posCli);
+
+    if(cli.getEstadoCliente() == false){
+        cli.leerdeDisco(0);
+    }
+
+    if(situacionCliente(cli,( sur.getLitros() * sur.getNafta().getprecio()))){
+        hacerFactura(cli, sur,true,true);
+    }
+    else {
+        hacerFactura(cli, sur,true);
+    }
 }
 
-void facturarxClietete(){
-    Factura fac;
-    Cliente cli;
+Surtidor cargarCombustible()
+{
+
+    int posNaf, posSur, opc;
+    float importe, litros;
     Surtidor sur;
     Nafta naf;
-    int posCli, posNaf, posSur;
 
+    if((posNaf = seleccionarNafta()) > -1)
+    {
+        if((posSur = seleccionarSurtidor()) > -1)
+        {
 
+            sur.LeerDeDisco(posSur);
+            sur.setNafta(naf.BuscarID(posNaf));
 
-    if((posCli = seleccionarClietete()) != -1 ){
+            do
+            {
+                system("cls");
+                cout << endl;
+                cout << " =============== " << endl;
+                cout << "  CARGAR POR :   " << endl;
+                cout << " =============== " << endl;
+                cout << " (1) IMPORTE     " << endl;
+                cout << " (2) LITROS      " << endl;
+                cout << " =============== " << endl;
+                cout << " (0) SALIR "   << endl;
+                cout << " >> ";
+                cin >> opc;
 
-            if((posNaf = seleccionarNafta()) != -1){
-
-                cli.leerdeDisco(posCli);
-                naf.LeerDeDisco(posNaf);
-                sur = cargarCombustible(naf.getIDtipoDeNafta());
-
-                if(sur.getIDsurtidor() != -1){
-
-                    if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
-                        fac.Facturar(cli,naf,sur);
-                        fac.Guardar();
-
+                if(opc > 0 && opc < 3)
+                {
+                    if(opc == 1)
+                    {
                         system("cls");
-
-                        cout << "NOMBRE     : ";
-                        cout << cli.getNombre() << endl;
-                        cout << "CUIT       : ";
-                        cout << cli.getCUIT() << endl;
-
-                        fac.MostrarFactura();
-                        system("pause");
-                    }
-                    else {
                         cout << endl;
-                        cout << " NO SE CARGO " << endl;
+                        cout << " IMPORTE : " ;
+                        cin >> importe;
+
+                        while(importe <=0 )
+                        {
+                            system("cls");
+                            cout << " INGRESE UN NUMERO POSITIVO " << endl;
+                            cout << " >> ";
+                            cin >> importe;
+                            system("pause");
+                        }
+                        sur.CombertirLitros(importe);
+                            if(sur.Cargar()){
+                                system("cls");
+                                sur.MostraCarga();
+                                system("pause");
+                                return sur;
+                            }
+                            system ("cls");
+                            cout << " ================= " << endl;
+                            cout << "  SIN COMBUSTIBLE  " << endl;
+                            cout << " ================= " << endl;
+                            system("pause");
+                            sur.setIDsurtidor(-2);
+                            return sur;
+                    }
+                    else
+                    {
+                        if( opc == 2)
+                        {
+                            system("cls");
+                            cout << endl;
+                            cout << " LITROS : " ;
+                            cin >> litros;
+
+                            while(litros <=0 )
+                            {
+                                system("cls");
+                                cout << " INGRESE UN NUMERO POSITIVO " << endl;
+                                cout << " >> ";
+                                cin >> litros;
+                                system("pause");
+                            }
+                            sur.setLitros(litros);
+                            if(sur.Cargar()){
+                                system("cls");
+                                sur.MostraCarga();
+                                system("pause");
+                                return sur;
+                            }
+                            system ("cls");
+                            cout << " ================= " << endl;
+                            cout << "  SIN COMBUSTIBLE  " << endl;
+                            cout << " ================= " << endl;
+                            system("pause");
+                            sur.setIDsurtidor(-2);
+                            return sur;
+                        }
+                    }
+                }
+                else
+                {
+                    if(opc != 0){
+                        system("cls");
+                        cout << endl;
+                        cout << " ERROR EN OPCION " << endl;
                         system("pause");
                     }
                 }
             }
-    }
-}
-
-void facturarxConsumidorFinal(){
-    Factura fac;
-    Cliente cli;
-    Surtidor sur;
-    Nafta naf;
-    int posCli = 0, posNaf, posSur;
-
-    if((posNaf = seleccionarNafta()) != -1){
-
-        cli.leerdeDisco(posCli);
-        naf.LeerDeDisco(posNaf);
-        sur = cargarCombustible(naf.getIDtipoDeNafta());
-
-        if(sur.getIDsurtidor() != -1){
-
-            if(sur.Cargar(naf.getIDtipoDeNafta()) == true){
-                fac.Facturar(cli,naf,sur);
-                fac.Guardar();
-
-                system("cls");
-
-                cout << "NOMBRE     : ";
-                cout << cli.getNombre() << endl;
-                cout << "CUIT       : ";
-                cout << cli.getCUIT() << endl;
-
-                fac.MostrarFactura();
-                system("pause");
-            }
-            else {
-                cout << endl;
-                cout << " NO SE CARGO " << endl;
-                system("pause");
-            }
+            while (opc != 0);
         }
     }
+
+
+    system("cls");
+    cout << endl;
+    cout << " ================= " << endl;
+    cout << "  CARGA CANCELADA  " << endl;
+    cout << " ================= " << endl;
+    system("pause");
+    sur.setIDsurtidor(-1);
+    return sur;
 }
 
-void mostrarFactura(){
+void listFacCli(Cliente cli, bool estado)
+{
     Factura aux;
     int pos = 0;
 
-    while (aux.LeerDeDisco(pos++)){
-        aux.MostrarFactura();
+    cout << endl;
+    cout << left;
+    cout << setw(6) <<" NUM ";
+    cout << setw(20) << " CLIENTE ";
+    cout << setw(10) << " TOTAL ";
+    cout << setw(10) << " SALDO ";
+    cout << setw(6) << " ESTADO " << endl;
+    cout << "========================================================= " << endl;
+
+    while (aux.LeerDeDisco(pos++))
+    {
+        if(aux.getCliente() == cli.getID() && aux.getPaga() == estado){
+
+            cout << left;
+            cout << setw(6) << aux.getNumFac();
+            cli.BuscarIDCliente(aux.getCliente());
+            cout << setw(20) << cli.getNombre();
+            cout << setw(10) << aux.getTotal();
+            cout << setw(10) << aux.getSaldo();
+            cout << setw(6) << aux.getPaga() << endl;
+        }
+    }
+    system("pause");
+}
+
+void mostFacturas(){
+    Factura aux;
+    Cliente cli;
+    int pos = 0;
+
+    cout << endl;
+    cout << left;
+    cout << setw(6) <<" NUM ";
+    cout << setw(20) << " CLIENTE ";
+    cout << setw(10) << " TOTAL ";
+    cout << setw(10) << " SALDO ";
+    cout << setw(6) << " ESTADO " << endl;
+    cout << "========================================================= " << endl;
+
+    while (aux.LeerDeDisco(pos++))
+    {
+        cout << left;
+        cout << setw(6) << aux.getNumFac();
+        cli.BuscarIDCliente(aux.getCliente());
+        cout << setw(20) << cli.getNombre();
+        cout << setw(10) << aux.getTotal();
+        cout << setw(10) << aux.getSaldo();
+        cout << setw(6) << aux.getPaga() << endl;
+
+    }
+    system("pause");
+}
+
+float deudaxCliente(Cliente cli){
+    Factura aux;
+    int pos = 0;
+    float deuda = 0;
+
+    while(aux.LeerDeDisco(pos++)){
+        if(aux.getCliente() == cli.getID()){
+            if(aux.getPaga() == false){
+                deuda += aux.getSaldo();
+            }
+        }
+    }
+    return deuda;
+}
+
+void deuda(){
+    Cliente cli;
+    int pos;
+
+    pos = seleccionarClietete();
+    if(pos > -1){
+        cli.leerdeDisco(pos);
+
+        system("cls");
         cout << endl;
+        cout << " ID: " << cli.getID() << endl;
+        cout << " CLIENTE : " << cli.getNombre() << endl;
+        cout << " LA DEUDA DEL CLEINTE ES DE : " << deudaxCliente(cli) << endl;
+        cout << "=========================================================" << endl;
+        listFacCli(cli, false);
     }
 }
 
-int seleccionarClietete(){
+void hacerPago(){
+    cout << "HACER " << endl;
+    system("pause");
+}
+
+int seleccionarClietete()
+{
     Cliente cli;
     int numero, posID, posCUIT;
     bool ok;
 
-    do {
+    do
+    {
         system("cls");
         cout << endl;
+        cout << " ========================== " << endl;
+        cout << " (1) PARA CONSUMIDOR FINAL  " << endl;
+        cout << " ========================== " << endl;
         cout << " NUMERO DE CLIENTE / CUIT : ";
         cin >> numero;
 
-        if((posID = cli.BuscarIDCliente(numero)) > -1 && cli.getEstadoCliente() == true){
+        if(numero == 0){
+            return 0;
+        }
+
+        if((posID = cli.BuscarIDCliente(numero)) > -1)
+        {
             return posID;
         }
-        else {
-            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1 && cli.getEstadoCliente() == true){
+        else
+        {
+            if((posCUIT = cli.buscarClientexCUIT(numero)) > -1)
+            {
                 return posCUIT;
             }
         }
 
-        if( posID > -1 || posCUIT > -1 && cli.getEstadoCliente() != true){
-            system("cls");
-            cout << endl;
-            cout << " ============================= " << endl;
-            cout << " = CLIENTE INACTIVO INACTIVA = " << endl;
-            cout << " ============================= " << endl;
-            system("pause");
-            return -1;
-        }
-
+        system("cls");
         cout << " ============================ " << endl;
         cout << " NUMERO DE CLIENTE INCORECTOR " << endl;
         cout << " ============================ " << endl;
@@ -554,22 +673,26 @@ int seleccionarClietete(){
         cout << " >> ";
         cin >> ok;
 
-    }while(ok);
+    }
+    while(ok);
     return -1;
 }
 
-int seleccionarNafta(){
-    Nafta naf;
+int seleccionarSurtidor()
+{
+    Surtidor sur;
     int id, pos;
     bool ok;
 
-    do {
+    do
+    {
         system("cls");
         cout << endl;
-        cout << " ID NAFTA: ";
+        cout << " ID SURTIDOR: ";
         cin >> id;
 
-        if((pos = naf.BuscarID(id)) > -1){
+        if((pos = sur.buscarPorID(id)) > -1)
+        {
             return pos;
         }
 
@@ -583,103 +706,131 @@ int seleccionarNafta(){
         cout << " >> ";
         cin >> ok;
 
-    }while(ok);
+    }
+    while(ok);
     return -1;
 }
 
-Surtidor cargarCombustible(int IDnaf){
-    int opc, numero;
-    Surtidor sur;
-    float pesos, litros;
+void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
+    Factura aux;
 
-
-    system("cls");
-
-    cout << " ============================ " << endl;
-    cout << "  INDIQUE NUMERO DE SURTIDOR  " << endl;
-    cout << " ============================ " << endl;
-    cout << " >> ";
-    cin >> numero;
-
-    while(sur.buscarPorID(numero) == -1){
-        system("cls");
-        cout << " ============================ " << endl;
-        cout << "  N DE SURTIDOR NO EXISTE     " << endl;
-        cout << " ============================ " << endl;
-        cout << " INGRESE OTRO                 " << endl;
-        cout << " >> ";
-        cin >> numero;
-    }
-
-    do{
-    system("cls");
-    cout << " SURTIDOR N " << sur.getIDsurtidor() << ": "<<endl;
-    cout << " ===================== " << endl;
-    cout << " (1) CARGAR POS PESOS  " << endl;
-    cout << " (2) CARGAR POR LITROS " << endl;
-    cout << " (0) SALIR             " << endl;
-    cout << " ===================== " << endl;
-    cout << " OPC >> ";
-    cin >> opc;
-
-    if(opc == 1){
-        system("cls");
-        cout << endl;
-        cout << " PESOS A CARGAR : ";
-        cin >> pesos;
-
-        while(pesos < 1){
+    aux.Facturar(cli, sur);
+    if(aux.Guardar()){
+        if(mostrar){
             system("cls");
-            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
-            cout << " PESOS A CARGAR : ";
-            cin >> pesos;
+            aux.MostrarFactura();
+            system("pause");
         }
-        sur.CombertirLitros(IDnaf,pesos);
-        return sur;
+        if(cobrar){
+            cout << " COBRAR = HACER FUNCION " << endl;
+            system("pause");
+        }
     }
     else {
-        if(opc == 2){
-            system("cls");
-            cout << endl;
-            cout << " LITROS A CARGAR : ";
-            cin >> litros;
+        cout << "ERROR EN EL GUARDDO " << endl;
+        system("pase");
+    }
 
-            while(litros < 1){
-            system("cls");
-            cout << " = INGRESE UN IMORTE MAYOR A 0 = " << endl;
-            cout << " PESOS A CARGAR : ";
-            cin >> litros;
-            }
-            sur.setLitros(litros);
-            return sur;
-        }
-        else {
-            if(opc != 0){
-                system ("cls");
-                cout << " ========================= " << endl;
-                cout << "       OPCION INCORECTA    " << endl;
-                cout << " ========================= " << endl;
-                system ("pause");
+}
+
+bool situacionCliente(Cliente cli, float importe){
+    //// TRUE => MOSTRAR Y COBRAR
+    if(cli.getID() != 1){
+        if(cli.getEstadoCliente() == true){
+            if(cli.getCuentaCorriente() == true){
+                if((cli.getLimiteCredito() - deudaxCliente(cli)) >= importe){
+                    return false;
+                }
             }
         }
     }
-
-    }while (opc != 0);
-
-    system ("cls");
-    cout << " ========================= " << endl;
-    cout << "       CARGA CANCELADA     " << endl;
-    cout << " ========================= " << endl;
-    system ("pause");
-
-    sur.setIDsurtidor(-1);
-    sur.setLitros(0);
-    return sur;
-
+    return true;
 }
+
+int seleccionarNafta()
+{
+    Nafta naf;
+    int id, pos;
+    bool ok;
+
+    do
+    {
+        system("cls");
+        cout << endl;
+        cout << " ID NAFTA: ";
+        cin >> id;
+
+        if((pos = naf.BuscarID(id)) > -1)
+        {
+            return pos;
+        }
+
+        system("cls");
+        cout << " ============================ " << endl;
+        cout << "       EL ID NO EXISTE        " << endl;
+        cout << " ============================ " << endl;
+        cout << " (1) INGRESAR OTRO NUMERO     " << endl;
+        cout << " (0) CANCELAR CARGA           " << endl;
+        cout << " ============================ " << endl;
+        cout << " >> ";
+        cin >> ok;
+
+    }
+    while(ok);
+    return -1;
+}
+
+
+
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
+
+void menuCobranzas(){
+
+    int opc;
+
+    do
+    {
+        system("cls");
+        cout << endl;
+        cout << " ========================= " << endl;
+        cout << "         COBRANZA          " << endl;
+        cout << " ========================= " << endl;
+        cout << " (1) DEUDA POR CLIENTE     " << endl;
+        cout << " (2) HACER RECIBO          " << endl;
+        cout << " (3) FACTURAS (TODAS)      " << endl;
+        cout << "===========================" << endl;
+        cout << " (0) SALIR                 " << endl;
+        cout << " >> ";
+        cin >> opc;
+        system("cls");
+
+        switch(opc)
+        {
+        case 1:
+            deuda();
+            break;
+        case 2:
+            hacerPago();
+            break;
+        case 3:
+            mostFacturas();
+            break;
+        case 0:
+            return;
+            break;
+        default:
+            cout << "====================" << endl;
+            cout << "  OPCION INCORECTA  " << endl;
+            cout << "====================" << endl;
+            system("pause");
+            system ("cls");
+        }
+
+    }
+    while(opc != 0);
+}
 
 ///===============================
 ///  FUNIONES PARA COMUSTIBLES
@@ -1098,7 +1249,8 @@ void vaciarTanque()
 ///  FUNIONES PARA INFORMES
 ///===============================
 
-void menuInfores(){
+void menuInfores()
+{
     int opc;
     do
     {
@@ -1141,7 +1293,8 @@ void menuInfores(){
 
 }
 
-void informeCombustibles(){
+void informeCombustibles()
+{
 
     Nafta aux;
     int pos = 0;
@@ -1156,44 +1309,65 @@ void informeCombustibles(){
     vecDisponible = new float [TAM];
     vecLitros = new float [TAM];
 
-
-    if(vecDisponible == nullptr){
-        cout << "NO MEMORIA VEC 1" << endl;
-        return;
-    }
-    if(vecLitros == nullptr){
-        cout << "NO MEMORIA VEC 2" << endl;
+    if(vecIDNaft == nullptr)
+    {
+        cout << "NO MEMORIA VEC NAFTA" << endl;
+        system("pause");
         return;
     }
 
-    for(int i=0; i<TAM; i++){
+    if(vecDisponible == nullptr)
+    {
+        cout << "NO MEMORIA VEC DISPONIBLE" << endl;
+        system("pause");
+        return;
+    }
+    if(vecLitros == nullptr)
+    {
+        cout << "NO MEMORIA VEC LITROS" << endl;
+        system("pause");
+        return;
+    }
+
+    for(int i=0; i<TAM; i++)
+    {
         vecLitros[i] = 0;
         vecDisponible[i] = 0;
     }
 
-    while(aux.LeerDeDisco(pos++)){
+    while(aux.LeerDeDisco(pos++))
+    {
         vecIDNaft[pos-1] = aux.getIDtipoDeNafta();
     }
 
     TanqueManager tanMan;
 
-    for(int i=0; i<TAM; i++){
+    for(int i=0; i<TAM; i++)
+    {
         vecDisponible[i] = tanMan.DisponibleAllenarxNafta(vecIDNaft[i]);
         vecLitros[i] = tanMan.DisponiblexCombustible(vecIDNaft[i]);
     }
 
-    for(int i=0; i<TAM; i++){
-        cout << "ID NAFTA       : ";
-        cout << vecIDNaft[i] << endl;
-        cout << " DISPONIBLE    : ";
-        cout << vecDisponible[i] << endl;
-        cout << " LITROS        : ";
-        cout << vecLitros[i] << endl;
-    }
+    cout << left;
+    cout << setw(4) <<" ID ";
+    cout << setw(10) << " NOMBRE ";
+    cout << setw(10) << " CAPACIDAD ";
+    cout << setw(10) << " LITROS " << endl;
+    cout << " ======================================================== " << endl;
 
+    for(int i=0; i<TAM; i++)
+    {
+        cout << left;
+        cout << setw(4) << vecIDNaft[i];
+        aux.BuscarID(vecIDNaft[i]);
+        cout << setw(10) << aux.getnombreDeCombustible();
+        cout << right << fixed << setprecision(2);
+        cout << setw(10) << vecDisponible[i];
+        cout << setw(10) << vecLitros[i] << endl;
+    }
     delete vecIDNaft;
     delete vecDisponible;
     delete vecLitros;
-
 }
+
 

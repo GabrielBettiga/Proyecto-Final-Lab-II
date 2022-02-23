@@ -1,10 +1,12 @@
 #ifndef FUNCIONES_H_INCLUDED
 #define FUNCIONES_H_INCLUDED
+#include <iomanip>
 #include "Cliente.h"
 #include "Nafta.h"
 #include "Surtidor.h"
 #include "TanqueManager.h"
 #include "Factura.h"
+#include "Recibo.h"
 
 bool archivos(const int TAM, bool *vec);
 bool configuracion();
@@ -26,17 +28,27 @@ void modificarCliente();
 ///  FUNIONES PARA VENTAS
 ///===============================
 void venta();
-void facturarxClietete();
-void facturarxConsumidorFinal();
-int seleccionarClietete();
+Surtidor cargarCombustible();
 int seleccionarNafta();
-Surtidor cargarCombustible(int idnaf);
-
-void mostrarFactura();
+int seleccionarClietete();
+int seleccionarSurtidor();
+void hacerFactura(Cliente cli, Surtidor sur, bool mostrar = false, bool cobrar = false);
+bool situacionCliente(Cliente cli, float importe);
 
 ///===============================
 ///  FUNIONES PARA COBRANZAS
 ///===============================
+void menuCobranzas();
+void listFacCli(Cliente cli, bool estado);
+void mostFacturas();
+float deudaxCliente(Cliente cli);
+void deuda();
+void hacerPago();
+void emitirRecibo();
+
+
+
+
 
 ///===============================
 ///  FUNIONES PARA COMUSTIBLES
@@ -62,5 +74,6 @@ void vaciarTanque();
 void menuInfores();
 
 void informeCombustibles();
+
 
 #endif // FUNCIONES_H_INCLUDED

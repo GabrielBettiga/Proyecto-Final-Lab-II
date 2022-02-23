@@ -35,7 +35,7 @@ int main(){
                 venta();
                 break;
             case 3:
-                /// COBRANZAS
+                menuCobranzas();
                 break;
             case 4:
                 menuCombustibles();
