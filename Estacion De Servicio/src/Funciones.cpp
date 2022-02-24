@@ -411,9 +411,9 @@ Surtidor cargarCombustible()
     {
         if((posSur = seleccionarSurtidor()) > -1)
         {
-
+            naf.LeerDeDisco(posNaf);
             sur.LeerDeDisco(posSur);
-            sur.setNafta(naf.BuscarID(posNaf));
+            sur.setNafta(naf);
 
             do
             {
