@@ -125,7 +125,7 @@ void Factura::modificarSaldo (Recibo r)
         if(r.getNumFactura()[i] != 0)
         {
             pos = buscarPorNumero(r.getNumFactura()[i]);
-            if(pos > 0)
+            if(pos > -1)
             {
                 _Saldo -= r.getImportePago()[i];
                 if(_Saldo == 0)

@@ -547,7 +547,6 @@ void listFacCli(Cliente cli, bool estado)
             cout << setw(6) << aux.getPaga() << endl;
         }
     }
-    system("pause");
 }
 
 void mostFacturas(){
@@ -592,7 +591,7 @@ float deudaxCliente(Cliente cli){
     return deuda;
 }
 
-void deuda(){
+void deudaCli(){
     Cliente cli;
     int pos;
 
@@ -607,12 +606,26 @@ void deuda(){
         cout << " LA DEUDA DEL CLEINTE ES DE : " << deudaxCliente(cli) << endl;
         cout << "=========================================================" << endl;
         listFacCli(cli, false);
+        system("pause");
     }
 }
 
 void hacerPago(){
-    cout << "HACER " << endl;
-    system("pause");
+
+    /// 1) PEDIR CLIENTE
+    /// 2) MOSTRAMOS LA DEUDA
+    /// 3) SELECCIONAR FACTURAS
+    /// 4) HACER RECIBO
+
+    Cliente cli;
+    int pos;
+    pos = seleccionarClietete();
+
+    if(cli.leerdeDisco(pos)){
+        seleccionarFacturas(cli);
+    }
+
+    return;
 }
 
 void mostrarRecibos(){
@@ -624,6 +637,120 @@ void mostrarRecibos(){
     }
     system("pause");
 }
+
+void seleccionarFacturas(Cliente cli){
+
+    system("cls");
+    Recibo rc;
+    float total;
+
+    cout << left;
+    cout << setw(20) << " CLIENTE : " << cli.getNombre();
+    cout << setw(12) << " CUIT : " << cli.getCUIT();
+    cout << setw(8) << " N CUENTA " << cli.getID() << endl;
+    cout << "============================================================================" << endl;
+
+    listFacCli(cli, false);
+    cout << "\n TOTAL DEUDA : " << deudaxCliente(cli) << endl;
+    cout << " TOTAL A PAGAR : ";
+    cin >> total;
+
+    vecRecibo(rc.getTam(), cli, total);
+
+
+
+
+    system("pause");
+}
+
+void  vecRecibo(int TAM, Cliente cli, float total){
+
+    int *i;
+    float *f;
+
+    i = new int [TAM]{};
+    f = new float [TAM]{};
+
+    if (i==NULL){
+        cout<<"ERROR"<<endl;
+        system("pause");
+        return;
+    }
+    if (f==NULL){
+        cout<<"ERROR"<<endl;
+        system("pause");
+        return;
+    }
+
+    int opc = -1;
+    int pos = 0, numFac;
+    float imp, acuTotal = total;
+    Recibo rc;
+    Factura fac;
+
+    while(opc != 0 && opc != 2 && pos < TAM){
+        cout << " FACTRA N: ";
+        cin >> numFac;
+        cout << " IMPORTE : ";
+        cin >>  imp;
+
+        if(acuTotal >= imp)
+        {
+            if(controlRc(numFac, imp))
+            {
+                i[pos] = numFac;
+                f[pos] = imp;
+                acuTotal -= imp;
+                cout << " CONTINUAR (1) / GUARDAR (2) / SALIR (0) - >> ";
+                cin >> opc;
+                pos++;
+            }
+            else {
+                cout << " ERROR EN FACTURA - CONTINUAR (1) / GUARDAR (2) / SALIR (0) >> " << endl;
+                cin >> opc;
+            }
+
+        }
+        else
+        {
+            cout << " ERROR EN IMPORTE = CONTINUAR (1) / GUARDAR (2) / SALIR (0) " << endl;
+            cout << " PENDIENTE DE APLICAR " << acuTotal << endl;
+            cout << " >> ";
+            cin >> opc;
+        }
+    }
+
+    if(opc != 0){
+        rc.cargarRecibo(cli, i, f, total);
+        if(rc.Guardar())
+        {
+            rc.mostrarRecibo();
+            fac.modificarSaldo(rc);
+        }
+        else
+        {
+            cout << "ERROR" << endl;
+        }
+    }
+
+    delete f;
+    delete i;
+}
+
+bool controlRc(int numFac, float imp){
+    Factura aux;
+
+    if(aux.buscarPorNumero(numFac) > -1){
+        if(aux.getSaldo() >= imp){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
 
 int seleccionarClietete()
 {
@@ -808,7 +935,7 @@ void menuCobranzas(){
         switch(opc)
         {
         case 1:
-            deuda();
+            deudaCli();
             break;
         case 2:
             hacerPago();

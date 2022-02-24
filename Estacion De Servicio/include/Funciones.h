@@ -42,11 +42,12 @@ void menuCobranzas();
 void listFacCli(Cliente cli, bool estado);
 void mostFacturas();
 float deudaxCliente(Cliente cli);
-void deuda();
+void deudaCli();                        ///MUESTRA TODAS LAS DEUDAS
 void hacerPago();
 void mostrarRecibos();
-
-
+void seleccionarFacturas(Cliente cli);
+void vecRecibo(int TAM, Cliente cli,float total);
+bool controlRc(int numFac, float imp);
 
 
 

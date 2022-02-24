@@ -121,12 +121,16 @@ void Recibo::cargarRecibo(Cliente cli, int *fac, float *impo, float pago){
         _numFactura[i] = fac [i];
         aplicado += _importePagado [i] = impo [i];
     }
+    if(aplicado > pago){
+        _saldoRecibo = 0;
+    }
     _total = pago;
     _saldoRecibo = _total - aplicado;
 
     if(_saldoRecibo == 0){
         _cerrado = true;
     }
+
 }
 
 void Recibo::cargarRecibo(int numFac){
