@@ -609,16 +609,21 @@ float saldoSinAplicarPorCliente(Cliente cli){
 void deudaCli(){
     Cliente cli;
     int pos;
+    float deuda, saldo;
 
     pos = seleccionarClietete();
     if(pos > -1){
         cli.leerdeDisco(pos);
+        deuda = deudaxCliente(cli);
+        saldo = saldoSinAplicarPorCliente(cli);
 
         system("cls");
         cout << endl;
-        cout << " ID: " << cli.getID() << endl;
-        cout << " CLIENTE : " << cli.getNombre() << endl;
-        cout << " LA DEUDA DEL CLEINTE ES DE : " << deudaxCliente(cli) << endl;
+        cout << " ID                : " << cli.getID() << endl;
+        cout << " CLIENTE           : " << cli.getNombre() << endl;
+        cout << " LA DEUDA          : " << deuda << endl;
+        cout << " PAGOS SIN APLICAR : " << saldo << endl;
+        cout << " DEUDA NETA        : " << (deuda - saldo) << endl;
         cout << "=========================================================" << endl;
         listFacCli(cli, false);
         system("pause");
@@ -637,7 +642,13 @@ void hacerPago(){
     pos = seleccionarClietete();
 
     if(cli.leerdeDisco(pos)){
-        seleccionarFacturas(cli);
+        if(cli.getEstadoCliente()){
+            seleccionarFacturas(cli);
+        }
+        else{
+            cout << " CUENTA INACTIVA " << endl;
+            system("pause");
+        }
     }
 
     return;
@@ -720,7 +731,7 @@ void vecRecibo(int TAM, Cliente cli,float total, float saldo, bool tomarSaldo){
 
         if(acuTotal >= imp)
         {
-            if(controlRc(numFac, imp, i, pos))
+            if(controlRc(numFac, imp, i, TAM))
             {
                 i[pos] = numFac;
                 f[pos] = imp;
@@ -773,12 +784,20 @@ bool controlRc(int numFac, float imp, int *vec, int vT){
             dos[0] = false;
         }
     }
+    cout << " dos 1: " << dos[0] << endl;
+    system("pause");
 
     if(aux.buscarPorNumero(numFac) > -1){
         if(aux.getSaldo() < imp){
             dos[1] = false;
         }
     }
+    else{
+        dos[1] = false;
+    }
+    cout << " dos 2: " << dos[1] << endl;
+    system("pause");
+
 
     if(dos[0] == true && dos[1] == true){
         return true;
@@ -919,7 +938,7 @@ bool situacionCliente(Cliente cli, float importe){
     if(cli.getID() != 1){
         if(cli.getEstadoCliente() == true){
             if(cli.getCuentaCorriente() == true){
-                if((cli.getLimiteCredito() - deudaxCliente(cli)) >= importe){
+                if((cli.getLimiteCredito() - deudaxCliente(cli) + saldoSinAplicarPorCliente(cli)) >= importe){
                     return false;
                 }
             }
