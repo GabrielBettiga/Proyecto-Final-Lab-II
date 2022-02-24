@@ -125,15 +125,19 @@ void Factura::modificarSaldo (Recibo r)
         if(r.getNumFactura()[i] != 0)
         {
             pos = buscarPorNumero(r.getNumFactura()[i]);
-            if(pos > 0)
+            if(pos > -1)
             {
                 _Saldo -= r.getImportePago()[i];
                 if(_Saldo == 0)
                 {
                     _Paga = true;
                 }
-
-                modificardeDisco(pos);
+                if(modificardeDisco(pos)){
+                }
+                else{
+                    cout << "ERROR" << endl;
+                    system("pause");
+                }
             }
         }
     }
@@ -159,7 +163,7 @@ int Factura::buscarPorNumero (int num)
 bool Factura::modificardeDisco(int pos)
 {
     FILE *p;
-    p = fopen("Factura.dat","rb+");                   ///ABRE EL ARCHIVO DESDE 0 Y PUEDE ESCRIBIR Y MODIFICAR.
+    p = fopen("Facturas.dat","rb+");                   ///ABRE EL ARCHIVO DESDE 0 Y PUEDE ESCRIBIR Y MODIFICAR.
 
     if (p == NULL)
     {

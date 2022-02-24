@@ -325,24 +325,15 @@ void cargarCliente()
 
 void mostrarCliente()
 {
-
-    int num;
+    int pos;
     Cliente obj;
 
     system ("cls");
 
-    cout << " NUMERO DE CLIENTE : " << endl;
-    cin >> num;
-
-    if(obj.BuscarIDCliente(num) >= 0)
+    if((pos = seleccionarClietete()) >= 0)
     {
-        cout << endl;
-        obj.mostrarCliente();
-        cout << endl;
-    }
-    else
-    {
-        cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
+        obj.leerdeDisco(pos);
+        obj.mostrar();
     }
 }
 
@@ -362,22 +353,16 @@ void mostrarTodosClientes()
 
 void modificarCliente()
 {
-    int num, pos;
+    int pos;
     Cliente obj;
 
     system ("cls");
-    cout << endl;
-    cout << " NUMERO DE CLIENTE : ";
-    cin >> num;
 
-    if((pos = obj.BuscarIDCliente(num)) >= 0)
+    if((pos = seleccionarClietete()) >= 0)
     {
+        obj.leerdeDisco(pos);
         obj.modificarDatoCliente();
         obj.modificardeDisco(pos);
-    }
-    else
-    {
-        cout << " EL NUMERO DE CLIENTE NO EXISTE " << endl;
     }
 }
 ///===============================
@@ -562,7 +547,6 @@ void listFacCli(Cliente cli, bool estado)
             cout << setw(6) << aux.getPaga() << endl;
         }
     }
-    system("pause");
 }
 
 void mostFacturas(){
@@ -588,7 +572,6 @@ void mostFacturas(){
         cout << setw(10) << aux.getTotal();
         cout << setw(10) << aux.getSaldo();
         cout << setw(6) << aux.getPaga() << endl;
-
     }
     system("pause");
 }
@@ -608,7 +591,7 @@ float deudaxCliente(Cliente cli){
     return deuda;
 }
 
-void deuda(){
+void deudaCli(){
     Cliente cli;
     int pos;
 
@@ -623,13 +606,151 @@ void deuda(){
         cout << " LA DEUDA DEL CLEINTE ES DE : " << deudaxCliente(cli) << endl;
         cout << "=========================================================" << endl;
         listFacCli(cli, false);
+        system("pause");
     }
 }
 
 void hacerPago(){
-    cout << "HACER " << endl;
+
+    /// 1) PEDIR CLIENTE
+    /// 2) MOSTRAMOS LA DEUDA
+    /// 3) SELECCIONAR FACTURAS
+    /// 4) HACER RECIBO
+
+    Cliente cli;
+    int pos;
+    pos = seleccionarClietete();
+
+    if(cli.leerdeDisco(pos)){
+        seleccionarFacturas(cli);
+    }
+
+    return;
+}
+
+void mostrarRecibos(){
+    Recibo aux;
+    int pos = 0;
+
+    while(aux.leerdeDisco(pos++)){
+        aux.mostrarRecibo();
+    }
     system("pause");
 }
+
+void seleccionarFacturas(Cliente cli){
+
+    system("cls");
+    Recibo rc;
+    float total;
+
+    cout << left;
+    cout << setw(20) << " CLIENTE : " << cli.getNombre();
+    cout << setw(12) << " CUIT : " << cli.getCUIT();
+    cout << setw(8) << " N CUENTA " << cli.getID() << endl;
+    cout << "============================================================================" << endl;
+
+    listFacCli(cli, false);
+    cout << "\n TOTAL DEUDA : " << deudaxCliente(cli) << endl;
+    cout << " TOTAL A PAGAR : ";
+    cin >> total;
+
+    vecRecibo(rc.getTam(), cli, total);
+
+
+
+
+    system("pause");
+}
+
+void  vecRecibo(int TAM, Cliente cli, float total){
+
+    int *i;
+    float *f;
+
+    i = new int [TAM]{};
+    f = new float [TAM]{};
+
+    if (i==NULL){
+        cout<<"ERROR"<<endl;
+        system("pause");
+        return;
+    }
+    if (f==NULL){
+        cout<<"ERROR"<<endl;
+        system("pause");
+        return;
+    }
+
+    int opc = -1;
+    int pos = 0, numFac;
+    float imp, acuTotal = total;
+    Recibo rc;
+    Factura fac;
+
+    while(opc != 0 && opc != 2 && pos < TAM){
+        cout << " FACTRA N: ";
+        cin >> numFac;
+        cout << " IMPORTE : ";
+        cin >>  imp;
+
+        if(acuTotal >= imp)
+        {
+            if(controlRc(numFac, imp))
+            {
+                i[pos] = numFac;
+                f[pos] = imp;
+                acuTotal -= imp;
+                cout << " CONTINUAR (1) / GUARDAR (2) / SALIR (0) - >> ";
+                cin >> opc;
+                pos++;
+            }
+            else {
+                cout << " ERROR EN FACTURA - CONTINUAR (1) / GUARDAR (2) / SALIR (0) >> " << endl;
+                cin >> opc;
+            }
+
+        }
+        else
+        {
+            cout << " ERROR EN IMPORTE = CONTINUAR (1) / GUARDAR (2) / SALIR (0) " << endl;
+            cout << " PENDIENTE DE APLICAR " << acuTotal << endl;
+            cout << " >> ";
+            cin >> opc;
+        }
+    }
+
+    if(opc != 0){
+        rc.cargarRecibo(cli, i, f, total);
+        if(rc.Guardar())
+        {
+            rc.mostrarRecibo();
+            fac.modificarSaldo(rc);
+        }
+        else
+        {
+            cout << "ERROR" << endl;
+        }
+    }
+
+    delete f;
+    delete i;
+}
+
+bool controlRc(int numFac, float imp){
+    Factura aux;
+
+    if(aux.buscarPorNumero(numFac) > -1){
+        if(aux.getSaldo() >= imp){
+            return true;
+        }
+    }
+    return false;
+}
+
+
+
+
 
 int seleccionarClietete()
 {
@@ -713,6 +834,7 @@ int seleccionarSurtidor()
 
 void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
     Factura aux;
+    Recibo rc;
 
     aux.Facturar(cli, sur);
     if(aux.Guardar()){
@@ -722,7 +844,10 @@ void hacerFactura(Cliente cli, Surtidor sur, bool mostrar, bool cobrar){
             system("pause");
         }
         if(cobrar){
-            cout << " COBRAR = HACER FUNCION " << endl;
+            rc.cargarRecibo(aux.getNumFac());
+            rc.Guardar();
+            aux.modificarSaldo(rc);
+            cout << " COBRADO ( HACER LINDO RECIBO )" << endl;
             system("pause");
         }
     }
@@ -800,6 +925,7 @@ void menuCobranzas(){
         cout << " (1) DEUDA POR CLIENTE     " << endl;
         cout << " (2) HACER RECIBO          " << endl;
         cout << " (3) FACTURAS (TODAS)      " << endl;
+        cout << " (4) VER RECIBOS           " << endl;
         cout << "===========================" << endl;
         cout << " (0) SALIR                 " << endl;
         cout << " >> ";
@@ -809,13 +935,16 @@ void menuCobranzas(){
         switch(opc)
         {
         case 1:
-            deuda();
+            deudaCli();
             break;
         case 2:
             hacerPago();
             break;
         case 3:
             mostFacturas();
+            break;
+        case 4:
+            mostrarRecibos();
             break;
         case 0:
             return;

@@ -10,6 +10,7 @@ class Recibo:public Documento
 
         Recibo();
         void cargarRecibo(Cliente cli, int *fac, float *impo, float pago);
+        void cargarRecibo(int numFac);
         void mostrarRecibo();
 
         int CantRecibo();
@@ -23,6 +24,7 @@ class Recibo:public Documento
         int * getNumFactura(){return _numFactura;}
         float * getImportePago(){return _importePagado;}
         float getSaldoRecibo(){return _saldoRecibo;}
+        float getTotal(){return _total;}
         bool getEstadoRecibo(){return _cerrado;}
 
     protected:
@@ -33,6 +35,7 @@ class Recibo:public Documento
         int     _numFactura[_TAMFAC];
         float   _importePagado[_TAMFAC];
         float   _saldoRecibo;
+        float   _total;
         bool    _cerrado;
 };
 

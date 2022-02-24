@@ -2,6 +2,7 @@
 using namespace std;
 
 #include "Recibo.h"
+#include "Factura.h"
 
 Recibo::Recibo()
 {
@@ -15,6 +16,7 @@ Recibo::Recibo()
     }
 
     _saldoRecibo = 0;
+    _total = 0;
     _cerrado = false;
 }
 
@@ -108,7 +110,7 @@ bool Recibo::modificardeDisco(int pos){
 
 void Recibo::cargarRecibo(Cliente cli, int *fac, float *impo, float pago){
     int i;
-    float total = 0;
+    float aplicado = 0;
 
     setCliente(cli);
     _Fecha.FechaActual();
@@ -117,13 +119,35 @@ void Recibo::cargarRecibo(Cliente cli, int *fac, float *impo, float pago){
 
     for(i=0; i<_TAMFAC; i++){
         _numFactura[i] = fac [i];
-        total += _importePagado [i] = impo [i];
+        aplicado += _importePagado [i] = impo [i];
     }
-    _saldoRecibo = pago - total;
+    if(aplicado > pago){
+        _saldoRecibo = 0;
+    }
+    _total = pago;
+    _saldoRecibo = _total - aplicado;
 
     if(_saldoRecibo == 0){
         _cerrado = true;
     }
+
+}
+
+void Recibo::cargarRecibo(int numFac){
+    Factura aux;
+    Cliente cli;
+    aux.buscarPorNumero(numFac);
+    cli.BuscarIDCliente(aux.getCliente());
+
+    setCliente(cli);
+    _Fecha.FechaActual();
+    _numRecibo = CantRecibo() + 1;
+    _numFactura[0] = numFac;
+    _importePagado [0] = aux.getTotal();
+    _saldoRecibo = 0;
+    _total = aux.getTotal();
+    _cerrado = true;
+
 }
 
 int Recibo::CantRecibo()
