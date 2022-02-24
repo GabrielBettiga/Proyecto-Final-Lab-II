@@ -1278,8 +1278,10 @@ void mostrarTodosLosTanques()
     {
         cout << left;
         cout << setw(6) << tan.getTanque().getIDtanque();
-        naf.BuscarID(tan.getTanque().getIDnafta());
-        cout << setw(20) << naf.getnombreDeCombustible();
+        if (naf.BuscarID(tan.getTanque().getIDnafta())==-1){
+                cout<<setw(20)<<"-";}
+        else{
+        cout << setw(20) << naf.getnombreDeCombustible();}
         cout << right;
         cout << setw(10) << tan.getTanque().getCapacidad();
         cout << setw(10) << tan.getTanque().getOcupacion();
