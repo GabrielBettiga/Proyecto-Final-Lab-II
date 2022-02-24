@@ -15,6 +15,9 @@ class Recibo:public Documento
 
         int CantRecibo();
 
+        void setSaldo(float x){_saldoRecibo = 0;}
+        void setEstado(bool x){_cerrado = x;}
+
         bool Guardar();
         bool leerdeDisco(int pos);
         bool modificardeDisco(int pos);

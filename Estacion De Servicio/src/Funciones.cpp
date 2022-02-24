@@ -591,6 +591,21 @@ float deudaxCliente(Cliente cli){
     return deuda;
 }
 
+float saldoSinAplicarPorCliente(Cliente cli){
+    Recibo rc;
+    int pos = 0;
+    float resultado = 0;
+
+    while(rc.leerdeDisco(pos++)){
+        if(rc.getCliente() == cli.getID()){
+            if(rc.getEstadoRecibo() == false){
+                resultado += rc.getSaldoRecibo();
+            }
+        }
+    }
+    return resultado;
+}
+
 void deudaCli(){
     Cliente cli;
     int pos;
@@ -642,7 +657,8 @@ void seleccionarFacturas(Cliente cli){
 
     system("cls");
     Recibo rc;
-    float total;
+    float total, saldo;
+    bool opc;
 
     cout << left;
     cout << setw(20) << " CLIENTE : " << cli.getNombre();
@@ -651,19 +667,22 @@ void seleccionarFacturas(Cliente cli){
     cout << "============================================================================" << endl;
 
     listFacCli(cli, false);
-    cout << "\n TOTAL DEUDA : " << deudaxCliente(cli) << endl;
+    cout << endl;
+    cout << " TOTAL DEUDA : " << deudaxCliente(cli) << endl;
+    cout << " TOTAL A FAVOR : " << (saldo = saldoSinAplicarPorCliente(cli)) << endl;
+    cout << " APLICAR SALDO A FAVOR (1) SI / (0) NO " << endl;
+    cout << " >> ";
+    cin >> opc;
+    cout << endl;
     cout << " TOTAL A PAGAR : ";
     cin >> total;
 
-    vecRecibo(rc.getTam(), cli, total);
-
-
-
+    vecRecibo(rc.getTam(), cli, total, saldo, opc);
 
     system("pause");
 }
 
-void  vecRecibo(int TAM, Cliente cli, float total){
+void vecRecibo(int TAM, Cliente cli,float total, float saldo, bool tomarSaldo){
 
     int *i;
     float *f;
@@ -681,6 +700,9 @@ void  vecRecibo(int TAM, Cliente cli, float total){
         system("pause");
         return;
     }
+    if(tomarSaldo == true){
+        total += saldo;
+    }
 
     int opc = -1;
     int pos = 0, numFac;
@@ -689,6 +711,8 @@ void  vecRecibo(int TAM, Cliente cli, float total){
     Factura fac;
 
     while(opc != 0 && opc != 2 && pos < TAM){
+        cout << " PENDIENTE DE APLCIA : ";
+        cout << acuTotal << endl;
         cout << " FACTRA N: ";
         cin >> numFac;
         cout << " IMPORTE : ";
@@ -696,7 +720,7 @@ void  vecRecibo(int TAM, Cliente cli, float total){
 
         if(acuTotal >= imp)
         {
-            if(controlRc(numFac, imp))
+            if(controlRc(numFac, imp, i, pos))
             {
                 i[pos] = numFac;
                 f[pos] = imp;
@@ -722,14 +746,17 @@ void  vecRecibo(int TAM, Cliente cli, float total){
 
     if(opc != 0){
         rc.cargarRecibo(cli, i, f, total);
-        if(rc.Guardar())
-        {
+        if(rc.Guardar()){
+            if(tomarSaldo == true){
+                cancelarSaldos(cli, rc.getNumRecibo());
+            }
             rc.mostrarRecibo();
             fac.modificarSaldo(rc);
         }
         else
         {
             cout << "ERROR" << endl;
+            system("pause");
         }
     }
 
@@ -737,17 +764,46 @@ void  vecRecibo(int TAM, Cliente cli, float total){
     delete i;
 }
 
-bool controlRc(int numFac, float imp){
+bool controlRc(int numFac, float imp, int *vec, int vT){
     Factura aux;
+    bool dos[2]{true, true};
 
-    if(aux.buscarPorNumero(numFac) > -1){
-        if(aux.getSaldo() >= imp){
-            return true;
+    for(int i=0; i<vT; i++){
+        if(vec[i] == numFac){
+            dos[0] = false;
         }
     }
-    return false;
+
+    if(aux.buscarPorNumero(numFac) > -1){
+        if(aux.getSaldo() < imp){
+            dos[1] = false;
+        }
+    }
+
+    if(dos[0] == true && dos[1] == true){
+        return true;
+    }
+    else{
+        return false;
+    }
 }
 
+void cancelarSaldos(Cliente cli, int ultimoRc){
+    Recibo rc;
+    int pos = 0;
+
+    while(rc.leerdeDisco(pos++)){
+        if(rc.getCliente() == cli.getID()){
+            if(rc.getNumRecibo() != ultimoRc){
+                if(rc.getEstadoRecibo() == false){
+                    rc.setEstado(true);
+                    rc.setSaldo(0);
+                    rc.modificardeDisco(pos-1);
+                }
+            }
+        }
+    }
+}
 
 
 
@@ -975,7 +1031,7 @@ void menuCombustibles()
         cout << " (1) ALTA COMBUSTIBLE      " << endl;
         cout << " (2) MODIFICAR COMBUSTIBLE " << endl;
         cout << " (3) MOSTRAR COMBUSTIBLE   " << endl;
-        cout << " < 9 > MOSTRAR TODOS LOS COMBUSTIBLES " << endl;
+        cout << " (4) MOSTRAR TODOS         " << endl;
         cout << " (0) SALIR                 " << endl;
         cout << "===========================" << endl;
         cout << " >> ";
@@ -993,7 +1049,7 @@ void menuCombustibles()
         case 3:
             mostrarCombustible();
             break;
-        case 9:
+        case 4:
             mostrarTodosCombustibles();
             break;
         case 0:

@@ -35,7 +35,8 @@ void Recibo::mostrarRecibo(){
         cout << "FACTUR P " << i+1 << " : ";
         cout << _importePagado[i] << endl;
         }
-
+    cout << "TOTA RECIBO : ";
+    cout << _total << endl;
     cout << "SALDO RECIBO : ";
     cout << _saldoRecibo << endl;
     cout << "ESTADO: ";
@@ -45,6 +46,7 @@ void Recibo::mostrarRecibo(){
     else {
         cout << "ABIERTO. " << endl;
     }
+    cout << endl;
 }
 
 bool Recibo::Guardar(){
