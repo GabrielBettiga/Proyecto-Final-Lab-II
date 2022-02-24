@@ -1207,6 +1207,7 @@ void menuTanques()
     int opc;
     do
     {
+        system ("cls");
         cout << endl;
         cout << "            TANQUES             " << endl;
         cout << "================================" << endl;
@@ -1225,24 +1226,19 @@ void menuTanques()
         {
         case 1:
             asignarNafta();
-            system ("cls");
             break;
         case 2:
             mostrarTanque();
-            system ("cls");
             break;
         case 3:
             mostrarTodosLosTanques();
             system("pause");
-            system("cls");
             break;
         case 4:
             ingresarCombustible();
-            system ("cls");
             break;
         case 5:
             vaciarTanque();
-            system ("cls");
             break;
         case 0:
             return;
@@ -1264,16 +1260,33 @@ void menuTanques()
 
 void mostrarTodosLosTanques()
 {
-    TanqueManager aux;
+    TanqueManager tan;
+    Nafta naf;
     int pos = 0;
 
-    while(aux.leerdeDisco(pos++))
-    {
-        aux.Mostrar();
-        cout << endl;
-    }
+    cout << endl;
+    cout << "               ==== TANQUES ==== " << endl;
+    cout << left;
+    cout << setw(6) <<" NUM ";
+    cout << setw(20) << " NOMBRE COMB ";
+    cout << setw(10) << " CAP. MAXIMA ";
+    cout << setw(10) << " OCUPACION ";
+    cout << setw(10) << " ESPACIO DISP " << endl;
+    cout << "========================================================================= " << endl;
 
+    while (tan.leerdeDisco(pos++))
+    {
+        cout << left;
+        cout << setw(6) << tan.getTanque().getIDtanque();
+        naf.BuscarID(tan.getTanque().getIDnafta());
+        cout << setw(20) << naf.getnombreDeCombustible();
+        cout << right;
+        cout << setw(10) << tan.getTanque().getCapacidad();
+        cout << setw(10) << tan.getTanque().getOcupacion();
+        cout << setw(10) <<  tan.getTanque().getDisponible() << endl;
+    }
 }
+
 
 void mostrarTanque()
 {
@@ -1313,12 +1326,7 @@ bool asignarNafta()
 
     do
     {
-        pos=0;
-        while(aux.leerdeDisco(pos++))
-        {
-            aux.Mostrar();
-            cout<<endl;
-        }
+        mostrarTodosLosTanques();
         cout<< "A QUE TANQUE QUIERE ASIGNARLE EL COMBUSTIBLE: ";
         cin>> tan;
 
@@ -1461,9 +1469,8 @@ void menuInfores()
         cout << endl;
         cout << "         INFORMES          " << endl;
         cout << "===========================" << endl;
-        cout << " (1) VENTAS                " << endl;
-        cout << " (2) COMBUSTIBLE           " << endl;
-        cout << " (3) TANQUES               " << endl;
+        cout << " (1) COMBUSTIBLE           " << endl;
+        cout << " (2) TANQUES               " << endl;
         cout << " (0) SALIR                 " << endl;
         cout << "===========================" << endl;
         cout << " >> ";
@@ -1473,13 +1480,10 @@ void menuInfores()
         switch(opc)
         {
         case 1:
-
-            break;
-        case 2:
             informeCombustibles();
             break;
-        case 3:
-
+        case 2:
+            ///informeTanques();
             break;
         case 0:
             return;
@@ -1496,6 +1500,54 @@ void menuInfores()
     while(opc != 0);
 
 }
+
+void informeVentas(){
+    Factura aux;
+    Cliente cli;
+    int pos = 0;
+    Fecha ini, fin;
+
+    cout << "FECHA INICIO  " << endl;
+    ini.cargarFecha();
+    cout << "FECHA FIN " << endl;
+    fin.cargarFecha();
+
+
+    cout << endl;
+    cout << left;
+    ///cout << setw(11) << " FECHA ";
+    cout << setw(8) <<" NUM ";
+    cout << setw(10) << " ID CLI ";
+    cout << setw(20) << " NOMBRE ";
+    cout << setw(10) << " TOTAL ";
+    cout << setw(6) << " SALDO " ;
+    cout << setw(10) << " ESTADO " << endl;
+    cout << "============================================================================= " << endl;
+
+    while (aux.LeerDeDisco(pos++))
+    {
+        if(ini >= aux.getFecha() && fin >= aux.getFecha()){
+            cout << left;
+            //cout << setw(11);
+            //aux.getFecha().MostrarFecha();
+            cout << setw(8) << aux.getNumFac();
+            cout << setw(10) << aux.getCliente();
+            cli.BuscarIDCliente(aux.getCliente());
+            cout << setw(20) << cli.getNombre();
+            cout << setw(10) << aux.getTotal();
+            cout << setw(6) << aux.getSaldo();
+            if(aux.getPaga()){
+                cout << setw(10) << " PAGO " << endl;
+            }
+            else{
+                cout << setw(10) << " IMPAGO " << endl;
+            }
+        }
+    }
+
+    system("pause");
+}
+
 
 void informeCombustibles()
 {

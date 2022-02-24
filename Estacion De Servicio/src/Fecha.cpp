@@ -26,6 +26,28 @@ Fecha::Fecha (){
 ///METODOS
 ///========================================================================================================
 
+void Fecha::cargarFecha(){
+
+    int dia, mes, anio;
+    cout << " DIA : ";
+    cin >> dia;
+    cout << " MES : ";
+    cin >> mes;
+    cout << "ANIO : ";
+    cin >> anio;
+
+    while(cambiarFecha(dia,mes,anio) == false ){
+        system("cls");
+        cout << " ERROR EN FECHCA " << endl;
+        cout << " DIA : ";
+        cin >> dia;
+        cout << " MES : ";
+        cin >> mes;
+        cout << "ANIO : ";
+        cin >> anio;;
+    }
+}
+
 void Fecha::FechaActual(){
     time_t t;
     struct tm *f;
@@ -41,13 +63,13 @@ void Fecha::FechaActual(){
 }
 
 void Fecha::MostrarFecha(){
+
     if(_dia<10){cout<<"0"<<_dia<<"/";}
     else {cout<<_dia<<"/";}
     if(_mes<10){cout<<"0"<<_mes<<"/";}
     else {cout<<_mes<<"/";}
     if(_anio<10){cout<<"0"<<_anio<<endl;}
     else {cout<<_anio<<endl;}
-
 }
 
 void Fecha::MostrarHora(){
@@ -59,6 +81,19 @@ void Fecha::MostrarHora(){
 
 
 bool Fecha::operator <= (Fecha aux){
+    if(_anio <= aux._anio){
+        if(_mes <= aux._mes){
+            if(_dia <= aux._dia){
+                return true;
+            }
+            return false;
+        }
+        return false;
+    }
+    return false;
+}
+
+bool Fecha::operator >= (Fecha aux){
     if(_anio <= aux._anio){
         if(_mes <= aux._mes){
             if(_dia <= aux._dia){

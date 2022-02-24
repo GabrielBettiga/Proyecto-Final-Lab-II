@@ -17,9 +17,11 @@ class Fecha
         int getMinutos(){return _minutos;}
 
         bool operator <= (Fecha aux);
+        bool operator >= (Fecha aux);
         void fechaSinDatos();
 
         bool cambiarFecha(int dia, int mes, int anio);
+        void cargarFecha();
 
         void FechaActual();
         void MostrarFecha();
