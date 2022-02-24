@@ -784,8 +784,6 @@ bool controlRc(int numFac, float imp, int *vec, int vT){
             dos[0] = false;
         }
     }
-    cout << " dos 1: " << dos[0] << endl;
-    system("pause");
 
     if(aux.buscarPorNumero(numFac) > -1){
         if(aux.getSaldo() < imp){
@@ -795,9 +793,6 @@ bool controlRc(int numFac, float imp, int *vec, int vT){
     else{
         dos[1] = false;
     }
-    cout << " dos 2: " << dos[1] << endl;
-    system("pause");
-
 
     if(dos[0] == true && dos[1] == true){
         return true;
